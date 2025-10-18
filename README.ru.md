@@ -15,6 +15,10 @@
 >
 > [English](README.ru.md)
 
+**Пример систем:**
+>
+> [Авторизация в аккаунт](https://youtu.be/iWmfeV_JrQw)
+
 ---
 
 ## Установка
