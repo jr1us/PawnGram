@@ -1,5 +1,3 @@
-#pragma dynamic 65536
-
 #include 					a_samp
 #include 					a_http
 #include 					a_actor
