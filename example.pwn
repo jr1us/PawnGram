@@ -49,7 +49,7 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
 	}
 
 	else if (!strcmp(message, "/photo", true)) {
-		SendTelegramPhoto(userId, "https://img.joomcdn.net/6ad386a00a79511072954393bd626e903ff3569e_1024_1024.jpeg", "*Photo*", "markdown");
+		SendTelegramPhoto(userId, "https://img.joomcdn.net/6ad386a00a79511072954393bd626e903ff3569e_1024_1024.jpeg", "*Photo* `the album` ", "markdown");
 	}
 
 	else if (!strcmp(message, "/note", true)) {
