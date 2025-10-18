@@ -170,72 +170,72 @@ stock DecodeUnicodeEscapes(const input[], output[], size = sizeof output)
             }
 
             switch(hexValue) {
-                case 0x0410: output[j++] = 0xC0; // ¿
-                case 0x0411: output[j++] = 0xC1; // ¡
-                case 0x0412: output[j++] = 0xC2; // ¬
-                case 0x0413: output[j++] = 0xC3; // √
-                case 0x0414: output[j++] = 0xC4; // ƒ
-                case 0x0415: output[j++] = 0xC5; // ≈
-                case 0x0401: output[j++] = 0xA8; // ®
-                case 0x0416: output[j++] = 0xC6; // ∆
-                case 0x0417: output[j++] = 0xC7; // «
-                case 0x0418: output[j++] = 0xC8; // »
-                case 0x0419: output[j++] = 0xC9; // …
-                case 0x041A: output[j++] = 0xCA; //  
-                case 0x041B: output[j++] = 0xCB; // À
-                case 0x041C: output[j++] = 0xCC; // Ã
-                case 0x041D: output[j++] = 0xCD; // Õ
-                case 0x041E: output[j++] = 0xCE; // Œ
-                case 0x041F: output[j++] = 0xCF; // œ
-                case 0x0420: output[j++] = 0xD0; // –
-                case 0x0421: output[j++] = 0xD1; // —
-                case 0x0422: output[j++] = 0xD2; // “
-                case 0x0423: output[j++] = 0xD3; // ”
-                case 0x0424: output[j++] = 0xD4; // ‘
-                case 0x0425: output[j++] = 0xD5; // ’
-                case 0x0426: output[j++] = 0xD6; // ÷
-                case 0x0427: output[j++] = 0xD7; // ◊
-                case 0x0428: output[j++] = 0xD8; // ÿ
-                case 0x0429: output[j++] = 0xD9; // Ÿ
-                case 0x042A: output[j++] = 0xDA; // ⁄
-                case 0x042B: output[j++] = 0xDB; // €
-                case 0x042C: output[j++] = 0xDC; // ‹
-                case 0x042D: output[j++] = 0xDD; // ›
-                case 0x042E: output[j++] = 0xDE; // ﬁ
-                case 0x042F: output[j++] = 0xDF; // ﬂ
-                case 0x0430: output[j++] = 0xE0; // ‡
-                case 0x0431: output[j++] = 0xE1; // ·
-                case 0x0432: output[j++] = 0xE2; // ‚
-                case 0x0433: output[j++] = 0xE3; // „
-                case 0x0434: output[j++] = 0xE4; // ‰
-                case 0x0435: output[j++] = 0xE5; // Â
-                case 0x0451: output[j++] = 0xB8; // ∏
-                case 0x0436: output[j++] = 0xE6; // Ê
-                case 0x0437: output[j++] = 0xE7; // Á
-                case 0x0438: output[j++] = 0xE8; // Ë
-                case 0x0439: output[j++] = 0xE9; // È
-                case 0x043A: output[j++] = 0xEA; // Í
-                case 0x043B: output[j++] = 0xEB; // Î
-                case 0x043C: output[j++] = 0xEC; // Ï
-                case 0x043D: output[j++] = 0xED; // Ì
-                case 0x043E: output[j++] = 0xEE; // Ó
-                case 0x043F: output[j++] = 0xEF; // Ô
-                case 0x0440: output[j++] = 0xF0; // 
-                case 0x0441: output[j++] = 0xF1; // Ò
-                case 0x0442: output[j++] = 0xF2; // Ú
-                case 0x0443: output[j++] = 0xF3; // Û
-                case 0x0444: output[j++] = 0xF4; // Ù
-                case 0x0445: output[j++] = 0xF5; // ı
-                case 0x0446: output[j++] = 0xF6; // ˆ
-                case 0x0447: output[j++] = 0xF7; // ˜
-                case 0x0448: output[j++] = 0xF8; // ¯
-                case 0x0449: output[j++] = 0xF9; // ˘
-                case 0x044A: output[j++] = 0xFA; // ˙
-                case 0x044B: output[j++] = 0xFB; // ˚
-                case 0x044C: output[j++] = 0xFC; // ¸
-                case 0x044D: output[j++] = 0xFD; // ˝
-                case 0x044E: output[j++] = 0xFE; // ˛
-                case 0x044F: output[j++] = 0xFF; // ˇ
+                case 0x0410: output[j++] = 0xC0; // –ê
+                case 0x0411: output[j++] = 0xC1; // –ë
+                case 0x0412: output[j++] = 0xC2; // –í
+                case 0x0413: output[j++] = 0xC3; // –ì
+                case 0x0414: output[j++] = 0xC4; // –î
+                case 0x0415: output[j++] = 0xC5; // –ï
+                case 0x0401: output[j++] = 0xA8; // –Å
+                case 0x0416: output[j++] = 0xC6; // –ñ
+                case 0x0417: output[j++] = 0xC7; // –ó
+                case 0x0418: output[j++] = 0xC8; // –ò
+                case 0x0419: output[j++] = 0xC9; // –ô
+                case 0x041A: output[j++] = 0xCA; // –ö
+                case 0x041B: output[j++] = 0xCB; // –õ
+                case 0x041C: output[j++] = 0xCC; // –ú
+                case 0x041D: output[j++] = 0xCD; // –ù
+                case 0x041E: output[j++] = 0xCE; // –û
+                case 0x041F: output[j++] = 0xCF; // –ü
+                case 0x0420: output[j++] = 0xD0; // –†
+                case 0x0421: output[j++] = 0xD1; // –°
+                case 0x0422: output[j++] = 0xD2; // –¢
+                case 0x0423: output[j++] = 0xD3; // –£
+                case 0x0424: output[j++] = 0xD4; // –§
+                case 0x0425: output[j++] = 0xD5; // –•
+                case 0x0426: output[j++] = 0xD6; // –¶
+                case 0x0427: output[j++] = 0xD7; // –ß
+                case 0x0428: output[j++] = 0xD8; // –®
+                case 0x0429: output[j++] = 0xD9; // –©
+                case 0x042A: output[j++] = 0xDA; // –™
+                case 0x042B: output[j++] = 0xDB; // –´
+                case 0x042C: output[j++] = 0xDC; // –¨
+                case 0x042D: output[j++] = 0xDD; // –≠
+                case 0x042E: output[j++] = 0xDE; // –Æ
+                case 0x042F: output[j++] = 0xDF; // –Ø
+                case 0x0430: output[j++] = 0xE0; // –∞
+                case 0x0431: output[j++] = 0xE1; // –±
+                case 0x0432: output[j++] = 0xE2; // –≤
+                case 0x0433: output[j++] = 0xE3; // –≥
+                case 0x0434: output[j++] = 0xE4; // –¥
+                case 0x0435: output[j++] = 0xE5; // –µ
+                case 0x0451: output[j++] = 0xB8; // —ë
+                case 0x0436: output[j++] = 0xE6; // –∂
+                case 0x0437: output[j++] = 0xE7; // –∑
+                case 0x0438: output[j++] = 0xE8; // –∏
+                case 0x0439: output[j++] = 0xE9; // –π
+                case 0x043A: output[j++] = 0xEA; // –∫
+                case 0x043B: output[j++] = 0xEB; // –ª
+                case 0x043C: output[j++] = 0xEC; // –º
+                case 0x043D: output[j++] = 0xED; // –Ω
+                case 0x043E: output[j++] = 0xEE; // –æ
+                case 0x043F: output[j++] = 0xEF; // –ø
+                case 0x0440: output[j++] = 0xF0; // —Ä
+                case 0x0441: output[j++] = 0xF1; // —Å
+                case 0x0442: output[j++] = 0xF2; // —Ç
+                case 0x0443: output[j++] = 0xF3; // —É
+                case 0x0444: output[j++] = 0xF4; // —Ñ
+                case 0x0445: output[j++] = 0xF5; // —Ö
+                case 0x0446: output[j++] = 0xF6; // —Ü
+                case 0x0447: output[j++] = 0xF7; // —á
+                case 0x0448: output[j++] = 0xF8; // —à
+                case 0x0449: output[j++] = 0xF9; // —â
+                case 0x044A: output[j++] = 0xFA; // —ä
+                case 0x044B: output[j++] = 0xFB; // —ã
+                case 0x044C: output[j++] = 0xFC; // —å
+                case 0x044D: output[j++] = 0xFD; // —ç
+                case 0x044E: output[j++] = 0xFE; // —é
+                case 0x044F: output[j++] = 0xFF; // —è
                 default: output[j++] = input[i]; 
             }
             i += 6; 
@@ -384,4 +384,17 @@ stock EncodePhotoURL(const url[], encoded[], size = sizeof(encoded))
         else encoded[pos++] = c;
     }
     encoded[pos] = '\0';
+}
+
+stock GetUpdateTypeStr(const jsonStr[])
+{
+    if (strfind(jsonStr, "\"callback_query\"") != -1) {
+        return 2; 
+    }
+
+    if (strfind(jsonStr, "\"message\"") != -1) {
+        return 1; 
+    }
+
+    return 0; 
 }
