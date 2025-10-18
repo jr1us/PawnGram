@@ -7,6 +7,10 @@
 
 > The library is not designed for creating multifunctional bots, but it is perfect for sending notifications, IDs, or simple messages.
 
+> Documentation:
+>
+> [Russian](README.ru.md)
+
 ## Installation
 
 1. Copy all library modules into the `pawno/include/` folder.
