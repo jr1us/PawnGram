@@ -372,8 +372,6 @@ callback OnTelegramUpdatesJSON(Request:id, E_HTTP_STATUS:status, Node:node) {
 
         ParseJsonId(convertData, userId);
 
-        printf("len -> %d [Telegram]", len);
-
         OnTelegramCommand(userId, userName, textConverted, outputFirstName, outputLastName);
         lastUpdateId = updateId;
     }
