@@ -289,14 +289,6 @@ AnswerCallbackQuery(callbackId[], text[] = "", bool:showAlert = false)
 
 ---
 
----
-
-## Внешний вид
-
-<img width="865" height="628" alt="image" src="https://github.com/user-attachments/assets/4ba73f4f-1d6b-43eb-ae6e-ac68d5216ebf" />
-
----
-
 ## Автор
 
 Автор: jr1us ([t.me/dcapybarov](https://t.me/dcapybarov) & [vk.com/s.fridom](https://vk.com/s.fridom))
