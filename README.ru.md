@@ -2,35 +2,35 @@
 |:--:|:--:|
 | <img width="350" height="400" alt="image" src="https://github.com/user-attachments/assets/845fabbe-c360-4bbe-93f4-99c7cd80275f" /> |   |
 
-# PawnGram — Library for Telegram Bots in Pawn
+# PawnGram — Библиотека для Telegram-ботов на языке Pawn
 
-**PawnGram** — lightweight library for creating Telegram bots in Pawn language.
+**PawnGram** — легкая библиотека для создания Telegram-ботов на языке Pawn.
 
-> The library is intended for simple bots: notifications, messages, IDs, quick integrations without excessive logic.
+> Библиотека предназначена для простых ботов: уведомления, сообщения, ID, быстрые интеграции без избыточной логики.
 >
-> Not suitable for complex and multifunctional bots.
+> Не подходит для сложных и многофункциональных ботов.
 >
-> Documentation:
+> Документация:
 >
-> [Русский](README.ru.md)
+> [English](README.ru.md)
 
 ---
 
-## Installation
+## Установка
 
-1. Copy all library files to the `pawno/include/` folder.
+1. Скопируйте все файлы библиотеки в папку `pawno/include/`.
 
 ---
 
-## Quick Start
+## Быстрое подключение
 
-**Important:**  
-Add `#pragma dynamic 65536` at the beginning of your script to avoid memory errors when working with Telegram API and JSON.
+**Важно:**  
+Добавьте `#pragma dynamic 65536` в начале скрипта, чтобы избежать ошибок памяти при работе с Telegram API и JSON.
 
 ```pawn
 #pragma dynamic 65536
 
-#define BOT_TOKEN "" // Get your token from @BotFather
+#define BOT_TOKEN "" // Получите токен у @BotFather
 
 #include "PawnGram"
 
@@ -43,7 +43,7 @@ callback OnTelegramCommand(const userId[], const username[], const message[], co
 
 ---
 
-## Usage Example
+## Пример использования
 
 ```pawn
 callback OnTelegramCommand(const userId[], const username[], const message[], const firstName[], const lastName[])
@@ -57,7 +57,7 @@ callback OnTelegramCommand(const userId[], const username[], const message[], co
 
     if (!strcmp(message, "/start", true))
     {
-        format(buffer, sizeof buffer, "*Hello, %s! Your ID*: `%s`", firstName, userId);
+        format(buffer, sizeof buffer, "*Привет, %s! Твой ID*: `%s`", firstName, userId);
         SendTelegramMessage(userId, buffer, "markdown");
     }
 	else if (!strcmp(message, "/sticker", true)) {
@@ -90,10 +90,10 @@ callback OnTelegramCommand(const userId[], const username[], const message[], co
         new buttonText4[64];
 
         ConvertWindows1251ToUTF8(firstName, utf8Message, sizeof(utf8Message));
-        ConvertWindows1251ToUTF8("Press 1", buttonText1, sizeof(buttonText1));
-        ConvertWindows1251ToUTF8("Press 2", buttonText2, sizeof(buttonText2));
-        ConvertWindows1251ToUTF8("Press 3", buttonText3, sizeof(buttonText3));
-        ConvertWindows1251ToUTF8("Press 4", buttonText4, sizeof(buttonText4));
+        ConvertWindows1251ToUTF8("Нажмите 1", buttonText1, sizeof(buttonText1));
+        ConvertWindows1251ToUTF8("Нажмите 2", buttonText2, sizeof(buttonText2));
+        ConvertWindows1251ToUTF8("Нажмите 3", buttonText3, sizeof(buttonText3));
+        ConvertWindows1251ToUTF8("Нажмите 4", buttonText4, sizeof(buttonText4));
 
         new Node:json = JsonObject(
             "chat_id", JsonString(userId),
@@ -133,7 +133,7 @@ callback OnTelegramCommand(const userId[], const username[], const message[], co
 
 ---
 
-## Callback Example for Inline Button Handling
+## Пример каллбэка для обработки inline-кнопок
 
 ```pawn
 callback OnTelegramInlineKeyBoard(userId[], username[], callbackData[], firstName[], lastName[], callbackId[])
@@ -165,134 +165,142 @@ callback OnTelegramInlineKeyBoard(userId[], username[], callbackData[], firstNam
 }
 ```
 
-> To handle inline buttons, be sure to add the `OnTelegramInlineKeyBoard` callback along with `OnTelegramMessage` to your mode.
+> Для обработки inline-кнопок обязательно добавьте каллбек `OnTelegramInlineKeyBoard` вместе с `OnTelegramMessage` в свой мод.
 
 ---
 
-## PawnGram Function Documentation
+## Документация по функциям PawnGram
 
-### Sending Messages
+### Отправка сообщений
 
 #### SendTelegramMessage
 ```pawn
 SendTelegramMessage(const userId[], const message[], const parse_mode[] = "")
 ```
-Sends a text message to a user.
-- **userId** — user or chat id.
-- **message** — message text.
-- **parse_mode** — formatting mode (`markdown`, `html`). Optional.
+Отправляет текстовое сообщение пользователю.
+- **userId** — id пользователя (или chat_id).
+- **message** — текст сообщения.
+- **parse_mode** — режим форматирования (`markdown`, `html`). Необязательный.
 
 #### SendTelegramSticker
 ```pawn
 SendTelegramSticker(const userId[], const stickerFileId[])
 ```
-Sends a sticker to a user.
-- **userId** — user id.
-- **stickerFileId** — sticker's file_id.
+Отправляет стикер пользователю.
+- **userId** — id пользователя.
+- **stickerFileId** — file_id стикера.
 
 #### SendTelegramPhoto
 ```pawn
 SendTelegramPhoto(const userId[], const photoURL[], const caption[] = "", const parse_mode[] = "")
 ```
-Sends a photo by link.
-- **userId** — chat id.
-- **photoURL** — photo URL.
-- **caption** — photo caption (optional).
-- **parse_mode** — caption formatting (optional).
+Отправляет фото по ссылке.
+- **userId** — id чата.
+- **photoURL** — URL фотографии.
+- **caption** — подпись к фото (опционально).
+- **parse_mode** — форматирование подписи (опционально).
 
 #### SendTelegramVoice
 ```pawn
 SendTelegramVoice(const chatId[], const voiceURL[])
 ```
-Sends a voice message.
-- **chatId** — chat id.
-- **voiceURL** — voice file URL.
+Отправляет голосовое сообщение.
+- **chatId** — id чата.
+- **voiceURL** — URL голосового файла.
 
 #### SendTelegramVideo
 ```pawn
 SendTelegramVideo(const userId[], const videoURL[], const caption[] = "", const parse_mode[] = "")
 ```
-Sends a video by link.
-- **userId** — chat id.
-- **videoURL** — video URL.
-- **caption** — video caption (optional).
-- **parse_mode** — caption formatting (optional).
+Отправляет видео по ссылке.
+- **userId** — id чата.
+- **videoURL** — URL видео.
+- **caption** — подпись к видео (опционально).
+- **parse_mode** — форматирование подписи (опционально).
 
 #### SendTelegramVideoNote
 ```pawn
 SendTelegramVideoNote(const chatId[], const videoNoteURL[])
 ```
-Sends a video note.
-- **chatId** — chat id.
-- **videoNoteURL** — video note URL.
+Отправляет видеозаметку.
+- **chatId** — id чата.
+- **videoNoteURL** — URL видеозаметки.
 
 #### SendTelegramMessageWithButton
 ```pawn
 SendTelegramMessageWithButton(Node:json)
 ```
-Sends a message with inline keyboard (buttons).
-- **json** — JSON object for keyboard markup.
+Отправляет сообщение с инлайн-клавиатурой (кнопками).
+- **json** — JSON-объект для разметки клавиатуры.
 
 ---
 
-### Getting Information
+### Получение информации
 
 #### GetTelegramUserInfo
 ```pawn
 GetTelegramUserInfo(const userId[])
 ```
-Gets user info (first name, last name, username).
-- **userId** — user id.
+Получает информацию о пользователе (имя, фамилия, username).
+- **userId** — id пользователя.
 
 #### GetTelegramUpdates
 ```pawn
 GetTelegramUpdates()
 ```
-Requests new Telegram updates (handled automatically).
+Запрашивает новые обновления Telegram (обрабатывается автоматически).
 
 #### GetChatMemberStatus
 ```pawn
 GetChatMemberStatus(const chatId[], const userId[])
 ```
-Gets user status in a chat (admin, member).
-- **chatId** — chat id.
-- **userId** — user id.
+Получает статус пользователя в чате (админ, участник).
+- **chatId** — id чата.
+- **userId** — id пользователя.
 
 #### GetBotInfo
 ```pawn
 GetBotInfo()
 ```
-Gets bot info (name, username, id). Automatically called at initialization.
+Получает информацию о самом боте (имя, username, id). Автоматически вызывается при инициализации.
 
 ---
 
-### Interactive
+### Интерактив
 
 #### AnswerCallbackQuery
 ```pawn
 AnswerCallbackQuery(callbackId[], text[] = "", bool:showAlert = false)
 ```
-Sends a response to inline button press (can show a notification).
+Отправляет ответ на нажатие инлайн-кнопки (можно показать уведомление).
 
 ---
 
-## Callbacks
+## Коллбэки
 
-- **OnTelegramCommand** — when receiving a new message/command.
-- **OnTelegramResponse** — after sending a message/sticker/photo.
-- **OnTelegramUserInfo** — when getting user info.
-- **OnTelegramUpdatesJSON** — when processing new updates.
-- **OnChatMemberStatus** — when getting user status in chat.
-- **OnBotInfo** — when getting bot info.
-- **OnTelegramInlineKeyBoard** — when pressing an inline button.
-- **OnTelegramMessage** — when receiving a normal message.
+- **OnTelegramCommand** — при получении нового сообщения/команды.
+- **OnTelegramResponse** — после отправки сообщения/стикера/фото.
+- **OnTelegramUserInfo** — при получении информации о пользователе.
+- **OnTelegramUpdatesJSON** — при обработке новых обновлений.
+- **OnChatMemberStatus** — при получении статуса пользователя в чате.
+- **OnBotInfo** — при получении информации о боте.
+- **OnTelegramInlineKeyBoard** — при нажатии на инлайн-кнопку.
+- **OnTelegramMessage** — при получении обычного сообщения.
 
 ---
 
-## Author
+---
 
-Author: jr1us ([t.me/dcapybarov](https://t.me/dcapybarov) & [vk.com/s.fridom](https://vk.com/s.fridom))
+## Внешний вид
 
-For any issues — contact me.
+<img width="865" height="628" alt="image" src="https://github.com/user-attachments/assets/4ba73f4f-1d6b-43eb-ae6e-ac68d5216ebf" />
+
+---
+
+## Автор
+
+Автор: jr1us ([t.me/dcapybarov](https://t.me/dcapybarov) & [vk.com/s.fridom](https://vk.com/s.fridom))
+
+По любым ошибкам — пишите мне.
 
 ---
