@@ -124,7 +124,7 @@ callback OnTelegramCommand(const userId[], const username[], const message[], co
             )
         );
 
-        SendTelegramMessageWithButton(userId, json);
+        SendTelegramMessageWithButton(json);
     }
 
     return 1;
@@ -228,10 +228,9 @@ Sends a video note.
 
 #### SendTelegramMessageWithButton
 ```pawn
-SendTelegramMessageWithButton(const userId[], Node:json)
+SendTelegramMessageWithButton(Node:json)
 ```
 Sends a message with inline keyboard (buttons).
-- **userId** — user id.
 - **json** — JSON object for keyboard markup.
 
 ---
