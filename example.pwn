@@ -1,3 +1,4 @@
+
 #include 					a_samp
 #include 					a_http
 #include 					a_actor
@@ -31,7 +32,7 @@ callback OnTelegramCommand(const userId[], const username[], const message[], co
 
     if (!strcmp(message, "/start", true))
     {
-        format(buffer, sizeof buffer, "*Привет, %s! Твой ID*: `%s`", firstName, userId);
+        format(buffer, sizeof buffer, "*РџСЂРёРІРµС‚, %s! РўРІРѕР№ ID*: `%s`", firstName, userId);
         SendTelegramMessage(userId, buffer, "markdown");
     }
 
