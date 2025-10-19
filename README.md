@@ -40,9 +40,9 @@ Add `#pragma dynamic 65536` at the beginning of your script to avoid memory erro
 
 #include "PawnGram"
 
-callback OnTelegramCommand(const userId[], const username[], const message[], const firstName[], const lastName[])
+callback OnTelegramMessage(const userId[], const username[], const message[], const firstName[], const lastName[])
 {
-    printf("[PawnGram -> OnTelegramCommand] New message! userId -> %s", userId);
+    printf("[PawnGram -> OnTelegramMessage] New message! userId -> %s", userId);
     return 1;
 }
 ```
@@ -52,9 +52,9 @@ callback OnTelegramCommand(const userId[], const username[], const message[], co
 ## Usage Example
 
 ```pawn
-callback OnTelegramCommand(const userId[], const username[], const message[], const firstName[], const lastName[])
+callback OnTelegramMessage(const userId[], const username[], const message[], const firstName[], const lastName[])
 {
-    printf("[PawnGram -> OnTelegramCommand] New message! userId -> %s", userId);
+    printf("[PawnGram -> OnTelegramMessage] New message! userId -> %s", userId);
 
     if (!strlen(message))
         return 0;
@@ -284,7 +284,7 @@ Sends a response to inline button press (can show a notification).
 
 ## Callbacks
 
-- **OnTelegramCommand** — when receiving a new message/command.
+- **OnTelegramMessage** — when receiving a new message/command.
 - **OnTelegramResponse** — after sending a message/sticker/photo.
 - **OnTelegramUserInfo** — when getting user info.
 - **OnTelegramUpdatesJSON** — when processing new updates.
