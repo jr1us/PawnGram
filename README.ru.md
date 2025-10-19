@@ -39,9 +39,9 @@
 
 #include "PawnGram"
 
-callback OnTelegramCommand(const userId[], const username[], const message[], const firstName[], const lastName[])
+callback OnTelegramMessage(const userId[], const username[], const message[], const firstName[], const lastName[])
 {
-    printf("[PawnGram -> OnTelegramCommand] New message! userId -> %s", userId);
+    printf("[PawnGram -> OnTelegramMessage] New message! userId -> %s", userId);
     return 1;
 }
 ```
@@ -51,9 +51,9 @@ callback OnTelegramCommand(const userId[], const username[], const message[], co
 ## Пример использования
 
 ```pawn
-callback OnTelegramCommand(const userId[], const username[], const message[], const firstName[], const lastName[])
+callback OnTelegramMessage(const userId[], const username[], const message[], const firstName[], const lastName[])
 {
-    printf("[PawnGram -> OnTelegramCommand] New message! userId -> %s", userId);
+    printf("[PawnGram -> OnTelegramMessage] New message! userId -> %s", userId);
 
     if (!strlen(message))
         return 0;
@@ -283,7 +283,7 @@ AnswerCallbackQuery(callbackId[], text[] = "", bool:showAlert = false)
 
 ## Коллбэки
 
-- **OnTelegramCommand** — при получении нового сообщения/команды.
+- **OnTelegramMessage** — при получении нового сообщения/команды.
 - **OnTelegramResponse** — после отправки сообщения/стикера/фото.
 - **OnTelegramUserInfo** — при получении информации о пользователе.
 - **OnTelegramUpdatesJSON** — при обработке новых обновлений.
