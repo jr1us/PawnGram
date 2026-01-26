@@ -1,8 +1,7 @@
 | <img width="400" height="600" alt="image1" src="https://github.com/user-attachments/assets/4ba73f4f-1d6b-43eb-ae6e-ac68d5216ebf" /> | <img width="564" height="298" alt="image2" src="https://github.com/user-attachments/assets/bd1e4918-0ae6-475b-a1c1-961a1bf0fe2d" /> |
 |:--:|:--:|
 | <img width="350" height="400" alt="image" src="https://github.com/user-attachments/assets/845fabbe-c360-4bbe-93f4-99c7cd80275f" /> | <img width="500" height="600" alt="image" src="https://github.com/user-attachments/assets/a336d814-0524-4939-a1b0-5dabfb7ff27b" />
-   |
-
+   
 # PawnGram — Library for Telegram Bots in Pawn
 
 **PawnGram** — lightweight library for creating Telegram bots in Pawn language.
@@ -14,6 +13,12 @@
 > Documentation:
 >
 > [Русский](README.ru.md)
+
+
+
+**Example systems:**
+>
+> [Account authorization](https://youtu.be/iWmfeV_JrQw)
 
 ---
 
@@ -35,9 +40,9 @@ Add `#pragma dynamic 65536` at the beginning of your script to avoid memory erro
 
 #include "PawnGram"
 
-callback OnTelegramCommand(const userId[], const username[], const message[], const firstName[], const lastName[])
+callback OnTelegramMessage(const userId[], const username[], const message[], const firstName[], const lastName[])
 {
-    printf("[PawnGram -> OnTelegramCommand] New message! userId -> %s", userId);
+    printf("[PawnGram -> OnTelegramMessage] New message! userId -> %s", userId);
     return 1;
 }
 ```
@@ -47,9 +52,9 @@ callback OnTelegramCommand(const userId[], const username[], const message[], co
 ## Usage Example
 
 ```pawn
-callback OnTelegramCommand(const userId[], const username[], const message[], const firstName[], const lastName[])
+callback OnTelegramMessage(const userId[], const username[], const message[], const firstName[], const lastName[])
 {
-    printf("[PawnGram -> OnTelegramCommand] New message! userId -> %s", userId);
+    printf("[PawnGram -> OnTelegramMessage] New message! userId -> %s", userId);
 
     if (!strlen(message))
         return 0;
@@ -71,6 +76,39 @@ callback OnTelegramCommand(const userId[], const username[], const message[], co
 
 		SendTelegramSticker(userId, stickers[random(sizeof stickers)]);
 	}
+
+	else if (!strcmp(message, "/custom_emoji", true)) {
+
+		new custom_emoji[][64] = {
+			"5334725814040674667", 
+			"5377385791456555103",
+			"5323520794121222108",
+			"5775870512127283512",
+			"5442678635909621223"
+		};
+
+		format(buffer, sizeof buffer, "<tg-emoji emoji-id=\"%s\">&#128525;</tg-emoji> <b>Отправка кастомного эмодзи / Send custom emoji</b>", custom_emoji[random(sizeof custom_emoji)]);
+
+		SendTelegramMessage(userId, buffer, "HTML");
+	}
+
+	else if (!strcmp(message, "/emoji", true)) {
+
+		new emoji[][64] = {
+			"&#128147;", 
+			"&#129320;",
+			"&#128512;",
+			"&#128526;",
+			"&#128545;"
+		};
+
+		format(buffer, sizeof(buffer), 
+			"%s <b>Отправка обычного эмодзи / Send default emoji!</b>", emoji[random(sizeof emoji)]
+		);
+		
+		SendTelegramMessage(userId, buffer, "HTML");
+	}
+
 	else if (!strcmp(message, "/photo", true)) {
 		SendTelegramPhoto(userId, "https://img.joomcdn.net/6ad386a00a79511072954393bd626e903ff3569e_1024_1024.jpeg", "*Photo*", "markdown");
 	}
@@ -279,7 +317,7 @@ Sends a response to inline button press (can show a notification).
 
 ## Callbacks
 
-- **OnTelegramCommand** — when receiving a new message/command.
+- **OnTelegramMessage** — when receiving a new message/command.
 - **OnTelegramResponse** — after sending a message/sticker/photo.
 - **OnTelegramUserInfo** — when getting user info.
 - **OnTelegramUpdatesJSON** — when processing new updates.
