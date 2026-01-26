@@ -24,19 +24,18 @@ main() { }
 
 callback OnTelegramMessage(const userId[], const username[], const message[], const firstName[], const lastName[])
 {
-    printf("[PawnGram -> OnTelegramCommand] New message! userId -> %s", userId);
+    printf("[PawnGram -> OnTelegramMessage] New message! userId -> %s", userId);
 
-	if (!strlen(message))
-		return 0;
+    if (!strlen(message))
+        return 0;
 
     new buffer[256];
 
     if (!strcmp(message, "/start", true))
     {
-        format(buffer, sizeof buffer, "*Привет, %s! Твой ID*: `%s`", firstName, userId);
+        format(buffer, sizeof buffer, "*Hello, %s! Your ID*: `%s`", firstName, userId);
         SendTelegramMessage(userId, buffer, "markdown");
     }
-
 	else if (!strcmp(message, "/sticker", true)) {
 
 		new stickers[][256] = {
@@ -48,8 +47,40 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
 		SendTelegramSticker(userId, stickers[random(sizeof stickers)]);
 	}
 
+	else if (!strcmp(message, "/custom_emoji", true)) {
+
+		new custom_emoji[][64] = {
+			"5334725814040674667", 
+			"5377385791456555103",
+			"5323520794121222108",
+			"5775870512127283512",
+			"5442678635909621223"
+		};
+
+		format(buffer, sizeof buffer, "<tg-emoji emoji-id=\"%s\">&#128525;</tg-emoji> <b>Отправка кастомного эмодзи / Send custom emoji</b>", custom_emoji[random(sizeof custom_emoji)]);
+
+		SendTelegramMessage(userId, buffer, "HTML");
+	}
+
+	else if (!strcmp(message, "/emoji", true)) {
+
+		new emoji[][64] = {
+			"&#128147;", 
+			"&#129320;",
+			"&#128512;",
+			"&#128526;",
+			"&#128545;"
+		};
+
+		format(buffer, sizeof(buffer), 
+			"%s <b>Отправка обычного эмодзи / Send default emoji!</b>", emoji[random(sizeof emoji)]
+		);
+		
+		SendTelegramMessage(userId, buffer, "HTML");
+	}
+
 	else if (!strcmp(message, "/photo", true)) {
-		SendTelegramPhoto(userId, "https://img.joomcdn.net/6ad386a00a79511072954393bd626e903ff3569e_1024_1024.jpeg", "*Photo* `the album` ", "markdown");
+		SendTelegramPhoto(userId, "https://img.joomcdn.net/6ad386a00a79511072954393bd626e903ff3569e_1024_1024.jpeg", "*Photo*", "markdown");
 	}
 
 	else if (!strcmp(message, "/note", true)) {
@@ -59,57 +90,51 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
 	else if (!strcmp(message, "/video", true)) {
 		SendTelegramVideo(userId, "https://static.videezy.com/system/resources/previews/000/000/892/original/zon.mp4", "*Video*", "markdown");
 	}
+    else if (!strcmp(message, "/buttons", true))
+    {
+        new utf8Message[512];
+        new buttonText1[64];
+        new buttonText2[64];
+        new buttonText3[64];
+        new buttonText4[64];
 
-	else if (!strcmp(message, "/buttons", true)) {
-		
-		new utf8Message[512];
-		new buttonText1[64];
-		new buttonText2[64];
-		new buttonText3[64];
-		new buttonText4[64];
+        ConvertWindows1251ToUTF8(firstName, utf8Message, sizeof(utf8Message));
+        ConvertWindows1251ToUTF8("Press 1", buttonText1, sizeof(buttonText1));
+        ConvertWindows1251ToUTF8("Press 2", buttonText2, sizeof(buttonText2));
+        ConvertWindows1251ToUTF8("Press 3", buttonText3, sizeof(buttonText3));
+        ConvertWindows1251ToUTF8("Press 4", buttonText4, sizeof(buttonText4));
 
-		ConvertWindows1251ToUTF8(firstName, utf8Message, sizeof(utf8Message));
+        new Node:json = JsonObject(
+            "chat_id", JsonString(userId),
+            "text", JsonString(utf8Message),
+            "reply_markup", JsonObject(
+                "inline_keyboard", JsonArray(
+                    JsonArray(
+                        JsonObject(
+                            "text", JsonString(buttonText1),
+                            "callback_data", JsonString("btn1")
+                        ),
+                        JsonObject(
+                            "text", JsonString(buttonText2),
+                            "callback_data", JsonString("btn2")
+                        )
+                    ),
+                    JsonArray(
+                        JsonObject(
+                            "text", JsonString(buttonText3),
+                            "callback_data", JsonString("btn3")
+                        ),
+                        JsonObject(
+                            "text", JsonString(buttonText4),
+                            "callback_data", JsonString("btn4")
+                        )
+                    )
+                )
+            )
+        );
 
-		ConvertWindows1251ToUTF8("Нажмите 1", buttonText1, sizeof(buttonText1));
-		ConvertWindows1251ToUTF8("Нажмите 2", buttonText2, sizeof(buttonText2));
-		ConvertWindows1251ToUTF8("Нажмите 3", buttonText3, sizeof(buttonText3));
-		ConvertWindows1251ToUTF8("Нажмите 4", buttonText4, sizeof(buttonText4));
-
-		new Node:json = JsonObject(
-			"chat_id", JsonString(userId),
-			"text", JsonString(utf8Message),
-			"reply_markup", JsonObject(
-				"inline_keyboard", JsonArray(
-					JsonArray(
-						JsonObject(
-							"text", JsonString(buttonText1),
-							"callback_data", JsonString("btn1")
-						),
-						JsonObject(
-							"text", JsonString(buttonText2),
-							"callback_data", JsonString("btn2")
-						)
-					),
-					JsonArray(
-						JsonObject(
-							"text", JsonString(buttonText3),
-							"callback_data", JsonString("btn3")
-						),
-						JsonObject(
-							"text", JsonString(buttonText4),
-							"callback_data", JsonString("btn4")
-						)
-					)
-				)
-			)
-		);
-
-		SendTelegramMessageWithButton(json);
-	}
-
-	else {
-		SendTelegramMessage(userId, message);
-	}
+        SendTelegramMessageWithButton(json);
+    }
 
     return 1;
 }

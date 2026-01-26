@@ -1,0 +1,484 @@
+// Смайлики и лица
+&#128512; // 😀 grinning face
+&#128513; // 😁 beaming face
+&#128514; // 😂 face with tears of joy
+&#128515; // 😃 grinning face with big eyes
+&#128516; // 😄 grinning face with smiling eyes
+&#128517; // 😅 grinning face with sweat
+&#128518; // 😆 grinning squinting face
+&#128519; // 😇 smiling face with halo
+&#128520; // 😈 smiling face with horns
+&#128521; // 😉 winking face
+&#128522; // 😊 smiling face with smiling eyes
+&#128523; // 😋 face savoring food
+&#128524; // 😌 relieved face
+&#128525; // 😍 smiling face with heart-eyes
+&#128526; // 😎 smiling face with sunglasses
+&#128527; // 😏 smirking face
+&#128528; // 😐 neutral face
+&#128529; // 😑 expressionless face
+&#128530; // 😒 unamused face
+&#128531; // 😓 downcast face with sweat
+&#128532; // 😔 pensive face
+&#128533; // 😕 confused face
+&#128534; // 😖 confounded face
+&#128535; // 😗 kissing face
+&#128536; // 😘 face blowing a kiss
+&#128537; // 😙 kissing face with smiling eyes
+&#128538; // 😚 kissing face with closed eyes
+&#128539; // 😛 face with tongue
+&#128540; // 😜 winking face with tongue
+&#128541; // 😝 squinting face with tongue
+&#128542; // 😞 disappointed face
+&#128543; // 😟 worried face
+&#128544; // 😠 angry face
+&#128545; // 😡 enraged face
+&#128546; // 😢 crying face
+&#128547; // 😣 persevering face
+&#128548; // 😤 face with steam from nose
+&#128549; // 😥 sad but relieved face
+&#128550; // 😦 frowning face with open mouth
+&#128551; // 😧 anguished face
+&#128552; // 😨 fearful face
+&#128553; // 😩 weary face
+&#128554; // 😪 sleepy face
+&#128555; // 😫 tired face
+&#128556; // 😬 grimacing face
+&#128557; // 😭 loudly crying face
+&#128558; // 😮 face with open mouth
+&#128559; // 😯 hushed face
+&#128560; // 😰 anxious face with sweat
+&#128561; // 😱 face screaming in fear
+&#128562; // 😲 astonished face
+&#128563; // 😳 flushed face
+&#128564; // 😴 sleeping face
+&#128565; // 😵 face with crossed-out eyes
+&#128566; // 😶 face without mouth
+&#128567; // 😷 face with medical mask
+&#129296; // 🤐 zipper-mouth face
+&#129297; // 🤑 money-mouth face
+&#129298; // 🤒 face with thermometer
+&#129299; // 🤓 nerd face
+&#129300; // 🤔 thinking face
+&#129301; // 🤕 face with head-bandage
+&#129312; // 🤠 cowboy hat face
+&#129313; // 🤡 clown face
+&#129314; // 🤢 nauseated face
+&#129315; // 🤣 rolling on the floor laughing
+&#129316; // 🤤 drooling face
+&#129317; // 🤥 lying face
+&#129319; // 🤧 sneezing face
+&#129320; // 🤨 face with raised eyebrow
+&#129321; // 🤩 star-struck
+&#129322; // 🤪 zany face
+&#129323; // 🤫 shushing face
+&#129324; // 🤬 face with symbols on mouth
+&#129325; // 🤭 face with hand over mouth
+&#129326; // 🤮 face vomiting
+&#129327; // 🤯 exploding head
+
+// Жесты и руки
+&#128070; // 👆 backhand index pointing up
+&#128071; // 👇 backhand index pointing down
+&#128072; // 👈 backhand index pointing left
+&#128073; // 👉 backhand index pointing right
+&#128074; // 👊 oncoming fist
+&#128075; // 👋 waving hand
+&#128076; // 👌 OK hand
+&#128077; // 👍 thumbs up
+&#128078; // 👎 thumbs down
+&#128079; // 👏 clapping hands
+&#128080; // 👐 open hands
+&#9995; // ✋ raised hand
+&#128400; // 🖐 hand with fingers splayed
+&#128406; // 🖖 vulcan salute
+&#129295; // 🤏 pinching hand
+&#129304; // 🤘 sign of the horns
+&#129305; // 🤙 call me hand
+&#129306; // 🤚 raised back of hand
+&#129307; // 🤛 left-facing fist
+&#129308; // 🤜 right-facing fist
+&#129309; // 🤝 handshake
+&#129310; // 🤞 crossed fingers
+&#129311; // 🤟 love-you gesture
+&#9996; // ✌ victory hand
+&#128588; // 💪 flexed biceps
+&#129330; // 🤲 palms up together
+
+// Сердца и любовь
+&#10084; // ❤ red heart
+&#128147; // 💓 beating heart
+&#128148; // 💔 broken heart
+&#128149; // 💕 two hearts
+&#128150; // 💖 sparkling heart
+&#128151; // 💗 growing heart
+&#128152; // 💘 heart with arrow
+&#128153; // 💙 blue heart
+&#128154; // 💚 green heart
+&#128155; // 💛 yellow heart
+&#128156; // 💜 purple heart
+&#128157; // 🖤 black heart
+&#128158; // 💞 revolving hearts
+&#128159; // 💟 heart decoration
+&#10083; // ❣ heart exclamation
+&#128293; // 🔥 fire
+&#128166; // 💦 sweat droplets
+&#11088; // ⭐ star
+&#127775; // 🌟 glowing star
+&#128171; // 💫 dizzy
+&#128165; // 💥 collision
+&#128168; // 💨 dashing away
+&#128175; // 💯 hundred points
+
+// Деньги и богатство
+&#128176; // 💰 money bag
+&#128177; // 💱 currency exchange
+&#128178; // 💲 heavy dollar sign
+&#128179; // 💳 credit card
+&#128180; // 💴 yen banknote
+&#128181; // 💵 dollar banknote
+&#128182; // 💶 euro banknote
+&#128183; // 💷 pound banknote
+&#128184; // 💸 money with wings
+&#128142; // 💎 gem stone
+&#129689; // 🪙 coin
+
+// Символы и знаки
+&#9989; // ✅ check mark button
+&#10060; // ❌ cross mark
+&#10004; // ✔ check mark
+&#10006; // ✖ multiplication sign
+&#10062; // ❎ cross mark button
+&#10160; // ➰ curly loop
+&#10175; // ➿ double curly loop
+&#128994; // 🔢 input numbers
+&#128996; // 🔤 input latin letters
+&#128170; // 💪 flexed biceps
+&#9888; // ⚠ warning
+&#128276; // 🔔 bell
+&#128277; // 🔕 bell with slash
+&#128161; // 💡 light bulb
+&#128295; // 🔧 wrench
+&#128296; // 🔨 hammer
+&#128297; // 🔩 nut and bolt
+&#128274; // 🔒 locked
+&#128275; // 🔓 unlocked
+&#128273; // 🔑 key
+&#128272; // 🔐 locked with key
+
+// Транспорт
+&#128643; // 🚃 railway car
+&#128644; // 🚄 high-speed train
+&#128645; // 🚅 bullet train
+&#128646; // 🚆 train
+&#128647; // 🚇 metro
+&#128648; // 🚈 light rail
+&#128649; // 🚉 station
+&#128650; // 🚊 tram
+&#128651; // 🚋 tram car
+&#128652; // 🚌 bus
+&#128653; // 🚍 oncoming bus
+&#128654; // 🚎 trolleybus
+&#128655; // 🚏 bus stop
+&#128656; // 🚐 minibus
+&#128657; // 🚑 ambulance
+&#128658; // 🚒 fire engine
+&#128659; // 🚓 police car
+&#128660; // 🚔 oncoming police car
+&#128661; // 🚕 taxi
+&#128662; // 🚖 oncoming taxi
+&#128663; // 🚗 automobile
+&#128664; // 🚘 oncoming automobile
+&#128665; // 🚙 sport utility vehicle
+&#128666; // 🚚 delivery truck
+&#128667; // 🚛 articulated lorry
+&#128668; // 🚜 tractor
+&#128669; // 🚝 monorail
+&#128670; // 🚞 mountain railway
+&#128671; // 🚟 suspension railway
+&#128672; // 🚠 mountain cableway
+&#128673; // 🚡 aerial tramway
+&#128674; // 🚢 ship
+&#9973; // ⛵ sailboat
+&#128676; // 🚤 speedboat
+&#128641; // 🚁 helicopter
+&#9992; // ✈ airplane
+&#128745; // 🛩 small airplane
+&#128640; // 🚀 rocket
+&#128752; // 🛰 satellite
+
+// Оружие и военное
+&#128299; // 🔫 pistol
+&#128163; // 💣 bomb
+&#128737; // 🛡 shield
+&#9876; // ⚔ crossed swords
+&#128170; // 💪 flexed biceps
+
+// Награды и достижения
+&#127942; // 🏆 trophy
+&#127941; // 🏅 sports medal
+&#129351; // 🥇 1st place medal
+&#129352; // 🥈 2nd place medal
+&#129353; // 🥉 3rd place medal
+&#127903; // 🎗 reminder ribbon
+
+// Природа
+&#127774; // 🌞 sun with face
+&#9728; // ☀ sun
+&#127773; // 🌝 full moon face
+&#127769; // 🌙 crescent moon
+&#11088; // ⭐ star
+&#127775; // 🌟 glowing star
+&#9729; // ☁ cloud
+&#9730; // ☂ umbrella
+&#9748; // ☔ umbrella with rain drops
+&#9731; // ☃ snowman
+&#127876; // 🎄 Christmas tree
+&#127794; // 🌲 evergreen tree
+
+// Еда и напитки
+&#127828; // 🍔 hamburger
+&#127829; // 🍕 pizza
+&#127830; // 🍖 meat on bone
+&#127831; // 🍗 poultry leg
+&#127789; // 🍝 spaghetti
+&#127790; // 🍞 bread
+&#127839; // 🍟 french fries
+&#127840; // 🍠 roasted sweet potato
+&#127859; // 🍳 cooking
+&#127858; // 🍲 pot of food
+&#127869; // 🍽 fork and knife with plate
+&#127870; // 🍾 bottle with popping cork
+&#127864; // 🍸 cocktail glass
+&#127866; // 🍺 beer mug
+&#127867; // 🍻 clinking beer mugs
+&#9749; // ☕ hot beverage
+&#127861; // 🍵 teacup without handle
+
+// Здания и места
+&#127968; // 🏠 house
+&#127969; // 🏡 house with garden
+&#127970; // 🏢 office building
+&#127971; // 🏣 Japanese post office
+&#127972; // 🏤 post office
+&#127973; // 🏥 hospital
+&#127974; // 🏦 bank
+&#127975; // 🏧 ATM sign
+&#127976; // 🏨 hotel
+&#127977; // 🏩 love hotel
+&#127978; // 🏪 convenience store
+&#127979; // 🏫 school
+&#127980; // 🏬 department store
+&#127981; // 🏭 factory
+&#127982; // 🏮 red paper lantern
+&#127983; // 🏯 Japanese castle
+&#127984; // 🏰 castle
+
+// Активности и спорт
+&#9917; // ⚽ soccer ball
+&#127936; // 🏀 basketball
+&#127944; // 🏈 american football
+&#9918; // ⚾ baseball
+&#127934; // 🎾 tennis
+&#127952; // 🏐 volleyball
+&#127953; // 🏑 field hockey
+&#127954; // 🏒 ice hockey
+&#127955; // 🏓 ping pong
+&#127957; // 🏹 bow and arrow
+&#127923; // 🎣 fishing pole
+&#129355; // 🥊 boxing glove
+&#129356; // 🥋 martial arts uniform
+
+// Время
+&#128336; // 🕐 one o'clock
+&#128337; // 🕑 two o'clock
+&#128338; // 🕒 three o'clock
+&#128339; // 🕓 four o'clock
+&#128340; // 🕔 five o'clock
+&#128341; // 🕕 six o'clock
+&#128342; // 🕖 seven o'clock
+&#128343; // 🕗 eight o'clock
+&#128344; // 🕘 nine o'clock
+&#128345; // 🕙 ten o'clock
+&#128346; // 🕚 eleven o'clock
+&#128347; // 🕛 twelve o'clock
+&#9200; // ⏰ alarm clock
+&#8986; // ⌚ watch
+&#9203; // ⏳ hourglass not done
+&#8987; // ⌛ hourglass done
+
+// Офис и работа
+&#128188; // 💼 briefcase
+&#128189; // 💽 computer disk
+&#128190; // 💾 floppy disk
+&#128191; // 💿 optical disk
+&#128192; // 📀 dvd
+&#128193; // 📁 file folder
+&#128194; // 📂 open file folder
+&#128195; // 📃 page with curl
+&#128196; // 📄 page facing up
+&#128197; // 📅 calendar
+&#128198; // 📆 tear-off calendar
+&#128199; // 📇 card index
+&#128200; // 📈 chart increasing
+&#128201; // 📉 chart decreasing
+&#128202; // 📊 bar chart
+&#128203; // 📋 clipboard
+&#128204; // 📌 pushpin
+&#128205; // 📍 round pushpin
+&#128206; // 📎 paperclip
+&#128207; // 📏 straight ruler
+&#128208; // 📐 triangular ruler
+&#9986; // ✂ scissors
+&#128221; // 📝 memo
+&#9999; // ✏ pencil
+&#128396; // 🖌 paintbrush
+&#128397; // 🖍 crayon
+&#128209; // 📑 bookmark tabs
+&#128210; // 📒 ledger
+&#128211; // 📓 notebook
+&#128212; // 📔 notebook with decorative cover
+&#128213; // 📕 closed book
+&#128214; // 📖 open book
+&#128215; // 📗 green book
+&#128216; // 📘 blue book
+&#128217; // 📙 orange book
+&#128218; // 📚 books
+&#128219; // 📛 name badge
+&#128220; // 📜 scroll
+
+// Технологии
+&#128241; // 📱 mobile phone
+&#128242; // 📲 mobile phone with arrow
+&#9742; // ☎ telephone
+&#128222; // 📞 telephone receiver
+&#128223; // 📟 pager
+&#128224; // 📠 fax machine
+&#128225; // 📡 satellite antenna
+&#128226; // 📢 loudspeaker
+&#128227; // 📣 megaphone
+&#128228; // 📤 outbox tray
+&#128229; // 📥 inbox tray
+&#128230; // 📦 package
+&#128231; // 📧 e-mail
+&#128232; // 📨 incoming envelope
+&#128233; // 📩 envelope with arrow
+&#128234; // 📪 closed mailbox with lowered flag
+&#128235; // 📫 closed mailbox with raised flag
+&#128236; // 📬 open mailbox with raised flag
+&#128237; // 📭 open mailbox with lowered flag
+&#128238; // 📮 postbox
+&#128239; // 📯 postal horn
+&#128240; // 📰 newspaper
+&#128246; // 📶 antenna bars
+&#128247; // 📷 camera
+&#128248; // 📸 camera with flash
+&#128249; // 📹 video camera
+&#128250; // 📺 television
+&#128251; // 📻 radio
+&#128252; // 📼 videocassette
+&#128253; // 📽 film projector
+&#127909; // 🎥 movie camera
+&#127902; // 🎞 film frames
+&#128381; // 🖥 desktop computer
+&#128187; // 💻 laptop
+&#9000; // ⌨ keyboard
+&#128421; // 🖱 computer mouse
+&#128424; // 🖲 trackball
+&#128433; // 🕹 joystick
+
+// Вопросы и восклицания
+&#10067; // ❓ red question mark
+&#10068; // ❔ white question mark
+&#10069; // ❕ white exclamation mark
+&#10071; // ❗ red exclamation mark
+&#8252; // ‼ double exclamation mark
+&#8265; // ⁉ exclamation question mark
+
+// Стрелки
+&#11014; // ⬆ up arrow
+&#11015; // ⬇ down arrow
+&#10145; // ➡ right arrow
+&#11013; // ⬅ left arrow
+&#8596; // ↔ left-right arrow
+&#8597; // ↕ up-down arrow
+&#8598; // ↖ up-left arrow
+&#8599; // ↗ up-right arrow
+&#8600; // ↘ down-right arrow
+&#8601; // ↙ down-left arrow
+&#10548; // ⤴ right arrow curving up
+&#10549; // ⤵ right arrow curving down
+&#128259; // 🔃 clockwise vertical arrows
+&#128260; // 🔄 counterclockwise arrows button
+
+// Музыка
+&#127925; // 🎵 musical note
+&#127926; // 🎶 musical notes
+&#127911; // 🎧 headphone
+&#127908; // 🎤 microphone
+&#127929; // 🎹 musical keyboard
+&#127930; // 🎺 trumpet
+&#127931; // 🎻 violin
+&#129345; // 🥁 drum
+&#127928; // 🎸 guitar
+
+// Флаги (примеры)
+&#127988; // 🏴 black flag
+&#127987; // 🏳 white flag
+&#127988;&#8205;&#9760; // 🏴‍☠️ pirate flag
+&#127466;&#127479; // 🇦🇫 flag: Afghanistan
+&#127482;&#127480; // 🇺🇸 flag: United States
+&#127479;&#127482; // 🇷🇺 flag: Russia
+
+// Погода
+&#9925; // ⛅ sun behind cloud
+&#9928; // ⛈ cloud with lightning and rain
+&#127780; // 🌤 sun behind small cloud
+&#127781; // 🌥 sun behind large cloud
+&#127782; // 🌦 sun behind rain cloud
+&#127783; // 🌧 cloud with rain
+&#127784; // 🌨 cloud with snow
+&#127785; // 🌩 cloud with lightning
+&#127786; // 🌪 tornado
+&#127787; // 🌫 fog
+&#127788; // 🌬 wind face
+&#127744; // 🌀 cyclone
+&#127752; // 🌈 rainbow
+&#9748; // ☔ umbrella with rain drops
+
+// Знаки зодиака
+&#9800; // ♈ Aries
+&#9801; // ♉ Taurus
+&#9802; // ♊ Gemini
+&#9803; // ♋ Cancer
+&#9804; // ♌ Leo
+&#9805; // ♍ Virgo
+&#9806; // ♎ Libra
+&#9807; // ♏ Scorpio
+&#9808; // ♐ Sagittarius
+&#9809; // ♑ Capricorn
+&#9810; // ♒ Aquarius
+&#9811; // ♓ Pisces
+
+// Дополнительные символы
+&#128169; // 💩 pile of poo
+&#128123; // 👻 ghost
+&#128125; // 👽 alien
+&#128126; // 👾 alien monster
+&#129302; // 🤖 robot
+&#127875; // 🎃 jack-o-lantern
+&#128128; // 🀀 mahjong red dragon
+&#128081; // 👑 crown
+&#128302; // 🔮 crystal ball
+&#128267; // 🔻 red triangle pointed down
+&#128268; // 🔼 up button
+&#128269; // 🔽 down button
+&#9208; // ⏸ pause button
+&#9209; // ⏹ stop button
+&#9654; // ▶ play button
+&#9664; // ◀ reverse button
+&#9194; // ⏪ fast reverse button
+&#9193; // ⏩ fast-forward button
+&#128256; // 🔀 shuffle tracks button
+&#128257; // 🔁 repeat button
+&#128258; // 🔂 repeat single button

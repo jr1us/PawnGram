@@ -5,12 +5,11 @@
     
     * Telegram bots in Pawn.
 */
-
-#include "pawn-encoding"
-
 #if !defined callback
     #define callback%0(%1) forward%0(%1);public%0(%1)
 #endif
+
+#define BOT_TOKEN "7627136521:AAELZXv6eKzsxRpyAjAW8rCo3TenIyJl2lY"
 
 #if !defined BOT_TOKEN
     #error "[PawnGram] Please create #define BOT_TOKEN "TokenBotFather" "
@@ -28,8 +27,6 @@ stock SendTelegramMessage(const userId[], const message[], const parse_mode[] = 
 {   
     if (!botInitialized)
         return print("[PawnGram] Bot not initialized yet!");
-
-    clientTelegram = RequestsClient(API_TELEGRAM_URL, RequestHeaders());
 
     if (!IsValidRequestsClient(clientTelegram)) 
         return 0;
@@ -70,8 +67,6 @@ stock SendTelegramSticker(const userId[], const stickerFileId[])
     if (!botInitialized)
         return print("[PawnGram] Bot not initialized yet!");
 
-    clientTelegram = RequestsClient(API_TELEGRAM_URL, RequestHeaders());
-
     if (!IsValidRequestsClient(clientTelegram)) 
         return 0;
 
@@ -100,7 +95,6 @@ stock SendTelegramPhoto(const userId[], const photoURL[], const caption[] = "", 
     if (!botInitialized)
         return print("[PawnGram] Bot not initialized yet!");
 
-    clientTelegram = RequestsClient(API_TELEGRAM_URL, RequestHeaders());
     if (!IsValidRequestsClient(clientTelegram))
         return 0;
 
@@ -147,7 +141,6 @@ stock SendTelegramVoice(const chatId[], const voiceURL[])
     if (!botInitialized)
         return print("[PawnGram] Bot not initialized yet!");
 
-    clientTelegram = RequestsClient(API_TELEGRAM_URL, RequestHeaders());
     if (!IsValidRequestsClient(clientTelegram)) 
         return 0;
 
@@ -171,9 +164,11 @@ stock SendTelegramVoice(const chatId[], const voiceURL[])
 
 stock SendTelegramVideo(const userId[], const videoURL[], const caption[] = "", const parse_mode[] = "")
 {
-    if (!botInitialized) return print("[PawnGram] Bot not initialized yet!");
-    clientTelegram = RequestsClient(API_TELEGRAM_URL, RequestHeaders());
-    if (!IsValidRequestsClient(clientTelegram)) return 0;
+    if (!botInitialized) 
+        return print("[PawnGram] Bot not initialized yet!");
+
+    if (!IsValidRequestsClient(clientTelegram)) 
+        return 0;
 
     new utf8URL[2096], encodedURL[2096];
     new utf8Caption[1024], encodedCaption[1024];
@@ -214,7 +209,6 @@ stock SendTelegramVideoNote(const chatId[], const videoNoteURL[])
     if (!botInitialized)
         return print("[PawnGram] Bot not initialized yet!");
 
-    clientTelegram = RequestsClient(API_TELEGRAM_URL, RequestHeaders());
     if (!IsValidRequestsClient(clientTelegram)) 
         return 0;
 
@@ -267,8 +261,8 @@ stock GetTelegramUserInfo(const userId[])
     if (!botInitialized)
         return print("[PawnGram] Bot not initialized yet!");
 
-    clientTelegram = RequestsClient(API_TELEGRAM_URL, RequestHeaders());
-    if (!IsValidRequestsClient(clientTelegram)) return 0;
+    if (!IsValidRequestsClient(clientTelegram)) 
+        return 0;
 
     new endpoint[256];
     format(endpoint, sizeof(endpoint),
@@ -279,7 +273,7 @@ stock GetTelegramUserInfo(const userId[])
 
     new Request:id = Request(clientTelegram, endpoint, HTTP_METHOD_GET, "OnTelegramUserInfo", "");
 
-    if (!IsValidRequest(clientTelegram))
+    if (!IsValidRequest(id))
         return 0;
 
     #if defined DEBUG_MODE_TELEGRAM
@@ -492,10 +486,11 @@ stock GetChatMemberStatus(const chatId[], const userId[])
     if (!botInitialized)
         return print("[PawnGram] Bot not initialized yet!");
 
-    clientTelegram = RequestsClient(API_TELEGRAM_URL, RequestHeaders());
-    if (!IsValidRequestsClient(clientTelegram)) return 0;
+    if (!IsValidRequestsClient(clientTelegram)) 
+        return 0;
 
     new endpoint[256];
+    
     format(endpoint, sizeof(endpoint),
         "/bot%s/getChatMember?chat_id=%s&user_id=%s",
         BOT_TOKEN, chatId, userId
@@ -538,8 +533,8 @@ callback OnChatMemberStatus(Request:reqId, E_HTTP_STATUS:status, const data[], d
 
 stock GetBotInfo()
 {
-    clientTelegram = RequestsClient(API_TELEGRAM_URL, RequestHeaders());
-    if (!IsValidRequestsClient(clientTelegram)) return 0;
+    if (!IsValidRequestsClient(clientTelegram)) 
+        return 0;
 
     new endpoint[256];
     format(endpoint, sizeof(endpoint), "/bot%s/getMe", BOT_TOKEN);
@@ -581,8 +576,6 @@ stock SendTelegramMessageWithButton(Node:json)
     if (!botInitialized)
         return print("[PawnGram] Bot not initialized yet!");
 
-    clientTelegram = RequestsClient(API_TELEGRAM_URL, RequestHeaders());
-
     if (!IsValidRequestsClient(clientTelegram))
         return 0;
 
@@ -599,7 +592,7 @@ stock SendTelegramMessageWithButton(Node:json)
         return 0;
 
     #if defined DEBUG_MODE_TELEGRAM
-        printf("[PawnGram] Request sent to user %s | id -> %d", userId, _:id);
+        printf("[PawnGram] Request sent id -> %d (OnPostJson)", _:id);
     #endif
 
     return _:id;
