@@ -76,6 +76,39 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
 
 		SendTelegramSticker(userId, stickers[random(sizeof stickers)]);
 	}
+
+	else if (!strcmp(message, "/custom_emoji", true)) {
+
+		new custom_emoji[][64] = {
+			"5334725814040674667", 
+			"5377385791456555103",
+			"5323520794121222108",
+			"5775870512127283512",
+			"5442678635909621223"
+		};
+
+		format(buffer, sizeof buffer, "<tg-emoji emoji-id=\"%s\">&#128525;</tg-emoji> <b>Отправка кастомного эмодзи / Send custom emoji</b>", custom_emoji[random(sizeof custom_emoji)]);
+
+		SendTelegramMessage(userId, buffer, "HTML");
+	}
+
+	else if (!strcmp(message, "/emoji", true)) {
+
+		new emoji[][64] = {
+			"&#128147;", 
+			"&#129320;",
+			"&#128512;",
+			"&#128526;",
+			"&#128545;"
+		};
+
+		format(buffer, sizeof(buffer), 
+			"%s <b>Отправка обычного эмодзи / Send default emoji!</b>", emoji[random(sizeof emoji)]
+		);
+		
+		SendTelegramMessage(userId, buffer, "HTML");
+	}
+
 	else if (!strcmp(message, "/photo", true)) {
 		SendTelegramPhoto(userId, "https://img.joomcdn.net/6ad386a00a79511072954393bd626e903ff3569e_1024_1024.jpeg", "*Photo*", "markdown");
 	}
