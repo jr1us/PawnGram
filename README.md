@@ -6,42 +6,40 @@
 |:--:|:--:|
 | <img width="350" height="400" alt="image3" src="https://github.com/user-attachments/assets/845fabbe-c360-4bbe-93f4-99c7cd80275f" /> | <img width="500" height="600" alt="image4" src="https://github.com/user-attachments/assets/a336d814-0524-4939-a1b0-5dabfb7ff27b" /> |
 
-   
-# PawnGram — Library for Telegram Bots in Pawn
 
-**PawnGram** — lightweight library for creating Telegram bots in Pawn language.
+# PawnGram — Telegram Bot Library for Pawn Language
 
-> The library is intended for simple bots: notifications, messages, IDs, quick integrations without excessive logic.
+**PawnGram** — lightweight library for creating Telegram bots using the Pawn language.
+
+> Designed for simple bots: notifications, messages, ID handling, quick integrations without excessive logic.  
 >
-> Not suitable for complex and multifunctional bots.
+> Not suitable for complex, feature-rich bots.  
 >
-> Documentation:
+> Documentation:  
 >
-> [Русский](README.ru.md)
+> [Russian](README.ru.md)
 
-
-
-**Example systems:**
+**Example systems:**  
 >
-> [Account authorization](https://youtu.be/iWmfeV_JrQw)
+> [Account authentication](https://youtu.be/iWmfeV_JrQw)
 
 ---
 
-## Installation
+## Installation 
 
-1. Copy all library files to the `pawno/include/` folder.
+1. Copy all library files into the `pawno/include/` directory.
 
 ---
 
-## Quick Start
+## Integration
 
 **Important:**  
-Add `#pragma dynamic 65536` at the beginning of your script to avoid memory errors when working with Telegram API and JSON.
+Add `#pragma dynamic 65536` at the beginning of your script to prevent memory errors when working with Telegram API and JSON.
 
 ```pawn
 #pragma dynamic 65536
 
-#define BOT_TOKEN "" // Get your token from @BotFather
+#define BOT_TOKEN "" // Get token from @BotFather
 
 #include "PawnGram"
 
@@ -52,9 +50,7 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
 }
 ```
 
----
-
-## Usage Example
+### Usage example:
 
 ```pawn
 callback OnTelegramMessage(const userId[], const username[], const message[], const firstName[], const lastName[])
@@ -71,86 +67,75 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
         format(buffer, sizeof buffer, "*Hello, %s! Your ID*: `%s`", firstName, userId);
         SendTelegramMessage(userId, buffer, "markdown");
     }
-	else if (!strcmp(message, "/sticker", true)) {
+    else if (!strcmp(message, "/sticker", true))
+    {
+        new stickers[][256] = {
+            "CAACAgIAAxkBAAETNwRo8x6fV8gso63eyvy9pI7RGhD7JQACdiAAAiFmgEvTomWJlLZrmDYE",
+            "CAACAgIAAxkBAAETNwZo8x7EbjvhDcqLic4NAciAy8KwQwACcCMAAi4PGErW6C2PO20QBzYE",
+            "CAACAgIAAxkBAAETNwho8x7Lcr5jlo7mVizwsl4b4aDsaAACjh0AAuEKiUv-S9BnpAI53TYE"
+        };
 
-		new stickers[][256] = {
-			"CAACAgIAAxkBAAETNwRo8x6fV8gso63eyvy9pI7RGhD7JQACdiAAAiFmgEvTomWJlLZrmDYE", 
-			"CAACAgIAAxkBAAETNwZo8x7EbjvhDcqLic4NAciAy8KwQwACcCMAAi4PGErW6C2PO20QBzYE",
-			"CAACAgIAAxkBAAETNwho8x7Lcr5jlo7mVizwsl4b4aDsaAACjh0AAuEKiUv-S9BnpAI53TYE"
-		};
+        SendTelegramMessage(userId, "", .stickerFileId = stickers[random(sizeof stickers)]);
+    }
+    else if (!strcmp(message, "/custom_emoji", true))
+    {
+        new custom_emoji[][64] = {
+            "5334725814040674667",
+            "5377385791456555103",
+            "5323520794121222108",
+            "5775870512127283512",
+            "5442678635909621223"
+        };
 
-		SendTelegramSticker(userId, stickers[random(sizeof stickers)]);
-	}
+        format(buffer, sizeof buffer, "<tg-emoji emoji-id=\"%s\">&#128525;</tg-emoji> <b>Sending custom emoji</b>", custom_emoji[random(sizeof custom_emoji)]);
+        SendTelegramMessage(userId, buffer, "HTML");
+    }
+    else if (!strcmp(message, "/emoji", true))
+    {
+        new emoji[][64] = {
+            "&#128147;",
+            "&#129320;",
+            "&#128512;",
+            "&#128526;",
+            "&#128545;"
+        };
 
-	else if (!strcmp(message, "/custom_emoji", true)) {
-
-		new custom_emoji[][64] = {
-			"5334725814040674667", 
-			"5377385791456555103",
-			"5323520794121222108",
-			"5775870512127283512",
-			"5442678635909621223"
-		};
-
-		format(buffer, sizeof buffer, "<tg-emoji emoji-id=\"%s\">&#128525;</tg-emoji> <b>Отправка кастомного эмодзи / Send custom emoji</b>", custom_emoji[random(sizeof custom_emoji)]);
-
-		SendTelegramMessage(userId, buffer, "HTML");
-	}
-
-	else if (!strcmp(message, "/emoji", true)) {
-
-		new emoji[][64] = {
-			"&#128147;", 
-			"&#129320;",
-			"&#128512;",
-			"&#128526;",
-			"&#128545;"
-		};
-
-		format(buffer, sizeof(buffer), 
-			"%s <b>Отправка обычного эмодзи / Send default emoji!</b>", emoji[random(sizeof emoji)]
-		);
-		
-		SendTelegramMessage(userId, buffer, "HTML");
-	}
-
-	else if (!strcmp(message, "/photo", true)) {
-		SendTelegramPhoto(userId, "https://img.joomcdn.net/6ad386a00a79511072954393bd626e903ff3569e_1024_1024.jpeg", "*Photo*", "markdown");
-	}
-
-	else if (!strcmp(message, "/note", true)) {
-		SendTelegramVideoNote(userId, "DQACAgIAAxkBAAIJ32jzD53WlozJwzyuVwRMiGfzjuMeAAL9dAACX-yYS0xYaHnq4TUBNgQ");
-	}
-
-	else if (!strcmp(message, "/video", true)) {
-		SendTelegramVideo(userId, "https://static.videezy.com/system/resources/previews/000/000/892/original/zon.mp4", "*Video*", "markdown");
-	}
+        format(buffer, sizeof(buffer), "%s <b>Sending default emoji!</b>", emoji[random(sizeof emoji)]);
+        SendTelegramMessage(userId, buffer, "HTML");
+    }
+    else if (!strcmp(message, "/photo", true))
+    {
+        SendTelegramMessage(userId, "*Photo*", "markdown", .photoUrl = "https://img.joomcdn.net/6ad386a00a79511072954393bd626e903ff3569e_1024_1024.jpeg");
+    }
+    else if (!strcmp(message, "/note", true))
+    {
+        SendTelegramMessage(userId, "", .videoNoteUrl = "DQACAgIAAxkBAAIJ32jzD53WlozJwzyuVwRMiGfzjuMeAAL9dAACX-yYS0xYaHnq4TUBNgQ");
+    }
+    else if (!strcmp(message, "/video", true))
+    {
+        SendTelegramMessage(userId, "*Video*", "markdown", .videoUrl = "https://static.videezy.com/system/resources/previews/000/000/892/original/zon.mp4");
+    }
     else if (!strcmp(message, "/buttons", true))
     {
-		new buttons[][][128] = 
-		{
-			{"button_1", "btn_1"},
-			{"button_2", "btn_2"},
-			{"button_3", "btn_3"},
-			{"4 Кнопка", "btn_4"}
-		};
+        new buttons[][][128] = {
+            {"button_1", "btn_1"},
+            {"button_2", "btn_2"},
+            {"button_3", "btn_3"},
+            {"Button 4", "btn_4"}
+        };
 
-		new keyboardJson[4096];
-
-		BuildInlineKeyboard(buttons, sizeof buttons, 3, keyboardJson); // 3 is the number of buttons per row (Grid layout:
-		  1 2 3
-			4);
-			
-		SendTelegramMessageWithButton(userId, "&#128520; Три кнопки в ряд", keyboardJson, "HTML");
+        new keyboardJson[4096];
+        BuildInlineKeyboard(buttons, sizeof buttons, 3, keyboardJson); // 3 = buttons per row (layout:
+        // 1 2 3
+        //   4);
+        SendTelegramMessage(userId, "&#128520; Three buttons in a row", "HTML", .keyboard = keyboardJson);
     }
 
     return 1;
 }
 ```
 
----
-
-## Callback Example for Inline Button Handling
+### Example callback for handling inline buttons
 
 ```pawn
 callback OnTelegramInlineKeyBoard(userId[], username[], callbackData[], firstName[], lastName[], callbackId[])
@@ -159,22 +144,18 @@ callback OnTelegramInlineKeyBoard(userId[], username[], callbackData[], firstNam
 
     if (strcmp(callbackData, "btn2", true) == 0)
     {
-        format(buffer, sizeof buffer, "Кнопка 2 нажата, %s!", firstName);
+        format(buffer, sizeof buffer, "Button 2 pressed, %s!", firstName);
         SendTelegramMessage(userId, buffer);
-
-        AnswerCallbackQuery(callbackId, "Show allert", true);
+        AnswerCallbackQuery(callbackId, "Show alert", true);
     }
-
-	else if (strcmp(callbackData, "btn4", true) == 0)
+    else if (strcmp(callbackData, "btn4", true) == 0)
     {
-        format(buffer, sizeof buffer, "Вы @%s", username);
-		
+        format(buffer, sizeof buffer, "You are @%s", username);
         SendTelegramMessage(userId, buffer);
-
         AnswerCallbackQuery(callbackId);
     }
-
-    else {
+    else
+    {
         AnswerCallbackQuery(callbackId);
     }
 
@@ -182,134 +163,50 @@ callback OnTelegramInlineKeyBoard(userId[], username[], callbackData[], firstNam
 }
 ```
 
-> To handle inline buttons, be sure to add the `OnTelegramInlineKeyBoard` callback along with `OnTelegramMessage` to your mode.
+### PawnGram Function Documentation
 
----
+### Sending messages
 
-## PawnGram Function Documentation
-
-### Sending Messages
-
-#### SendTelegramMessage
 ```pawn
-SendTelegramMessage(const userId[], const message[], const parse_mode[] = "")
+SendTelegramMessage(
+    const userId[],
+    const text[] = "",
+    const parse_mode[] = "",
+    const photoUrl[] = "",
+    const videoUrl[] = "",
+    const stickerFileId[] = "",
+    const voiceUrl[] = "",
+    const videoNoteUrl[] = "",
+    const keyboard[] = ""
+)
 ```
-Sends a text message to a user.
-- **userId** — user or chat id.
-- **message** — message text.
-- **parse_mode** — formatting mode (`markdown`, `html`). Optional.
 
-#### SendTelegramSticker
-```pawn
-SendTelegramSticker(const userId[], const stickerFileId[])
-```
-Sends a sticker to a user.
-- **userId** — user id.
-- **stickerFileId** — sticker's file_id.
+### Universal function for sending any content type.
+	userId — chat or user ID.
+	text — message text (optional).
+	parse_mode — formatting mode (markdown, html).
+	photoUrl — image URL (when sending photos).
+	videoUrl — video URL (when sending videos).
+	stickerFileId — sticker file_id.
+	voiceUrl — voice message URL.
+	videoNoteUrl — video note file_id.
+	keyboard — JSON string with inline keyboard.
 
-#### SendTelegramPhoto
-```pawn
-SendTelegramPhoto(const userId[], const photoURL[], const caption[] = "", const parse_mode[] = "")
-```
-Sends a photo by link.
-- **userId** — chat id.
-- **photoURL** — photo URL.
-- **caption** — photo caption (optional).
-- **parse_mode** — caption formatting (optional).
+### All media parameters are mutually exclusive — send only one per call.
 
-#### SendTelegramVoice
-```pawn
-SendTelegramVoice(const chatId[], const voiceURL[])
-```
-Sends a voice message.
-- **chatId** — chat id.
-- **voiceURL** — voice file URL.
+### Getting user information (asynchronous — request sent here, result handled only in callback)
 
-#### SendTelegramVideo
-```pawn
-SendTelegramVideo(const userId[], const videoURL[], const caption[] = "", const parse_mode[] = "")
-```
-Sends a video by link.
-- **userId** — chat id.
-- **videoURL** — video URL.
-- **caption** — video caption (optional).
-- **parse_mode** — caption formatting (optional).
-
-#### SendTelegramVideoNote
-```pawn
-SendTelegramVideoNote(const chatId[], const videoNoteURL[])
-```
-Sends a video note.
-- **chatId** — chat id.
-- **videoNoteURL** — video note URL.
-
-#### SendTelegramMessageWithButton
-```pawn
-SendTelegramMessageWithButton(const userId[], const text[], const inline[], const parse_mode[] = "")
-```
-Sends a message with inline keyboard (buttons).
-- **json** — JSON object for keyboard markup.
-
----
-
-### Getting Information
-
-#### GetTelegramUserInfo
 ```pawn
 GetTelegramUserInfo(const userId[])
 ```
-Gets user info (first name, last name, username).
-- **userId** — user id.
 
-#### GetTelegramUpdates
-```pawn
-GetTelegramUpdates()
-```
-Requests new Telegram updates (handled automatically).
+### Getting user status in specific chat/channel (bot must be chat/channel admin | asynchronous — request sent here, result handled only in callback)
 
-#### GetChatMemberStatus
 ```pawn
 GetChatMemberStatus(const chatId[], const userId[])
 ```
-Gets user status in a chat (admin, member).
-- **chatId** — chat id.
-- **userId** — user id.
 
-#### GetBotInfo
-```pawn
-GetBotInfo()
-```
-Gets bot info (name, username, id). Automatically called at initialization.
+Author:
+- jr1us (t.me/dcapybarov & vk.com/s.fridom)
 
----
-
-### Interactive
-
-#### AnswerCallbackQuery
-```pawn
-AnswerCallbackQuery(callbackId[], text[] = "", bool:showAlert = false)
-```
-Sends a response to inline button press (can show a notification).
-
----
-
-## Callbacks
-
-- **OnTelegramMessage** — when receiving a new message/command.
-- **OnTelegramResponse** — after sending a message/sticker/photo.
-- **OnTelegramUserInfo** — when getting user info.
-- **OnTelegramUpdatesJSON** — when processing new updates.
-- **OnChatMemberStatus** — when getting user status in chat.
-- **OnBotInfo** — when getting bot info.
-- **OnTelegramInlineKeyBoard** — when pressing an inline button.
-- **OnTelegramMessage** — when receiving a normal message.
-
----
-
-## Author
-
-Author: jr1us ([t.me/dcapybarov](https://t.me/dcapybarov) & [vk.com/s.fridom](https://vk.com/s.fridom))
-
-For any issues — contact me.
-
----
+For any issues — contact me directly.
