@@ -125,48 +125,21 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
 	}
     else if (!strcmp(message, "/buttons", true))
     {
-        new utf8Message[512];
-        new buttonText1[64];
-        new buttonText2[64];
-        new buttonText3[64];
-        new buttonText4[64];
+		new buttons[][][128] = 
+		{
+			{"button_1", "btn_1"},
+			{"button_2", "btn_2"},
+			{"button_3", "btn_3"},
+			{"4 Кнопка", "btn_4"}
+		};
 
-        ConvertWindows1251ToUTF8(firstName, utf8Message, sizeof(utf8Message));
-        ConvertWindows1251ToUTF8("Press 1", buttonText1, sizeof(buttonText1));
-        ConvertWindows1251ToUTF8("Press 2", buttonText2, sizeof(buttonText2));
-        ConvertWindows1251ToUTF8("Press 3", buttonText3, sizeof(buttonText3));
-        ConvertWindows1251ToUTF8("Press 4", buttonText4, sizeof(buttonText4));
+		new keyboardJson[4096];
+		new Node:json;
 
-        new Node:json = JsonObject(
-            "chat_id", JsonString(userId),
-            "text", JsonString(utf8Message),
-            "reply_markup", JsonObject(
-                "inline_keyboard", JsonArray(
-                    JsonArray(
-                        JsonObject(
-                            "text", JsonString(buttonText1),
-                            "callback_data", JsonString("btn1")
-                        ),
-                        JsonObject(
-                            "text", JsonString(buttonText2),
-                            "callback_data", JsonString("btn2")
-                        )
-                    ),
-                    JsonArray(
-                        JsonObject(
-                            "text", JsonString(buttonText3),
-                            "callback_data", JsonString("btn3")
-                        ),
-                        JsonObject(
-                            "text", JsonString(buttonText4),
-                            "callback_data", JsonString("btn4")
-                        )
-                    )
-                )
-            )
-        );
-
-        SendTelegramMessageWithButton(json);
+		BuildInlineKeyboard(buttons, sizeof buttons, 3, keyboardJson); // 3 это количество кнопок в ряд (Cетка будет такая:
+		1 2 3
+		  4);
+		SendTelegramMessageWithButton(userId, "&#128520; Три кнопки в ряд", keyboardJson, "HTML");
     }
 
     return 1;
@@ -270,7 +243,7 @@ SendTelegramVideoNote(const chatId[], const videoNoteURL[])
 
 #### SendTelegramMessageWithButton
 ```pawn
-SendTelegramMessageWithButton(Node:json)
+SendTelegramMessageWithButton(const userId[], const text[], const inline[], const parse_mode[] = "")
 ```
 Отправляет сообщение с инлайн-клавиатурой (кнопками).
 - **json** — JSON-объект для разметки клавиатуры.
