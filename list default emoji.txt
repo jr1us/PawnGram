@@ -76,6 +76,19 @@
 &#129325; // 🤭 face with hand over mouth
 &#129326; // 🤮 face vomiting
 &#129327; // 🤯 exploding head
+&#129488; // 🥰 smiling face with hearts
+&#129489; // 🥱 yawning face
+&#129490; // 🥲 smiling face with tear
+&#129491; // 🥳 partying face
+&#129492; // 🥴 woozy face
+&#129493; // 🥵 hot face
+&#129494; // 🥶 cold face
+&#129495; // 🥷 ninja
+&#129496; // 🥸 disguised face
+&#129497; // 🥹 face holding back tears
+&#129498; // 🥺 pleading face
+&#129499; // 🥻 sari
+&#129500; // 🥼 lab coat
 
 // Жесты и руки
 &#128070; // 👆 backhand index pointing up
@@ -104,6 +117,11 @@
 &#9996; // ✌ victory hand
 &#128588; // 💪 flexed biceps
 &#129330; // 🤲 palms up together
+&#128591; // 🙏 folded hands
+&#9757; // ☝ index pointing up
+&#128405; // 🖕 middle finger
+&#9994; // ✊ raised fist
+&#129292; // 🤌 pinched fingers
 
 // Сердца и любовь
 &#10084; // ❤ red heart
@@ -117,10 +135,19 @@
 &#128154; // 💚 green heart
 &#128155; // 💛 yellow heart
 &#128156; // 💜 purple heart
-&#128157; // 🖤 black heart
+&#129294; // 🤎 brown heart
+&#128420; // 🖤 black heart
+&#129293; // 🤍 white heart
+&#10083; // ❣ heart exclamation
 &#128158; // 💞 revolving hearts
 &#128159; // 💟 heart decoration
-&#10083; // ❣ heart exclamation
+&#128157; // 💝 heart with ribbon
+&#128159; // 💟 heart decoration
+&#10084;&#65039;&#8205;&#128293; // ❤️‍🔥 heart on fire
+&#10084;&#65039;&#8205;&#129657; // ❤️‍🩹 mending heart
+&#129505; // 🧡 orange heart
+
+// Огонь и эффекты
 &#128293; // 🔥 fire
 &#128166; // 💦 sweat droplets
 &#11088; // ⭐ star
@@ -129,6 +156,14 @@
 &#128165; // 💥 collision
 &#128168; // 💨 dashing away
 &#128175; // 💯 hundred points
+&#9889; // ⚡ high voltage
+&#10024; // ✨ sparkles
+&#127752; // 🌈 rainbow
+&#9728; // ☀ sun
+&#127774; // 🌞 sun with face
+&#127769; // 🌙 crescent moon
+&#11088; // ⭐ star
+&#127775; // 🌟 glowing star
 
 // Деньги и богатство
 &#128176; // 💰 money bag
@@ -142,6 +177,9 @@
 &#128184; // 💸 money with wings
 &#128142; // 💎 gem stone
 &#129689; // 🪙 coin
+&#129297; // 🤑 money-mouth face
+&#128200; // 📈 chart increasing
+&#128201; // 📉 chart decreasing
 
 // Символы и знаки
 &#9989; // ✅ check mark button
@@ -149,11 +187,8 @@
 &#10004; // ✔ check mark
 &#10006; // ✖ multiplication sign
 &#10062; // ❎ cross mark button
-&#10160; // ➰ curly loop
-&#10175; // ➿ double curly loop
-&#128994; // 🔢 input numbers
-&#128996; // 🔤 input latin letters
-&#128170; // 💪 flexed biceps
+&#9194; // ⏪ fast reverse button
+&#9193; // ⏩ fast-forward button
 &#9888; // ⚠ warning
 &#128276; // 🔔 bell
 &#128277; // 🔕 bell with slash
@@ -165,6 +200,11 @@
 &#128275; // 🔓 unlocked
 &#128273; // 🔑 key
 &#128272; // 🔐 locked with key
+&#9940; // ⛔ no entry
+&#128683; // 🚫 prohibited
+&#9937; // ⛑ rescue worker's helmet
+&#9763; // ☣ biohazard
+&#9762; // ☢ radioactive
 
 // Транспорт
 &#128643; // 🚃 railway car
@@ -201,18 +241,25 @@
 &#128674; // 🚢 ship
 &#9973; // ⛵ sailboat
 &#128676; // 🚤 speedboat
-&#128641; // 🚁 helicopter
 &#9992; // ✈ airplane
 &#128745; // 🛩 small airplane
+&#128747; // 🛫 airplane departure
+&#128748; // 🛬 airplane arrival
+&#128641; // 🚁 helicopter
 &#128640; // 🚀 rocket
 &#128752; // 🛰 satellite
+&#129666; // 🛸 flying saucer
+&#128186; // 💺 seat
 
 // Оружие и военное
 &#128299; // 🔫 pistol
 &#128163; // 💣 bomb
 &#128737; // 🛡 shield
 &#9876; // ⚔ crossed swords
+&#127993; // 🏹 bow and arrow
 &#128170; // 💪 flexed biceps
+&#9876; // ⚔ crossed swords
+&#128481; // 🔱 trident emblem
 
 // Награды и достижения
 &#127942; // 🏆 trophy
@@ -221,20 +268,67 @@
 &#129352; // 🥈 2nd place medal
 &#129353; // 🥉 3rd place medal
 &#127903; // 🎗 reminder ribbon
+&#127894; // 🎖 military medal
+&#11088; // ⭐ star
+&#127775; // 🌟 glowing star
+&#128081; // 👑 crown
 
-// Природа
+// Природа и погода
 &#127774; // 🌞 sun with face
 &#9728; // ☀ sun
 &#127773; // 🌝 full moon face
 &#127769; // 🌙 crescent moon
+&#127770; // 🌚 new moon face
+&#127771; // 🌛 first quarter moon face
+&#127772; // 🌜 last quarter moon face
 &#11088; // ⭐ star
 &#127775; // 🌟 glowing star
 &#9729; // ☁ cloud
 &#9730; // ☂ umbrella
 &#9748; // ☔ umbrella with rain drops
 &#9731; // ☃ snowman
-&#127876; // 🎄 Christmas tree
+&#9924; // ⛄ snowman without snow
+&#9925; // ⛅ sun behind cloud
+&#9928; // ⛈ cloud with lightning and rain
+&#127780; // 🌤 sun behind small cloud
+&#127781; // 🌥 sun behind large cloud
+&#127782; // 🌦 sun behind rain cloud
+&#127783; // 🌧 cloud with rain
+&#127784; // 🌨 cloud with snow
+&#127785; // 🌩 cloud with lightning
+&#127786; // 🌪 tornado
+&#127787; // 🌫 fog
+&#127788; // 🌬 wind face
+&#127744; // 🌀 cyclone
+&#127752; // 🌈 rainbow
+&#9928; // ⛈ cloud with lightning and rain
+&#127785; // 🌩 cloud with lightning
+&#10052; // ❄ snowflake
+&#9731; // ☃ snowman
+&#9924; // ⛄ snowman without snow
+&#9732; // ☄ comet
+
+// Растения и деревья
 &#127794; // 🌲 evergreen tree
+&#127795; // 🌳 deciduous tree
+&#127796; // 🌴 palm tree
+&#127797; // 🌵 cactus
+&#127798; // 🌶 hot pepper
+&#127799; // 🌷 tulip
+&#127800; // 🌸 cherry blossom
+&#127801; // 🌹 rose
+&#127802; // 🌺 hibiscus
+&#127803; // 🌻 sunflower
+&#127804; // 🌼 blossom
+&#127805; // 🌽 ear of corn
+&#127806; // 🌾 sheaf of rice
+&#127807; // 🌿 herb
+&#9752; // ☘ shamrock
+&#127808; // 🍀 four leaf clover
+&#127809; // 🍁 maple leaf
+&#127810; // 🍂 fallen leaf
+&#127811; // 🍃 leaf fluttering in wind
+&#127876; // 🎄 Christmas tree
 
 // Еда и напитки
 &#127828; // 🍔 hamburger
@@ -254,6 +348,141 @@
 &#127867; // 🍻 clinking beer mugs
 &#9749; // ☕ hot beverage
 &#127861; // 🍵 teacup without handle
+&#129373; // 🥝 kiwi fruit
+&#129374; // 🥞 pancakes
+&#129472; // 🧀 cheese wedge
+&#129368; // 🥨 pretzel
+&#129385; // 🥩 cut of meat
+&#129382; // 🥦 broccoli
+&#127789; // 🍝 spaghetti
+&#127838; // 🍞 bread
+&#127828; // 🍔 hamburger
+&#127839; // 🍟 french fries
+&#129472; // 🧀 cheese wedge
+&#129364; // 🥤 cup with straw
+&#129370; // 🥪 sandwich
+&#129386; // 🥚 egg
+
+// Фрукты
+&#127815; // 🍏 green apple
+&#127816; // 🍎 red apple
+&#127817; // 🍑 peach
+&#127818; // 🍒 cherries
+&#127819; // 🍓 strawberry
+&#127820; // 🍔 hamburger
+&#127821; // 🍕 pizza
+&#127822; // 🍖 meat on bone
+&#127823; // 🍗 poultry leg
+&#127824; // 🍘 rice cracker
+&#127825; // 🍙 rice ball
+&#127826; // 🍚 cooked rice
+&#127827; // 🍛 curry rice
+&#127814; // 🍞 bread
+&#129373; // 🥝 kiwi fruit
+&#129361; // 🥑 avocado
+&#129389; // 🥭 mango
+&#127821; // 🍕 pizza
+
+// Животные
+&#128054; // 🐶 dog face
+&#128021; // 🐕 dog
+&#128041; // 🐩 poodle
+&#128058; // 🐺 wolf
+&#129418; // 🦊 fox
+&#129437; // 🦝 raccoon
+&#128049; // 🐱 cat face
+&#128008; // 🐈 cat
+&#129409; // 🦁 lion
+&#128005; // 🐅 tiger
+&#128006; // 🐆 leopard
+&#128052; // 🐴 horse face
+&#128014; // 🐎 horse
+&#129412; // 🦄 unicorn
+&#129426; // 🦒 giraffe
+&#128046; // 🐮 cow face
+&#128002; // 🐂 ox
+&#128003; // 🐃 water buffalo
+&#128004; // 🐄 cow
+&#128055; // 🐷 pig face
+&#128022; // 🐖 pig
+&#128023; // 🐗 boar
+&#128061; // 🐽 pig nose
+&#128015; // 🐏 ram
+&#128017; // 🐑 ewe
+&#128016; // 🐐 goat
+&#128042; // 🐪 camel
+&#128043; // 🐫 two-hump camel
+&#129433; // 🦙 llama
+&#128024; // 🐘 elephant
+&#129423; // 🦏 rhinoceros
+&#129427; // 🦛 hippopotamus
+&#128045; // 🐭 mouse face
+&#128001; // 🐁 mouse
+&#128000; // 🐀 rat
+&#128057; // 🐹 hamster
+&#128048; // 🐰 rabbit face
+&#128007; // 🐇 rabbit
+&#128063; // 🐿 chipmunk
+&#129441; // 🦡 badger
+&#128059; // 🐻 bear
+&#128040; // 🐨 koala
+&#128060; // 🐼 panda
+&#128062; // 🐾 paw prints
+&#129415; // 🦃 turkey
+&#128020; // 🐔 chicken
+&#128019; // 🐓 rooster
+&#128035; // 🐣 hatching chick
+&#128036; // 🐤 baby chick
+&#128037; // 🐥 front-facing baby chick
+&#128038; // 🐦 bird
+&#128039; // 🐧 penguin
+&#129415; // 🦃 turkey
+&#128330; // 🕊 dove
+&#129414; // 🦅 eagle
+&#129416; // 🦆 duck
+&#129417; // 🦇 bat
+&#129428; // 🦉 owl
+&#129421; // 🦚 peacock
+&#129436; // 🦜 parrot
+&#128056; // 🐸 frog
+&#128010; // 🐊 crocodile
+&#128034; // 🐢 turtle
+&#129422; // 🦎 lizard
+&#128013; // 🐍 snake
+&#128009; // 🐉 dragon
+&#128050; // 🐲 dragon face
+&#129429; // 🦕 sauropod
+&#129430; // 🦖 T-Rex
+&#128051; // 🐳 spouting whale
+&#128011; // 🐋 whale
+&#128044; // 🐬 dolphin
+&#128031; // 🐟 fish
+&#128032; // 🐠 tropical fish
+&#128033; // 🐡 blowfish
+&#129416; // 🦈 shark
+&#128025; // 🐙 octopus
+&#128026; // 🐚 spiral shell
+&#129438; // 🦀 crab
+&#129439; // 🦞 lobster
+&#129424; // 🦐 shrimp
+&#129425; // 🦑 squid
+&#129440; // 🦪 oyster
+
+// Насекомые
+&#128012; // 🐌 snail
+&#129419; // 🦋 butterfly
+&#128027; // 🐛 bug
+&#128028; // 🐜 ant
+&#128029; // 🐝 honeybee
+&#128030; // 🐞 lady beetle
+&#129411; // 🦗 cricket
+&#128375; // 🕷 spider
+&#128376; // 🕸 spider web
+&#129434; // 🦂 scorpion
+&#129435; // 🦟 mosquito
+&#129704; // 🪰 fly
+&#129705; // 🪱 worm
+&#129446; // 🦠 microbe
 
 // Здания и места
 &#127968; // 🏠 house
@@ -273,6 +502,16 @@
 &#127982; // 🏮 red paper lantern
 &#127983; // 🏯 Japanese castle
 &#127984; // 🏰 castle
+&#128510; // 🗾 map of Japan
+&#9962; // ⛺ tent
+&#127957; // 🏕 camping
+&#127960; // 🏘 houses
+&#127961; // 🏙 cityscape
+&#127962; // 🏚 derelict house
+&#127963; // 🏛 classical building
+&#127964; // 🏜 desert
+&#127965; // 🏝 desert island
+&#127966; // 🏞 national park
 
 // Активности и спорт
 &#9917; // ⚽ soccer ball
@@ -288,6 +527,53 @@
 &#127923; // 🎣 fishing pole
 &#129355; // 🥊 boxing glove
 &#129356; // 🥋 martial arts uniform
+&#9971; // ⛳ flag in hole
+&#127948; // 🏌 person golfing
+&#9975; // ⛷ skier
+&#127938; // 🏂 snowboarder
+&#127935; // 🏋 person lifting weights
+&#129338; // 🤺 person fencing
+&#129340; // 🤼 people wrestling
+&#129342; // 🤾 person playing handball
+&#129341; // 🤽 person playing water polo
+&#127946; // 🏊 person swimming
+&#127940; // 🏄 person surfing
+&#128675; // 🚣 person rowing boat
+&#127943; // 🏇 horse racing
+&#128692; // 🚴 person biking
+&#128693; // 🚵 person mountain biking
+&#129337; // 🤹 person juggling
+
+// Игры и хобби
+&#127920; // 🎰 slot machine
+&#127922; // 🎲 game die
+&#129668; // 🃏 joker
+&#127183; // 🀄 mahjong red dragon
+&#127924; // 🎴 flower playing cards
+&#127913; // 🎩 top hat
+&#127912; // 🎨 artist palette
+&#129398; // 🧶 yarn
+&#129526; // 🧾 receipt
+&#127917; // 🎭 performing arts
+&#127918; // 🎮 video game
+&#128377; // 🕹 joystick
+&#127919; // 🎯 direct hit
+&#127923; // 🎣 fishing pole
+
+// Музыка
+&#127925; // 🎵 musical note
+&#127926; // 🎶 musical notes
+&#127911; // 🎧 headphone
+&#127908; // 🎤 microphone
+&#127929; // 🎹 musical keyboard
+&#127930; // 🎺 trumpet
+&#127931; // 🎻 violin
+&#129345; // 🥁 drum
+&#127928; // 🎸 guitar
+&#127932; // 🎼 musical score
+&#127927; // 🎷 saxophone
+&#129346; // 🥂 clinking glasses
+&#127922; // 🎲 game die
 
 // Время
 &#128336; // 🕐 one o'clock
@@ -306,6 +592,8 @@
 &#8986; // ⌚ watch
 &#9203; // ⏳ hourglass not done
 &#8987; // ⌛ hourglass done
+&#9201; // ⏱ stopwatch
+&#9202; // ⏲ timer clock
 
 // Офис и работа
 &#128188; // 💼 briefcase
@@ -346,6 +634,13 @@
 &#128218; // 📚 books
 &#128219; // 📛 name badge
 &#128220; // 📜 scroll
+&#128172; // 📬 open mailbox with raised flag
+&#128173; // 📭 open mailbox with lowered flag
+&#128174; // 📮 postbox
+&#128391; // 🖇 linked paperclips
+&#128393; // 🖉 lower left pencil
+&#128394; // 🖊 lower left ballpoint pen
+&#128395; // 🖋 lower left fountain pen
 
 // Технологии
 &#128241; // 📱 mobile phone
@@ -386,6 +681,27 @@
 &#128421; // 🖱 computer mouse
 &#128424; // 🖲 trackball
 &#128433; // 🕹 joystick
+&#128190; // 💾 floppy disk
+&#128191; // 💿 optical disk
+&#128192; // 📀 dvd
+&#129686; // 🪔 diya lamp
+&#128295; // 🔧 wrench
+&#129691; // 🪛 screwdriver
+&#128296; // 🔨 hammer
+&#9874; // ⚒ hammer and pick
+&#128736; // 🛠 hammer and wrench
+&#128298; // 🔪 kitchen knife
+&#129683; // 🪓 axe
+
+// Медицина
+&#128137; // 💉 syringe
+&#128138; // 💊 pill
+&#129657; // 🩹 adhesive bandage
+&#129658; // 🩺 stethoscope
+&#129498; // 🥺 pleading face
+&#9877; // ⚕ medical symbol
+&#127973; // 🏥 hospital
+&#129702; // 🪦 headstone
 
 // Вопросы и восклицания
 &#10067; // ❓ red question mark
@@ -394,6 +710,12 @@
 &#10071; // ❗ red exclamation mark
 &#8252; // ‼ double exclamation mark
 &#8265; // ⁉ exclamation question mark
+&#128172; // 💬 speech balloon
+&#128173; // 💭 thought balloon
+&#128490; // 🗨 left speech bubble
+&#128491; // 🗩 right anger bubble
+&#128495; // 🗯 right anger bubble
+&#128172; // 💬 speech balloon
 
 // Стрелки
 &#11014; // ⬆ up arrow
@@ -410,41 +732,46 @@
 &#10549; // ⤵ right arrow curving down
 &#128259; // 🔃 clockwise vertical arrows
 &#128260; // 🔄 counterclockwise arrows button
+&#128261; // 🔅 dim button
+&#128262; // 🔆 bright button
+&#128263; // 🔇 muted speaker
+&#128264; // 🔈 speaker low volume
+&#128265; // 🔉 speaker medium volume
+&#128266; // 🔊 speaker high volume
+&#128267; // 🔻 red triangle pointed down
+&#128268; // 🔼 up button
+&#128269; // 🔽 down button
+&#9194; // ⏪ fast reverse button
+&#9193; // ⏩ fast-forward button
+&#9198; // ⏮ last track button
+&#9197; // ⏭ next track button
+&#9208; // ⏸ pause button
+&#9209; // ⏹ stop button
+&#9654; // ▶ play button
+&#9664; // ◀ reverse button
+&#128256; // 🔀 shuffle tracks button
+&#128257; // 🔁 repeat button
+&#128258; // 🔂 repeat single button
+&#128270; // 🔎 magnifying glass tilted right
+&#128269; // 🔍 magnifying glass tilted left
 
-// Музыка
-&#127925; // 🎵 musical note
-&#127926; // 🎶 musical notes
-&#127911; // 🎧 headphone
-&#127908; // 🎤 microphone
-&#127929; // 🎹 musical keyboard
-&#127930; // 🎺 trumpet
-&#127931; // 🎻 violin
-&#129345; // 🥁 drum
-&#127928; // 🎸 guitar
-
-// Флаги (примеры)
-&#127988; // 🏴 black flag
-&#127987; // 🏳 white flag
-&#127988;&#8205;&#9760; // 🏴‍☠️ pirate flag
-&#127466;&#127479; // 🇦🇫 flag: Afghanistan
-&#127482;&#127480; // 🇺🇸 flag: United States
-&#127479;&#127482; // 🇷🇺 flag: Russia
-
-// Погода
-&#9925; // ⛅ sun behind cloud
-&#9928; // ⛈ cloud with lightning and rain
-&#127780; // 🌤 sun behind small cloud
-&#127781; // 🌥 sun behind large cloud
-&#127782; // 🌦 sun behind rain cloud
-&#127783; // 🌧 cloud with rain
-&#127784; // 🌨 cloud with snow
-&#127785; // 🌩 cloud with lightning
-&#127786; // 🌪 tornado
-&#127787; // 🌫 fog
-&#127788; // 🌬 wind face
-&#127744; // 🌀 cyclone
-&#127752; // 🌈 rainbow
-&#9748; // ☔ umbrella with rain drops
+// Религиозные символы
+&#9774; // ☮ peace symbol
+&#9775; // ☯ yin yang
+&#9784; // ✈ airplane
+&#9766; // ☦ orthodox cross
+&#9770; // ☪ star and crescent
+&#128328; // 🕈 star of David
+&#128334; // 🕎 menorah
+&#9784; // ✈ airplane
+&#9961; // ⛩ shinto shrine
+&#9962; // ⛪ church
+&#128332; // 🕌 mosque
+&#128333; // 🕍 synagogue
+&#128331; // 🕋 kaaba
+&#9961; // ⛩ shinto shrine
+&#128720; // 🛐 place of worship
+&#9801; // ♉ Taurus
 
 // Знаки зодиака
 &#9800; // ♈ Aries
@@ -459,6 +786,81 @@
 &#9809; // ♑ Capricorn
 &#9810; // ♒ Aquarius
 &#9811; // ♓ Pisces
+&#9934; // ⛎ Ophiuchus
+
+// Геометрические фигуры
+&#9632; // ▀ black square
+&#9633; // ▁ white square
+&#9634; // ▂ black square button
+&#9635; // ▃ white square button
+&#9642; // ▪ black small square
+&#9643; // ▫ white small square
+&#9644; // ▬ black medium square
+&#9645; // ▭ white medium square
+&#9646; // ▮ black medium-small square
+&#9647; // ▯ white medium-small square
+&#11035; // ⬛ black large square
+&#11036; // ⬜ white large square
+&#128312; // 🔸 small orange diamond
+&#128313; // 🔹 small blue diamond
+&#128310; // 🔶 large orange diamond
+&#128311; // 🔷 large blue diamond
+&#128998; // 🔦 flashlight
+&#128999; // 🔧 wrench
+&#9899; // ⚫ black circle
+&#9898; // ⚪ white circle
+&#128308; // 🔴 red circle
+&#128309; // 🔵 blue circle
+&#128992; // 🔠 input latin uppercase
+&#128993; // 🔡 input latin lowercase
+&#128994; // 🔢 input numbers
+&#128995; // 🔣 input symbols
+
+// Национальные флаги
+&#127462;&#127463; // 🇦🇨 flag: Ascension Island
+&#127462;&#127465; // 🇦🇪 flag: United Arab Emirates
+&#127462;&#127466; // 🇦🇫 flag: Afghanistan
+&#127462;&#127468; // 🇦🇱 flag: Albania
+&#127462;&#127474; // 🇦🇲 flag: Armenia
+&#127462;&#127479; // 🇦🇷 flag: Argentina
+&#127462;&#127481; // 🇦🇹 flag: Austria
+&#127462;&#127482; // 🇦🇺 flag: Australia
+&#127463;&#127465; // 🇧🇩 flag: Bangladesh
+&#127463;&#127466; // 🇧🇪 flag: Belgium
+&#127463;&#127468; // 🇧🇱 flag: St. Barthélemy
+&#127463;&#127479; // 🇧🇷 flag: Brazil
+&#127464;&#127462; // 🇨🇦 flag: Canada
+&#127464;&#127469; // 🇨🇭 flag: Switzerland
+&#127464;&#127473; // 🇨🇱 flag: Chile
+&#127464;&#127475; // 🇨🇳 flag: China
+&#127464;&#127476; // 🇨🇴 flag: Colombia
+&#127464;&#127482; // 🇨🇺 flag: Cuba
+&#127465;&#127466; // 🇩🇪 flag: Germany
+&#127465;&#127472; // 🇩🇰 flag: Denmark
+&#127466;&#127468; // 🇪🇨 flag: Ecuador
+&#127466;&#127474; // 🇪🇸 flag: Spain
+&#127466;&#127481; // 🇪🇹 flag: Ethiopia
+&#127467;&#127479; // 🇫🇷 flag: France
+&#127468;&#127463; // 🇬🇧 flag: United Kingdom
+&#127468;&#127479; // 🇬🇷 flag: Greece
+&#127469;&#127472; // 🇭🇰 flag: Hong Kong SAR China
+&#127470;&#127475; // 🇮🇳 flag: India
+&#127470;&#127481; // 🇮🇹 flag: Italy
+&#127471;&#127477; // 🇯🇵 flag: Japan
+&#127472;&#127479; // 🇰🇷 flag: South Korea
+&#127474;&#127485; // 🇲🇽 flag: Mexico
+&#127475;&#127473; // 🇳🇱 flag: Netherlands
+&#127475;&#127476; // 🇳🇴 flag: Norway
+&#127477;&#127473; // 🇵🇱 flag: Poland
+&#127477;&#127481; // 🇵🇹 flag: Portugal
+&#127479;&#127476; // 🇷🇴 flag: Romania
+&#127479;&#127482; // 🇷🇺 flag: Russia
+&#127480;&#127462; // 🇸🇦 flag: Saudi Arabia
+&#127480;&#127466; // 🇸🇪 flag: Sweden
+&#127481;&#127479; // 🇹🇷 flag: Turkey
+&#127482;&#127462; // 🇺🇦 flag: Ukraine
+&#127482;&#127480; // 🇺🇸 flag: United States
+&#127484;&#127462; // 🇿🇦 flag: South Africa
 
 // Дополнительные символы
 &#128169; // 💩 pile of poo
@@ -470,15 +872,302 @@
 &#128128; // 🀀 mahjong red dragon
 &#128081; // 👑 crown
 &#128302; // 🔮 crystal ball
-&#128267; // 🔻 red triangle pointed down
-&#128268; // 🔼 up button
-&#128269; // 🔽 down button
+&#129668; // 🃏 joker
+&#127183; // 🀄 mahjong red dragon
+&#128084; // 👔 necktie
+&#128085; // 👕 t-shirt
+&#128086; // 👖 jeans
+&#128087; // 👗 dress
+&#128088; // 👘 kimono
+&#128089; // 👙 bikini
+&#128090; // 👚 woman's clothes
+&#128091; // 👛 purse
+&#128092; // 👜 handbag
+&#128093; // 👝 clutch bag
+&#127890; // 🎒 backpack
+&#128094; // 👞 man's shoe
+&#128095; // 👟 running shoe
+&#128096; // 👠 high-heeled shoe
+&#128097; // 👡 woman's sandal
+&#128098; // 👢 woman's boot
+&#128099; // 👣 footprints
+&#129506; // 🧢 billed cap
+&#128082; // 👒 woman's hat
+&#127913; // 🎩 top hat
+&#127891; // 🎓 graduation cap
+&#9937; // ⛑ rescue worker's helmet
+&#128083; // 👓 glasses
+&#128374; // 🕶 sunglasses
+&#129404; // 🥽 goggles
+&#129294; // 🤿 diving mask
+&#128100; // 👤 bust in silhouette
+&#128101; // 👥 busts in silhouette
+&#128111; // 👯 people with bunny ears
+&#128112; // 👰 person with veil
+&#129328; // 🤰 pregnant woman
+&#129329; // 🤱 breast-feeding
+&#128113; // 👱 person: blond hair
+&#128114; // 👲 person with skullcap
+&#128115; // 👳 person wearing turban
+&#128116; // 👴 old man
+&#128117; // 👵 old woman
+&#128118; // 👶 baby
+&#128119; // 👷 construction worker
+&#128120; // 👸 princess
+&#129332; // 🤴 prince
+&#128372; // 🕴 person in suit levitating
+&#129333; // 🤵 person in tuxedo
+&#129335; // 🤷 person shrugging
+&#129318; // 🤦 person facepalming
+&#129481; // 🧙 mage
+&#129485; // 🧝 elf
+&#129487; // 🧟 zombie
+&#129489; // 🧡 orange heart
+&#128147; // 💓 beating heart
+&#128157; // 💝 heart with ribbon
+&#128159; // 💟 heart decoration
+&#10084; // ❤ red heart
+&#129505; // 🧡 orange heart
+&#128155; // 💛 yellow heart
+&#128154; // 💚 green heart
+&#128153; // 💙 blue heart
+&#128156; // 💜 purple heart
+&#129294; // 🤎 brown heart
+&#128420; // 🖤 black heart
+&#129293; // 🤍 white heart
+
+// Профессии
+&#128104;&#8205;&#9877; // 👨‍⚕ man health worker
+&#128105;&#8205;&#9877; // 👩‍⚕ woman health worker
+&#128104;&#8205;&#127891; // 👨‍🎓 man student
+&#128105;&#8205;&#127891; // 👩‍🎓 woman student
+&#128104;&#8205;&#127979; // 👨‍🏫 man teacher
+&#128105;&#8205;&#127979; // 👩‍🏫 woman teacher
+&#128104;&#8205;&#9878; // 👨‍⚖ man judge
+&#128105;&#8205;&#9878; // 👩‍⚖ woman judge
+&#128104;&#8205;&#127806; // 👨‍🌾 man farmer
+&#128105;&#8205;&#127806; // 👩‍🌾 woman farmer
+&#128104;&#8205;&#127859; // 👨‍🍳 man cook
+&#128105;&#8205;&#127859; // 👩‍🍳 woman cook
+&#128104;&#8205;&#128295; // 👨‍🔧 man mechanic
+&#128105;&#8205;&#128295; // 👩‍🔧 woman mechanic
+&#128104;&#8205;&#127981; // 👨‍🏭 man factory worker
+&#128105;&#8205;&#127981; // 👩‍🏭 woman factory worker
+&#128104;&#8205;&#128188; // 👨‍💼 man office worker
+&#128105;&#8205;&#128188; // 👩‍💼 woman office worker
+&#128104;&#8205;&#128300; // 👨‍🔬 man scientist
+&#128105;&#8205;&#128300; // 👩‍🔬 woman scientist
+&#128104;&#8205;&#128187; // 👨‍💻 man technologist
+&#128105;&#8205;&#128187; // 👩‍💻 woman technologist
+&#128104;&#8205;&#127908; // 👨‍🎤 man singer
+&#128105;&#8205;&#127908; // 👩‍🎤 woman singer
+&#128104;&#8205;&#127912; // 👨‍🎨 man artist
+&#128105;&#8205;&#127912; // 👩‍🎨 woman artist
+&#128104;&#8205;&#9992; // 👨‍✈ man pilot
+&#128105;&#8205;&#9992; // 👩‍✈ woman pilot
+&#128104;&#8205;&#128640; // 👨‍🚀 man astronaut
+&#128105;&#8205;&#128640; // 👩‍🚀 woman astronaut
+&#128104;&#8205;&#128658; // 👨‍🚒 man firefighter
+&#128105;&#8205;&#128658; // 👩‍🚒 woman firefighter
+&#128110; // 👮 police officer
+&#128373; // 🕵 detective
+&#128130; // 💂 guard
+&#128372; // 🕴 person in suit levitating
+
+// Семья
+&#128104;&#8205;&#128105;&#8205;&#128102; // 👨‍👩‍👦 family: man, woman, boy
+&#128104;&#8205;&#128105;&#8205;&#128103; // 👨‍👩‍👧 family: man, woman, girl
+&#128104;&#8205;&#128105;&#8205;&#128103;&#8205;&#128102; // 👨‍👩‍👧‍👦 family: man, woman, girl, boy
+&#128104;&#8205;&#128105;&#8205;&#128102;&#8205;&#128102; // 👨‍👩‍👦‍👦 family: man, woman, boy, boy
+&#128104;&#8205;&#128105;&#8205;&#128103;&#8205;&#128103; // 👨‍👩‍👧‍👧 family: man, woman, girl, girl
+&#128104;&#8205;&#128104;&#8205;&#128102; // 👨‍👨‍👦 family: man, man, boy
+&#128104;&#8205;&#128104;&#8205;&#128103; // 👨‍👨‍👧 family: man, man, girl
+&#128105;&#8205;&#128105;&#8205;&#128102; // 👩‍👩‍👦 family: woman, woman, boy
+&#128105;&#8205;&#128105;&#8205;&#128103; // 👩‍👩‍👧 family: woman, woman, girl
+
+// Цвета и символы
+&#128992; // 🔠 input latin uppercase
+&#128993; // 🔡 input latin lowercase
+&#128994; // 🔢 input numbers
+&#128995; // 🔣 input symbols
+&#128996; // 🔤 input latin letters
+&#127344; // 🅰 A button (blood type)
+&#127345; // 🅱 B button (blood type)
+&#127374; // 🅾 O button (blood type)
+&#127359; // 🆎 AB button (blood type)
+&#127379; // 🆓 FREE button
+&#8505; // ℹ information
+&#128281; // 🔹 small blue diamond
+&#128280; // 🔸 small orange diamond
+&#128310; // 🔶 large orange diamond
+&#128311; // 🔷 large blue diamond
+&#128308; // 🔴 red circle
+&#128309; // 🔵 blue circle
+&#11035; // ⬛ black large square
+&#11036; // ⬜ white large square
+&#9724; // ◼ black medium square
+&#9725; // ◻ white medium square
+&#9726; // ◾ black medium-small square
+&#9727; // ◽ white medium-small square
+&#9642; // ▪ black small square
+&#9643; // ▫ white small square
+&#128992; // 🔠 input latin uppercase
+&#128993; // 🔡 input latin lowercase
+&#128994; // 🔢 input numbers
+&#128995; // 🔣 input symbols
+&#128996; // 🔤 input latin letters
+
+// Праздничные
+&#127875; // 🎃 jack-o-lantern
+&#127876; // 🎄 Christmas tree
+&#127877; // 🎅 Santa Claus
+&#129381; // 🎆 fireworks
+&#127879; // 🎇 sparkler
+&#127880; // 🎈 balloon
+&#127881; // 🎉 party popper
+&#127882; // 🎊 confetti ball
+&#127883; // 🎋 tanabata tree
+&#127884; // 🎌 crossed flags
+&#127885; // 🎍 pine decoration
+&#127886; // 🎎 Japanese dolls
+&#127887; // 🎏 carp streamer
+&#127888; // 🎐 wind chime
+&#127889; // 🎑 moon viewing ceremony
+&#129512; // 🧨 firecracker
+&#127872; // 🎀 ribbon
+&#127873; // 🎁 wrapped gift
+&#127895; // 🎗 reminder ribbon
+&#127903; // 🎟 admission tickets
+
+// Дополнительные эмодзи
+&#128110; // 👮 police officer
+&#129489; // 🥱 yawning face
+&#129666; // 🛸 flying saucer
+&#129668; // 🃏 joker
+&#129504; // 🧠 brain
+&#129728; // 🫀 anatomical heart
+&#129729; // 🫁 lungs
+&#129730; // 🫂 people hugging
+&#129731; // 🫃 pregnant man
+&#129732; // 🫄 pregnant person
+&#129744; // 🫐 blueberries
+&#129745; // 🫑 bell pepper
+&#129746; // 🫒 olive
+&#129747; // 🫓 flatbread
+&#129748; // 🫔 tamale
+&#129749; // 🫕 fondue
+&#129750; // 🫖 teapot
+&#129751; // 🫗 pouring liquid
+&#129752; // 🫘 beans
+&#129753; // 🫙 jar
+&#129520; // 🧐 face with monocle
+&#129488; // 🥰 smiling face with hearts
+&#129760; // 🫠 melting face
+&#129761; // 🫡 saluting face
+&#129762; // 🫢 face with open eyes and hand over mouth
+&#129763; // 🫣 face with peeking eye
+&#129764; // 🫤 face with diagonal mouth
+&#129765; // 🫥 dotted line face
+&#129398; // 🧶 yarn
+&#129399; // 🧷 safety pin
+&#129509; // 🧵 thread
+&#129511; // 🧷 safety pin
+&#129648; // 🪐 ringed planet
+&#129680; // 🪠 plunger
+&#129681; // 🪡 sewing needle
+&#129682; // 🪢 knot
+&#129683; // 🪣 bucket
+&#129684; // 🪤 mouse trap
+&#129685; // 🪥 toothbrush
+&#129686; // 🪦 headstone
+&#129687; // 🪧 placard
+&#129688; // 🪨 rock
+&#129689; // 🪩 mirror ball
+&#129690; // 🪪 identification card
+&#129691; // 🪫 low battery
+&#129692; // 🪬 hamsa
+&#129693; // 🪭 folding hand fan
+&#129694; // 🪮 hair pick
+&#129695; // 🪯 khanda
+&#129696; // 🪰 fly
+&#129697; // 🪱 worm
+&#129698; // 🪲 beetle
+&#129699; // 🪳 cockroach
+&#129700; // 🪴 potted plant
+&#129701; // 🪵 wood
+&#129702; // 🪶 feather
+&#129703; // 🪷 lotus
+&#129704; // 🪸 coral
+&#129705; // 🪹 empty nest
+&#129706; // 🪺 nest with eggs
+&#129707; // 🪻 hyacinth
+&#129708; // 🪼 jellyfish
+&#129709; // 🪽 wing
+&#129710; // 🪿 goose
+
+// Дополнительные лица
+&#128127; // 👿 angry face with horns
+&#128128; // 💀 skull
+&#9760; // ☠ skull and crossbones
+&#128169; // 💩 pile of poo
+&#129313; // 🤡 clown face
+&#128121; // 👹 ogre
+&#128122; // 👺 goblin
+&#128123; // 👻 ghost
+&#128125; // 👽 alien
+&#128126; // 👾 alien monster
+&#129302; // 🤖 robot
+&#128520; // 😈 smiling face with horns
+
+// Дополнительные символы и знаки
+&#128289; // 🔡 input latin lowercase
+&#128290; // 🔢 input numbers
+&#128291; // 🔣 input symbols
+&#128292; // 🔤 input latin letters
+&#127344; // 🅰 A button (blood type)
+&#127345; // 🅱 B button (blood type)
+&#127358; // 🅾 O button (blood type)
+&#127359; // 🆎 AB button (blood type)
+&#127374; // 🆑 CL button
+&#127377; // 🆒 COOL button
+&#127378; // 🆓 FREE button
+&#8505; // ℹ information
+&#127380; // 🆔 ID button
+&#9410; // Ⓜ circled M
+&#127381; // 🆕 NEW button
+&#127382; // 🆖 NG button
+&#127358; // 🅾 O button (blood type)
+&#127383; // 🆗 OK button
+&#127384; // 🆘 SOS button
+&#127385; // 🆙 UP! button
+&#127386; // 🆚 VS button
+&#127489; // 🈁 Japanese "here" button
+&#127490; // 🈂 Japanese "service charge" button
+&#127542; // 🈶 Japanese "not free of charge" button
+&#127543; // 🈷 Japanese "monthly amount" button
+&#127544; // 🈸 Japanese "application" button
+&#127545; // 🈹 Japanese "discount" button
+&#127546; // 🈺 Japanese "open for business" button
+&#127568; // 🉐 Japanese "bargain" button
+&#127569; // 🉑 Japanese "acceptable" button
+
+// Медиа кнопки
+&#9198; // ⏮ last track button
+&#9197; // ⏭ next track button
+&#9199; // ⏯ play or pause button
 &#9208; // ⏸ pause button
 &#9209; // ⏹ stop button
-&#9654; // ▶ play button
-&#9664; // ◀ reverse button
-&#9194; // ⏪ fast reverse button
+&#9210; // ⏺ record button
+&#9166; // ⏰ alarm clock
+&#9167; // ⏱ stopwatch
 &#9193; // ⏩ fast-forward button
+&#9194; // ⏪ fast reverse button
+&#9195; // ⏫ fast up button
+&#9196; // ⏬ fast down button
 &#128256; // 🔀 shuffle tracks button
 &#128257; // 🔁 repeat button
 &#128258; // 🔂 repeat single button
+&#128259; // 🔃 clockwise vertical arrows
+&#128260; // 🔄 counterclockwise arrows button
+&#128261; // 🔅 dim button
+&#128262; // 🔆 bright button
