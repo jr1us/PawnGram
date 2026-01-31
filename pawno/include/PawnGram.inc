@@ -1,5 +1,4 @@
 /*
-
     * github.com/jr1us.com
     * (c) 2025 
     
@@ -13,17 +12,88 @@
 
 #if !defined BOT_TOKEN
     #error "[PawnGram] Please create #define BOT_TOKEN "TokenBotFather" "
-    #define BOT_TOKEN "" // Token t.me/BotFather
+    #define BOT_TOKEN ""
 #endif
 
 #define API_TELEGRAM_URL "https://api.telegram.org"
 
+#if !defined DEBUG_MODE_TELEGRAM
+    #define DEBUG_MODE_TELEGRAM 0 
+#endif
+
+#if !defined SHOW_ERROR_TELEGRAM_API
+    #define SHOW_ERROR_TELEGRAM_API 1 
+#endif
+
+#define SHOW_ERROR_LANGUAGE "EN" // RU | EN
+
+const MAX_CALLBACK_SIZE = 128;
+
 static bool:botInitialized = false;
 static RequestsClient:clientTelegram;
-
 static lastUpdateId = 0; 
 
-stock SendTelegramMessage(const userId[], const message[], const parse_mode[] = "")
+static const TelegramErrorsEN[][] = {
+    "Bad Request: chat not found",
+    "Bad Request: message is not modified",
+    "Bad Request: message text is empty",
+    "Bad Request: message to delete not found",
+    "Bad Request: message can't be deleted",
+    "Bad Request: message to edit not found",
+    "Bad Request: query is too old",
+    "Bad Request: BUTTON_URL_INVALID",
+    "Bad Request: BUTTON_DATA_INVALID",
+    "Bad Request: can't parse entities",
+    "Bad Request: wrong file identifier/HTTP URL specified",
+    "Bad Request: failed to get HTTP URL content",
+    "Bad Request: wrong type of the web page content",
+    "Bad Request: wrong file_id or the file is temporarily unavailable",
+    "Bad Request: photo should be uploaded as an InputFile",
+    "Bad Request: PEER_ID_INVALID",
+    "Forbidden: bot was blocked by the user",
+    "Forbidden: bot can't initiate conversation with a user",
+    "Forbidden: bot was kicked from the group chat",
+    "Forbidden: bot was kicked from the supergroup chat",
+    "Forbidden: bot was kicked from the channel chat",
+    "Forbidden: user is deactivated",
+    "Unauthorized: bot token is invalid",
+    "Not Found: method not found",
+    "Conflict: terminated by other getUpdates request",
+    "Too Many Requests: retry after X seconds",
+    "Bad Gateway: wrong response from the Telegram API"
+};
+
+static const TelegramErrorsRU[][] = {
+    "Чат c пользователем не найден",
+    "Сообщение не изменено",
+    "Текст сообщения пустой",
+    "Сообщение для удаления не найдено",
+    "Сообщение не может быть удалено",
+    "Сообщение для редактирования не найдено",
+    "Запрос слишком старый",
+    "Неверный URL кнопки",
+    "Неверные данные кнопки",
+    "Не удалось разобрать форматирование",
+    "Неверный идентификатор файла/HTTP URL",
+    "Не удалось получить содержимое по HTTP URL",
+    "Неверный тип содержимого веб-страницы",
+    "Неверный file_id или файл временно недоступен",
+    "Фото должно быть загружено как InputFile",
+    "Неверный идентификатор получателя",
+    "Запрещено: бот заблокирован пользователем",
+    "Запрещено: бот не может начать диалог с пользователем",
+    "Запрещено: бот исключен из группового чата",
+    "Запрещено: бот исключен из супергруппы",
+    "Запрещено: бот исключен из канала",
+    "Запрещено: пользователь деактивирован",
+    "Не авторизован: токен бота неверный",
+    "Не найдено: метод не найден",
+    "Конфликт: прерван другим запросом getUpdates",
+    "Слишком много запросов: повторите через X секунд",
+    "Ошибка шлюза: неверный ответ от API Telegram"
+};
+
+stock SendTelegramMessage(const userId[], const text[], const parse_mode[] = "", const photoUrl[] = "", const videoUrl[] = "", const stickerFileId[] = "", const voiceUrl[] = "", const videoNoteUrl[] = "", const keyboard[] = "")
 {   
     if (!botInitialized)
         return print("[PawnGram] Bot not initialized yet!");
@@ -31,201 +101,104 @@ stock SendTelegramMessage(const userId[], const message[], const parse_mode[] = 
     if (!IsValidRequestsClient(clientTelegram)) 
         return 0;
 
-    new utf8Message[2096], encoded[2096];    
-    new endpoint[4096];
-    new parseStr[32];
+    if (strlen(keyboard)) {
+        new utf8Message[4096], fullJson[8192], Node:json;
+        new method[64];
 
-    ConvertWindows1251ToUTF8(message, utf8Message, sizeof(utf8Message));
-    UrleanCodeExport(utf8Message, encoded, sizeof(encoded));
+        if (strlen(photoUrl)) {
+            method = "/sendPhoto";
+            ConvertWindows1251ToUTF8(text, utf8Message, sizeof(utf8Message));
+            
+            if (strlen(parse_mode))
+                format(fullJson, sizeof(fullJson), "{\"chat_id\":\"%s\",\"photo\":\"%s\",\"caption\":\"%s\",\"parse_mode\":\"%s\",\"reply_markup\":{\"inline_keyboard\":%s}}", userId, photoUrl, utf8Message, parse_mode, keyboard);
+            else
+                format(fullJson, sizeof(fullJson), "{\"chat_id\":\"%s\",\"photo\":\"%s\",\"caption\":\"%s\",\"reply_markup\":{\"inline_keyboard\":%s}}", userId, photoUrl, utf8Message, keyboard);
+        }
+        else if (strlen(videoUrl)) {
+            method = "/sendVideo";
+            ConvertWindows1251ToUTF8(text, utf8Message, sizeof(utf8Message));
+            
+            if (strlen(parse_mode))
+                format(fullJson, sizeof(fullJson), "{\"chat_id\":\"%s\",\"video\":\"%s\",\"caption\":\"%s\",\"parse_mode\":\"%s\",\"reply_markup\":{\"inline_keyboard\":%s}}", userId, videoUrl, utf8Message, parse_mode, keyboard);
+            else
+                format(fullJson, sizeof(fullJson), "{\"chat_id\":\"%s\",\"video\":\"%s\",\"caption\":\"%s\",\"reply_markup\":{\"inline_keyboard\":%s}}", userId, videoUrl, utf8Message, keyboard);
+        }
+        else {
+            method = "/sendMessage";
+            ConvertWindows1251ToUTF8(text, utf8Message, sizeof(utf8Message));
+
+            if (strlen(parse_mode))
+                format(fullJson, sizeof(fullJson), "{\"chat_id\":\"%s\",\"text\":\"%s\",\"parse_mode\":\"%s\",\"reply_markup\":{\"inline_keyboard\":%s}}", userId, utf8Message, parse_mode, keyboard);
+            else
+                format(fullJson, sizeof(fullJson), "{\"chat_id\":\"%s\",\"text\":\"%s\",\"reply_markup\":{\"inline_keyboard\":%s}}", userId, utf8Message, keyboard);
+        }
+
+        JsonParse(fullJson, json);
+
+        new endpoint[128];
+        format(endpoint, sizeof(endpoint), "/bot%s%s", BOT_TOKEN, method);
+
+        new Request:id = RequestJSON(clientTelegram, endpoint, HTTP_METHOD_POST, "OnPostJson", json, .headers = RequestHeaders());
+
+        if (!IsValidRequest(id))
+            return 0;
+
+        #if DEBUG_MODE_TELEGRAM
+            printf("[PawnGram] Request sent id -> %d (OnPostJson)", _:id);
+        #endif
+
+        return _:id;
+    }
+
+    new utf8Text[2096], encodedText[2096], utf8Media[2096], encodedMedia[2096];
+    new utf8Caption[1024], encodedCaption[1024], endpoint[4096];
+    
+    if (strlen(photoUrl)) {
+        ConvertWindows1251ToUTF8(photoUrl, utf8Media, sizeof(utf8Media));
+        UrleanCodeExport(utf8Media, encodedMedia, sizeof(encodedMedia));
+        format(endpoint, sizeof(endpoint), "/bot%s/sendPhoto?chat_id=%s&photo=%s", BOT_TOKEN, userId, encodedMedia);
+    }
+    else if (strlen(videoUrl)) {
+        ConvertWindows1251ToUTF8(videoUrl, utf8Media, sizeof(utf8Media));
+        UrleanCodeExport(utf8Media, encodedMedia, sizeof(encodedMedia));
+        format(endpoint, sizeof(endpoint), "/bot%s/sendVideo?chat_id=%s&video=%s", BOT_TOKEN, userId, encodedMedia);
+    }
+    else if (strlen(stickerFileId)) {
+        format(endpoint, sizeof(endpoint), "/bot%s/sendSticker?chat_id=%s&sticker=%s", BOT_TOKEN, userId, stickerFileId);
+    }
+    else if (strlen(voiceUrl)) {
+        ConvertWindows1251ToUTF8(voiceUrl, utf8Media, sizeof(utf8Media));
+        UrleanCodeExport(utf8Media, encodedMedia, sizeof(encodedMedia));
+        format(endpoint, sizeof(endpoint), "/bot%s/sendVoice?chat_id=%s&voice=%s", BOT_TOKEN, userId, encodedMedia);
+    }
+    else if (strlen(videoNoteUrl)) {
+        ConvertWindows1251ToUTF8(videoNoteUrl, utf8Media, sizeof(utf8Media));
+        UrleanCodeExport(utf8Media, encodedMedia, sizeof(encodedMedia));
+        format(endpoint, sizeof(endpoint), "/bot%s/sendVideoNote?chat_id=%s&video_note=%s", BOT_TOKEN, userId, encodedMedia);
+    }
+    else {
+        ConvertWindows1251ToUTF8(text, utf8Text, sizeof(utf8Text));
+        UrleanCodeExport(utf8Text, encodedText, sizeof(encodedText));
+        format(endpoint, sizeof(endpoint), "/bot%s/sendMessage?chat_id=%s&text=%s", BOT_TOKEN, userId, encodedText);
+    }
+
+    if ((strlen(photoUrl) || strlen(videoUrl)) && strlen(text)) {
+        ConvertWindows1251ToUTF8(text, utf8Caption, sizeof(utf8Caption));
+        UrleanCodeExport(utf8Caption, encodedCaption, sizeof(encodedCaption));
+        format(endpoint, sizeof(endpoint), "%s&caption=%s", endpoint, encodedCaption);
+    }
 
     if (strlen(parse_mode))
-        format(parseStr, sizeof(parseStr), "&parse_mode=%s", parse_mode);
-    else
-        parseStr = "";
-
-    format(endpoint, sizeof(endpoint),
-        "/bot%s/sendMessage?chat_id=%s&text=%s%s",
-        BOT_TOKEN,
-        userId,
-        encoded,
-        parseStr
-    );
+        format(endpoint, sizeof(endpoint), "%s&parse_mode=%s", endpoint, parse_mode);
 
     new Request:id = Request(clientTelegram, endpoint, HTTP_METHOD_GET, "OnTelegramResponse");
 
     if (!IsValidRequest(id))
         return 0;
 
-    #if defined DEBUG_MODE_TELEGRAM
+    #if DEBUG_MODE_TELEGRAM
         printf("[PawnGram] Request sent to user %s | id -> %d", userId, _:id);
     #endif
-    return _:id;
-}
-
-stock SendTelegramSticker(const userId[], const stickerFileId[])
-{
-    if (!botInitialized)
-        return print("[PawnGram] Bot not initialized yet!");
-
-    if (!IsValidRequestsClient(clientTelegram)) 
-        return 0;
-
-    new endpoint[4096];
-    format(endpoint, sizeof(endpoint),
-        "/bot%s/sendSticker?chat_id=%s&sticker=%s",
-        BOT_TOKEN,
-        userId,
-        stickerFileId
-    );
-
-    new Request:id = Request(clientTelegram, endpoint, HTTP_METHOD_GET, "OnTelegramResponse");
-
-    if (!IsValidRequest(id))
-        return 0;
-
-    #if defined DEBUG_MODE_TELEGRAM
-        printf("[PawnGram] Sticker sent to user %s | id -> %d", userId, _:id);
-    #endif
-
-    return _:id;
-}
-
-stock SendTelegramPhoto(const userId[], const photoURL[], const caption[] = "", const parse_mode[] = "")
-{
-    if (!botInitialized)
-        return print("[PawnGram] Bot not initialized yet!");
-
-    if (!IsValidRequestsClient(clientTelegram))
-        return 0;
-
-    new utf8URL[2096], encodedURL[2096];
-    new utf8Caption[1024], encodedCaption[1024];
-    new endpoint[4096];
-    new captionStr[2048];
-
-    ConvertWindows1251ToUTF8(photoURL, utf8URL, sizeof(utf8URL));
-    UrleanCodeExport(utf8URL, encodedURL, sizeof(encodedURL));
-
-    if (strlen(caption))
-    {
-        ConvertWindows1251ToUTF8(caption, utf8Caption, sizeof(utf8Caption));
-        UrleanCodeExport(utf8Caption, encodedCaption, sizeof(encodedCaption));
-
-        if (strlen(parse_mode))
-            format(captionStr, sizeof(captionStr), "&caption=%s&parse_mode=%s", encodedCaption, parse_mode);
-        else
-            format(captionStr, sizeof(captionStr), "&caption=%s", encodedCaption);
-    }
-    
-    format(endpoint, sizeof(endpoint),
-        "/bot%s/sendPhoto?chat_id=%s&photo=%s%s",
-        BOT_TOKEN,
-        userId,
-        encodedURL,
-        captionStr
-    );
-
-    new Request:id = Request(clientTelegram, endpoint, HTTP_METHOD_GET, "OnTelegramResponse");
-    if (!IsValidRequest(id))
-        return 0;
-
-    #if defined DEBUG_MODE_TELEGRAM
-        printf("[PawnGram] Photo sent to chat %s | id -> %d", userId, _:id);
-    #endif
-    return _:id;
-}
-
-
-stock SendTelegramVoice(const chatId[], const voiceURL[])
-{
-    if (!botInitialized)
-        return print("[PawnGram] Bot not initialized yet!");
-
-    if (!IsValidRequestsClient(clientTelegram)) 
-        return 0;
-
-    new encodedURL[1024];
-    EncodePhotoURL(voiceURL, encodedURL, sizeof(encodedURL));
-
-    new endpoint[1024];
-    format(endpoint, sizeof(endpoint),
-        "/bot%s/sendVoice?chat_id=%s&voice=%s",
-        BOT_TOKEN,
-        chatId,
-        encodedURL
-    );
-
-    new Request:id = Request(clientTelegram, endpoint, HTTP_METHOD_GET, "OnTelegramResponse");
-    if (!IsValidRequest(id))
-        return 0;
-
-    return _:id;
-}
-
-stock SendTelegramVideo(const userId[], const videoURL[], const caption[] = "", const parse_mode[] = "")
-{
-    if (!botInitialized) 
-        return print("[PawnGram] Bot not initialized yet!");
-
-    if (!IsValidRequestsClient(clientTelegram)) 
-        return 0;
-
-    new utf8URL[2096], encodedURL[2096];
-    new utf8Caption[1024], encodedCaption[1024];
-    new endpoint[4096], captionStr[2048];
-
-    ConvertWindows1251ToUTF8(videoURL, utf8URL, sizeof(utf8URL));
-    UrleanCodeExport(utf8URL, encodedURL, sizeof(encodedURL));
-
-    if (strlen(caption))
-    {
-        ConvertWindows1251ToUTF8(caption, utf8Caption, sizeof(utf8Caption));
-        UrleanCodeExport(utf8Caption, encodedCaption, sizeof(encodedCaption));
-        if (strlen(parse_mode))
-            format(captionStr, sizeof(captionStr), "&caption=%s&parse_mode=%s", encodedCaption, parse_mode);
-        else
-            format(captionStr, sizeof(captionStr), "&caption=%s", encodedCaption);
-    }
-
-    format(endpoint, sizeof(endpoint),
-        "/bot%s/sendVideo?chat_id=%s&video=%s%s",
-        BOT_TOKEN,
-        userId,
-        encodedURL,
-        captionStr
-    );
-
-    new Request:id = Request(clientTelegram, endpoint, HTTP_METHOD_GET, "OnTelegramResponse");
-    if (!IsValidRequest(id)) return 0;
-
-    #if defined DEBUG_MODE_TELEGRAM
-        printf("[PawnGram] Video sent to chat %s | id -> %d", userId, _:id);
-    #endif
-    return _:id;
-}
-
-stock SendTelegramVideoNote(const chatId[], const videoNoteURL[])
-{
-    if (!botInitialized)
-        return print("[PawnGram] Bot not initialized yet!");
-
-    if (!IsValidRequestsClient(clientTelegram)) 
-        return 0;
-
-    new encodedURL[1024];
-    EncodePhotoURL(videoNoteURL, encodedURL, sizeof(encodedURL));
-
-    new endpoint[1024];
-    format(endpoint, sizeof(endpoint),
-        "/bot%s/sendVideoNote?chat_id=%s&video_note=%s",
-        BOT_TOKEN,
-        chatId,
-        encodedURL
-    );
-
-    new Request:id = Request(clientTelegram, endpoint, HTTP_METHOD_GET, "OnTelegramResponse");
-    if (!IsValidRequest(id))
-        return 0;
 
     return _:id;
 }
@@ -238,18 +211,40 @@ callback OnTelegramResponse(Request:id, E_HTTP_STATUS:status, const data[], data
     UTF8_To_Win1251(data, convertData, sizeof convertData);
 
     if (status == HTTP_STATUS_OK)
-    {   
+    {
         new userId[32];
-
         ParseJsonInt(convertData, "chat", "id", userId);
 
-        #if defined DEBUG_MODE_TELEGRAM
+        #if DEBUG_MODE_TELEGRAM
             printf("[PawnGram] Message send to user -> %s", userId);
         #endif
     }
     else {
-        #if defined DEBUG_MODE_TELEGRAM
-            printf("[PawnGram -> OnTelegramResponse] Error %d | id: %d | Response: %s", _:status, _:id, convertData);
+        #if SHOW_ERROR_TELEGRAM_API
+        if (status != HTTP_STATUS_OK) {
+            new errorOutput[256];
+            format(errorOutput, sizeof(errorOutput), "%s", convertData);
+
+            if (!strcmp(SHOW_ERROR_LANGUAGE, "RU", true)) {
+                for(new i = 0; i < sizeof TelegramErrorsEN; i++) {
+                    if(strfind(convertData, TelegramErrorsEN[i], true) != -1) {
+                        format(errorOutput, sizeof(errorOutput), "%s", TelegramErrorsRU[i]);
+                        break;
+                    }
+                }
+            }
+            else {
+                for(new i = 0; i < sizeof TelegramErrorsEN; i++) {
+                    if(strfind(convertData, TelegramErrorsEN[i], true) != -1) {
+                        format(errorOutput, sizeof(errorOutput), "%s", TelegramErrorsEN[i]);
+                        break;
+                    }
+                }
+            }
+
+            printf("[PawnGram -> OnTelegramResponse] ErrorId: %d | Response: %s", _:id, errorOutput);
+            return 1;
+        }
         #endif
     }
 
@@ -265,18 +260,14 @@ stock GetTelegramUserInfo(const userId[])
         return 0;
 
     new endpoint[256];
-    format(endpoint, sizeof(endpoint),
-        "/bot%s/getChat?chat_id=%s",
-        BOT_TOKEN,
-        userId
-    );
+    format(endpoint, sizeof(endpoint), "/bot%s/getChat?chat_id=%s", BOT_TOKEN, userId);
 
     new Request:id = Request(clientTelegram, endpoint, HTTP_METHOD_GET, "OnTelegramUserInfo", "");
 
     if (!IsValidRequest(id))
         return 0;
 
-    #if defined DEBUG_MODE_TELEGRAM
+    #if DEBUG_MODE_TELEGRAM
         printf("[PawnGram] Requesting info for user %s | id -> %d", userId, _:id);
     #endif
     return _:id;
@@ -291,21 +282,17 @@ callback OnTelegramUserInfo(Request:id, E_HTTP_STATUS:status, const data[], data
 
     if (status == HTTP_STATUS_OK)
     {   
-        new firstName[128], lastName[128], chatId[64],
-            outputFirstName[128], outputLastName[512],
-            userName[256];
+        new firstName[128], lastName[128], chatId[64], outputFirstName[128], outputLastName[512], userName[256];
 
         ParseJsonString(converteData, "result", "first_name", firstName, sizeof(firstName));
         ParseJsonString(converteData, "result", "last_name", lastName, sizeof(lastName));
-
         ParseJsonString(converteData, "result", "username", userName, sizeof(userName));
-
         ParseJsonInt(converteData, "result", "id", chatId);
 
         DecodeUnicodeEscapes(lastName, outputLastName, sizeof(outputLastName));
         DecodeUnicodeEscapes(firstName, outputFirstName, sizeof(outputFirstName));
 
-        #if defined DEBUG_MODE_TELEGRAM
+        #if DEBUG_MODE_TELEGRAM
             printf("[PawnGram -> OnTelegramUserInfo] Info userId -> %s | first_name -> %s | last_name -> %s | @username -> %s", 
                 chatId, outputFirstName, outputLastName, userName);
         #endif
@@ -320,24 +307,13 @@ callback GetTelegramUpdates()
     new endpoint[256];
 
     if (lastUpdateId > 0)
-        format(endpoint, sizeof(endpoint),
-            "/bot%s/getUpdates?timeout=30&offset=%d",
-            BOT_TOKEN, lastUpdateId + 1
-        );
+        format(endpoint, sizeof(endpoint), "/bot%s/getUpdates?timeout=30&offset=%d", BOT_TOKEN, lastUpdateId + 1);
     else
-        format(endpoint, sizeof(endpoint),
-            "/bot%s/getUpdates?timeout=30",
-            BOT_TOKEN
-        );
+        format(endpoint, sizeof(endpoint), "/bot%s/getUpdates?timeout=30", BOT_TOKEN);
 
     if (!IsValidRequestsClient(clientTelegram)) return 0;
 
-    new Request:id = RequestJSON(
-        clientTelegram,
-        endpoint,
-        HTTP_METHOD_GET,
-        "OnTelegramUpdatesJSON"
-    );
+    new Request:id = RequestJSON(clientTelegram, endpoint, HTTP_METHOD_GET, "OnTelegramUpdatesJSON");
 
     if (!IsValidRequest(id))
         return 0;
@@ -372,7 +348,6 @@ callback OnTelegramUpdatesJSON(Request:id, E_HTTP_STATUS:status, Node:node)
     for (new i = 0; i < len; i++) 
     {        
         if (GetUpdateTypeStr(convertData) == 2) {
-
             JsonArrayObject(result, i, update); 
             JsonGetInt(update, "update_id", updateId); 
 
@@ -404,9 +379,7 @@ callback OnTelegramUpdatesJSON(Request:id, E_HTTP_STATUS:status, Node:node)
             OnTelegramInlineKeyBoard(userId, userName, callbackData, outputFirstName, outputLastName, callbackId);
         }
 
-
         if (GetUpdateTypeStr(convertData) == 1) {
-        
             JsonArrayObject(result, i, update); 
             JsonGetInt(update, "update_id", updateId); 
 
@@ -457,24 +430,15 @@ stock AnswerCallbackQuery(callbackId[], text[] = "", bool:showAlert = false)
     }
     else
     {
-        json = JsonObject(
-            "callback_query_id", JsonString(callbackId)
-        );
+        json = JsonObject("callback_query_id", JsonString(callbackId));
     }
 
-    new Request:id = RequestJSON(
-        clientTelegram,
-        "/bot"BOT_TOKEN"/answerCallbackQuery",
-        HTTP_METHOD_POST,
-        "OnPostJson",
-        json,
-        .headers = RequestHeaders()
-    );
+    new Request:id = RequestJSON(clientTelegram, "/bot"BOT_TOKEN"/answerCallbackQuery", HTTP_METHOD_POST, "OnPostJson", json, .headers = RequestHeaders());
 
     if (!IsValidRequest(id))
         return 0;
 
-    #if defined DEBUG_MODE_TELEGRAM
+    #if DEBUG_MODE_TELEGRAM
         printf("[PawnGram] AnswerCallbackQuery sent | callback_id -> %s | request_id -> %d", callbackId, _:id);
     #endif
 
@@ -490,11 +454,7 @@ stock GetChatMemberStatus(const chatId[], const userId[])
         return 0;
 
     new endpoint[256];
-    
-    format(endpoint, sizeof(endpoint),
-        "/bot%s/getChatMember?chat_id=%s&user_id=%s",
-        BOT_TOKEN, chatId, userId
-    );
+    format(endpoint, sizeof(endpoint), "/bot%s/getChatMember?chat_id=%s&user_id=%s", BOT_TOKEN, chatId, userId);
 
     new Request:reqId = Request(clientTelegram, endpoint, HTTP_METHOD_GET, "OnChatMemberStatus");
     return _:reqId;
@@ -517,13 +477,13 @@ callback OnChatMemberStatus(Request:reqId, E_HTTP_STATUS:status, const data[], d
         ParseJsonString(convertData, "result", "status", statusStr, sizeof(statusStr));
         ParseJsonInt(convertData, "user", "id", userIdOut);
 
-        #if defined DEBUG_MODE_TELEGRAM
+        #if DEBUG_MODE_TELEGRAM
             printf("[PawnGram -> OnChatMemberStatus] User %s -> status: %s", userIdOut, statusStr);
         #endif
     }
     else
     {   
-        #if defined DEBUG_MODE_TELEGRAM
+        #if SHOW_ERROR_TELEGRAM_API
             printf("[PawnGram -> OnChatMemberStatus] Error %d | id: %d | Response: %s", _:status, _:reqId, convertData);
         #endif
     }
@@ -554,7 +514,6 @@ callback OnBotInfo(Request:reqId, E_HTTP_STATUS:status, const data[], dataLen)
         new botId[64], firstName[128], userName[128];
         
         ParseJsonInt(convertData, "result", "id", botId);
-
         ParseJsonString(convertData, "result", "first_name", firstName, sizeof(firstName));
         ParseJsonString(convertData, "result", "username", userName, sizeof(userName));
 
@@ -572,31 +531,28 @@ callback OnBotInfo(Request:reqId, E_HTTP_STATUS:status, const data[], dataLen)
 }
 
 enum ButtonInfo {
-    BtnText[128],
-    BtnCallback[128]
+    BtnText[MAX_CALLBACK_SIZE],
+    BtnCallback[MAX_CALLBACK_SIZE]
 };
 
-stock BuildInlineKeyboard(const buttons[][][128], buttonCount, buttonsPerRow, output[], len = sizeof(output)) {
-    new result[4096];
-    new tmp[256];
-    result[0] = 0;
+stock BuildInlineKeyboard(const buttons[][][MAX_CALLBACK_SIZE], buttonCount, buttonsPerRow, output[], len = sizeof(output)) {
+    static result[4096], tmp[MAX_CALLBACK_SIZE * 2], utf8Text[1024];
+
+    result[0] = tmp[0] = utf8Text[0] = EOS;
 
     strcat(result, "[");
 
     for (new i = 0; i < buttonCount; i += buttonsPerRow) {
-        if (i > 0) {
+        if (i > 0)
             strcat(result, ",");
-        }
 
         strcat(result, "[");
 
         for (new j = 0; j < buttonsPerRow && (i + j) < buttonCount; j++) {
-            new utf8Text[1024];
             ConvertWindows1251ToUTF8(buttons[i + j][0], utf8Text, sizeof(utf8Text));
 
-            if (j > 0) {
+            if (j > 0) 
                 strcat(result, ",");
-            }
 
             format(tmp, sizeof(tmp), "{\"text\":\"%s\",\"callback_data\":\"%s\"}", utf8Text, buttons[i + j][1]);
             strcat(result, tmp);
@@ -610,56 +566,46 @@ stock BuildInlineKeyboard(const buttons[][][128], buttonCount, buttonsPerRow, ou
     format(output, len, "%s", result);
 }
 
-stock SendTelegramMessageWithButton(const userId[], const text[], const inline[], const parse_mode[] = "")
-{
-    if (!botInitialized)
-        return print("[PawnGram] Bot not initialized yet!");
-
-    if (!IsValidRequestsClient(clientTelegram))
-        return 0;
-
-    new utf8Message[4096];
-    new fullJson[8192];
-    new Node:json;
-
-    ConvertWindows1251ToUTF8(text, utf8Message, sizeof(utf8Message));
-
-    if (strlen(parse_mode) > 0)
-        format(fullJson, sizeof(fullJson), "{\"chat_id\":\"%s\",\"text\":\"%s\",\"parse_mode\":\"%s\",\"reply_markup\":{\"inline_keyboard\":%s}}", userId, utf8Message, parse_mode, inline);
-    else
-        format(fullJson, sizeof(fullJson), "{\"chat_id\":\"%s\",\"text\":\"%s\",\"reply_markup\":{\"inline_keyboard\":%s}}", userId, utf8Message, inline);
-
-    JsonParse(fullJson, json);
-
-    new Request:id = RequestJSON(
-        clientTelegram,
-        "/bot"BOT_TOKEN"/sendMessage",
-        HTTP_METHOD_POST,
-        "OnPostJson",
-        json,
-        .headers = RequestHeaders()
-    );
-
-    if (!IsValidRequest(id))
-        return 0;
-
-    #if defined DEBUG_MODE_TELEGRAM
-        printf("[PawnGram] Request sent id -> %d (OnPostJson)", _:id);
-    #endif
-
-    return _:id;
-}
-
-
 callback OnPostJson(Request:id, E_HTTP_STATUS:status, Node:node) {
-    #if defined DEBUG_MODE_TELEGRAM
-    new jsonInfo[2096], convertData[2096];
+    #if SHOW_ERROR_TELEGRAM_API
+        if (status != HTTP_STATUS_OK) {
+            new description[MAX_CALLBACK_SIZE * 2];
+            JsonGetString(node, "description", description);
 
-    JsonStringify(node, jsonInfo, sizeof jsonInfo);
-    UTF8_To_Win1251(jsonInfo, convertData, sizeof convertData);
+            new errorOutput[MAX_CALLBACK_SIZE * 2];
+            format(errorOutput, sizeof(errorOutput), "%s", description);
 
-    print(convertData);
+            if (!strcmp(SHOW_ERROR_LANGUAGE, "RU", true)) {
+                for(new i = 0; i < sizeof TelegramErrorsEN; i++) {
+                    if(strfind(description, TelegramErrorsEN[i], true) != -1) {
+                        format(errorOutput, sizeof(errorOutput), "%s", TelegramErrorsRU[i]);
+                        break;
+                    }
+                }
+            }
+            else {
+                for(new i = 0; i < sizeof TelegramErrorsEN; i++) {
+                    if(strfind(description, TelegramErrorsEN[i], true) != -1) {
+                        format(errorOutput, sizeof(errorOutput), "%s", TelegramErrorsEN[i]);
+                        break;
+                    }
+                }
+            }
+
+
+            printf("[PawnGram -> OnPostJson] ErrorId: %d | Response: %s", _:id, errorOutput);
+            return 1;
+        }
     #endif
+
+    #if DEBUG_MODE_TELEGRAM
+        new jsonInfoDebug[2096], convertDataDebug[2096];
+        JsonStringify(node, jsonInfoDebug, sizeof jsonInfoDebug);
+
+        UTF8_To_Win1251(jsonInfoDebug, convertDataDebug, sizeof convertDataDebug);
+        print(convertDataDebug);
+    #endif
+    return 1;
 }
 
 public OnGameModeInit()
