@@ -9,7 +9,7 @@
     #define callback%0(%1) forward%0(%1);public%0(%1)
 #endif
 
-#define BOT_TOKEN "7627136521:AAELZXv6eKzsxRpyAjAW8rCo3TenIyJl2lY"
+#define BOT_TOKEN ""
 
 #if !defined BOT_TOKEN
     #error "[PawnGram] Please create #define BOT_TOKEN "TokenBotFather" "
@@ -560,7 +560,7 @@ callback OnBotInfo(Request:reqId, E_HTTP_STATUS:status, const data[], dataLen)
 
         botInitialized = true;
 
-        SetTimer("GetTelegramUpdates", 1000, true);
+        SetTimer("GetTelegramUpdates", 500, true);
 
         printf("[PawnGram] Bot successful Initialized! t.me/%s | Name: %s", userName, firstName);
     }   
@@ -571,13 +571,65 @@ callback OnBotInfo(Request:reqId, E_HTTP_STATUS:status, const data[], dataLen)
     }
 }
 
-stock SendTelegramMessageWithButton(Node:json)
+enum ButtonInfo {
+    BtnText[128],
+    BtnCallback[128]
+};
+
+stock BuildInlineKeyboard(const buttons[][][128], buttonCount, buttonsPerRow, output[], len = sizeof(output)) {
+    new result[4096];
+    new tmp[256];
+    result[0] = 0;
+
+    strcat(result, "[");
+
+    for (new i = 0; i < buttonCount; i += buttonsPerRow) {
+        if (i > 0) {
+            strcat(result, ",");
+        }
+
+        strcat(result, "[");
+
+        for (new j = 0; j < buttonsPerRow && (i + j) < buttonCount; j++) {
+            new utf8Text[1024];
+            ConvertWindows1251ToUTF8(buttons[i + j][0], utf8Text, sizeof(utf8Text));
+
+            if (j > 0) {
+                strcat(result, ",");
+            }
+
+            format(tmp, sizeof(tmp), "{\"text\":\"%s\",\"callback_data\":\"%s\"}", utf8Text, buttons[i + j][1]);
+            strcat(result, tmp);
+        }
+
+        strcat(result, "]");
+    }
+
+    strcat(result, "]");
+
+    format(output, len, "%s", result);
+}
+
+stock SendTelegramMessageWithButton(const userId[], const text[], const inline[], const parse_mode[] = "")
 {
     if (!botInitialized)
         return print("[PawnGram] Bot not initialized yet!");
 
     if (!IsValidRequestsClient(clientTelegram))
         return 0;
+
+    new utf8Message[4096];
+    new fullJson[8192];
+    new Node:json;
+
+    ConvertWindows1251ToUTF8(text, utf8Message, sizeof(utf8Message));
+
+    if (strlen(parse_mode) > 0)
+        format(fullJson, sizeof(fullJson), "{\"chat_id\":\"%s\",\"text\":\"%s\",\"parse_mode\":\"%s\",\"reply_markup\":{\"inline_keyboard\":%s}}", userId, utf8Message, parse_mode, inline);
+    else
+        format(fullJson, sizeof(fullJson), "{\"chat_id\":\"%s\",\"text\":\"%s\",\"reply_markup\":{\"inline_keyboard\":%s}}", userId, utf8Message, inline);
+
+    JsonParse(fullJson, json);
 
     new Request:id = RequestJSON(
         clientTelegram,
@@ -597,7 +649,6 @@ stock SendTelegramMessageWithButton(Node:json)
 
     return _:id;
 }
-
 
 
 callback OnPostJson(Request:id, E_HTTP_STATUS:status, Node:node) {
