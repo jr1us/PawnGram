@@ -138,7 +138,10 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
 		new keyboardJson[4096];
 		new Node:json;
 
-		BuildInlineKeyboard(buttons, sizeof buttons, 3, keyboardJson);
+		BuildInlineKeyboard(buttons, sizeof buttons, 3, keyboardJson); // 3 is the number of buttons per row (Grid layout:
+		  1 2 3
+			4);
+			
 		SendTelegramMessageWithButton(userId, "&#128520; Три кнопки в ряд", keyboardJson, "HTML");
     }
 
