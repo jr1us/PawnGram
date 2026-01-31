@@ -134,7 +134,6 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
 		};
 
 		new keyboardJson[4096];
-		new Node:json;
 
 		BuildInlineKeyboard(buttons, sizeof buttons, 3, keyboardJson); // 3 это количество кнопок в ряд (Cетка будет такая:
 		1 2 3
