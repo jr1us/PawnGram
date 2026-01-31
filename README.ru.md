@@ -1,7 +1,11 @@
+<p align="center">
+  <img width="515" height="208" alt="image5" src="https://github.com/user-attachments/assets/bcbc5788-9770-4adb-a9b0-898a8feedaa7" />
+</p>
+
 | <img width="400" height="600" alt="image1" src="https://github.com/user-attachments/assets/4ba73f4f-1d6b-43eb-ae6e-ac68d5216ebf" /> | <img width="564" height="298" alt="image2" src="https://github.com/user-attachments/assets/bd1e4918-0ae6-475b-a1c1-961a1bf0fe2d" /> |
 |:--:|:--:|
-| <img width="350" height="400" alt="image" src="https://github.com/user-attachments/assets/845fabbe-c360-4bbe-93f4-99c7cd80275f" /> | <img width="500" height="600" alt="image" src="https://github.com/user-attachments/assets/a336d814-0524-4939-a1b0-5dabfb7ff27b" />
-   |
+| <img width="350" height="400" alt="image3" src="https://github.com/user-attachments/assets/845fabbe-c360-4bbe-93f4-99c7cd80275f" /> | <img width="500" height="600" alt="image4" src="https://github.com/user-attachments/assets/a336d814-0524-4939-a1b0-5dabfb7ff27b" /> |
+
 
 # PawnGram — Библиотека для Telegram-ботов на языке Pawn
 
@@ -121,48 +125,21 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
 	}
     else if (!strcmp(message, "/buttons", true))
     {
-        new utf8Message[512];
-        new buttonText1[64];
-        new buttonText2[64];
-        new buttonText3[64];
-        new buttonText4[64];
+		new buttons[][][128] = 
+		{
+			{"button_1", "btn_1"},
+			{"button_2", "btn_2"},
+			{"button_3", "btn_3"},
+			{"4 Кнопка", "btn_4"}
+		};
 
-        ConvertWindows1251ToUTF8(firstName, utf8Message, sizeof(utf8Message));
-        ConvertWindows1251ToUTF8("Press 1", buttonText1, sizeof(buttonText1));
-        ConvertWindows1251ToUTF8("Press 2", buttonText2, sizeof(buttonText2));
-        ConvertWindows1251ToUTF8("Press 3", buttonText3, sizeof(buttonText3));
-        ConvertWindows1251ToUTF8("Press 4", buttonText4, sizeof(buttonText4));
+		new keyboardJson[4096];
+		new Node:json;
 
-        new Node:json = JsonObject(
-            "chat_id", JsonString(userId),
-            "text", JsonString(utf8Message),
-            "reply_markup", JsonObject(
-                "inline_keyboard", JsonArray(
-                    JsonArray(
-                        JsonObject(
-                            "text", JsonString(buttonText1),
-                            "callback_data", JsonString("btn1")
-                        ),
-                        JsonObject(
-                            "text", JsonString(buttonText2),
-                            "callback_data", JsonString("btn2")
-                        )
-                    ),
-                    JsonArray(
-                        JsonObject(
-                            "text", JsonString(buttonText3),
-                            "callback_data", JsonString("btn3")
-                        ),
-                        JsonObject(
-                            "text", JsonString(buttonText4),
-                            "callback_data", JsonString("btn4")
-                        )
-                    )
-                )
-            )
-        );
-
-        SendTelegramMessageWithButton(json);
+		BuildInlineKeyboard(buttons, sizeof buttons, 3, keyboardJson); // 3 это количество кнопок в ряд (Cетка будет такая:
+		1 2 3
+		  4);
+		SendTelegramMessageWithButton(userId, "&#128520; Три кнопки в ряд", keyboardJson, "HTML");
     }
 
     return 1;
@@ -266,7 +243,7 @@ SendTelegramVideoNote(const chatId[], const videoNoteURL[])
 
 #### SendTelegramMessageWithButton
 ```pawn
-SendTelegramMessageWithButton(Node:json)
+SendTelegramMessageWithButton(const userId[], const text[], const inline[], const parse_mode[] = "")
 ```
 Отправляет сообщение с инлайн-клавиатурой (кнопками).
 - **json** — JSON-объект для разметки клавиатуры.
