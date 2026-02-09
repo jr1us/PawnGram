@@ -1,11 +1,34 @@
 <p align="center">
-  <img width="515" height="208" alt="image5" src="https://github.com/user-attachments/assets/bcbc5788-9770-4adb-a9b0-898a8feedaa7" />
+  <img width="515" height="208" alt="PawnGram Logo" src="https://github.com/user-attachments/assets/bcbc5788-9770-4adb-a9b0-898a8feedaa7" />
 </p>
 
-| <img width="400" height="600" alt="image1" src="https://github.com/user-attachments/assets/4ba73f4f-1d6b-43eb-ae6e-ac68d5216ebf" /> | <img width="564" height="298" alt="image2" src="https://github.com/user-attachments/assets/bd1e4918-0ae6-475b-a1c1-961a1bf0fe2d" /> |
-|:--:|:--:|
-| <img width="350" height="400" alt="image3" src="https://github.com/user-attachments/assets/845fabbe-c360-4bbe-93f4-99c7cd80275f" /> | <img width="500" height="600" alt="image4" src="https://github.com/user-attachments/assets/a336d814-0524-4939-a1b0-5dabfb7ff27b" /> |
-<img width="518" height="201" alt="image" src="https://github.com/user-attachments/assets/6a5a1c2f-e5e9-4fd0-a16e-214b1258fae6"/> | <img width="514" height="346" alt="image" src="https://github.com/user-attachments/assets/d412b91f-8737-453b-b2d7-033a3a2746e8" />
+---
+
+<table>
+  <tr>
+    <td valign="top"><img width="528" height="164" alt="Feature 1" src="https://github.com/user-attachments/assets/ab291efe-46ec-4b46-bd03-eb49f7b0b0cb" /></td>
+    <td valign="top"><img width="518" height="201" alt="Feature 2" src="https://github.com/user-attachments/assets/6a5a1c2f-e5e9-4fd0-a16e-214b1258fae6" /></td>
+    <td valign="top"><img width="514" height="346" alt="Feature 3" src="https://github.com/user-attachments/assets/d412b91f-8737-453b-b2d7-033a3a2746e8" /></td>
+  </tr>
+</table>
+
+---
+
+<table>
+  <tr>
+    <td align="center"><img width="400" height="600" alt="Example 1" src="https://github.com/user-attachments/assets/4ba73f4f-1d6b-43eb-ae6e-ac68d5216ebf" /></td>
+    <td align="center"><img width="564" height="298" alt="Example 2" src="https://github.com/user-attachments/assets/bd1e4918-0ae6-475b-a1c1-961a1bf0fe2d" /></td>
+  </tr>
+</table>
+
+---
+
+<table>
+  <tr>
+    <td align="center"><img width="350" height="400" alt="Example 3" src="https://github.com/user-attachments/assets/845fabbe-c360-4bbe-93f4-99c7cd80275f" /></td>
+    <td align="center"><img width="500" height="600" alt="Example 4" src="https://github.com/user-attachments/assets/a336d814-0524-4939-a1b0-5dabfb7ff27b" /></td>
+  </tr>
+</table>
 
 
 
