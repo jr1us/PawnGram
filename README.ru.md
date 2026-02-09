@@ -168,7 +168,7 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
 }
 ```
 
-##Пример каллбэка для обработки платежей
+## Пример каллбэка для обработки платежей
 
 ```pawn
 callback OnTelegramSuccessfulPayment(const userId[], const payload[], const currency[], const amount[])
@@ -182,7 +182,7 @@ callback OnTelegramSuccessfulPayment(const userId[], const payload[], const curr
 }
 ```
 
-##Пример каллбэка для обработки inline-кнопок
+## Пример каллбэка для обработки inline-кнопок
 
 ```pawn
 callback OnTelegramInlineKeyBoard(userId[], username[], callbackData[], firstName[], lastName[], callbackId[])
@@ -224,7 +224,8 @@ SendTelegramMessage(
     const stickerFileId[] = "",
     const voiceUrl[] = "",
     const videoNoteUrl[] = "",
-    const keyboard[] = ""
+    const keyboard[] = "",
+	const message_effect_id[] = ""
 )
 ```
 
@@ -238,6 +239,7 @@ SendTelegramMessage(
 	voiceUrl — URL голосового сообщения.
 	videoNoteUrl — file_id видеозаметки.
 	keyboard — JSON-строка с inline-клавиатурой.
+	message_effect_id — Эффект при отправке сообщения ( рядом с времен эмодзи, посмотреть все эмодзи можно в PawnGram.Utils.inc )
 	
 ### Все медиа-параметры взаимоисключающие — передавайте только один за раз.
 
