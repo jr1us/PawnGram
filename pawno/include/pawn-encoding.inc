@@ -1,6 +1,6 @@
 /*
     * github.com/jr1us.com
-    * (c) 2025 
+    * (c) 2026
 
     Converts Windows-1251 encoded strings to UTF-8 and vice versa.
     Also includes URL encoding/decoding and JSON parsing functions.
@@ -133,13 +133,14 @@ stock ConvertWindows1251ToUTF8(const input[], output[], maxlen)
     {
         utf_len = ConvertCharToUTF8(input[i], buf);
 
-        if (outpos + utf_len >= maxlen)
+        if (outpos + utf_len >= maxlen - 1)
             break;
 
         for (new j = 0; j < utf_len; j++)
             output[outpos++] = buf[j];
     }
 
+    output[outpos] = EOS;
     return outpos;
 }
 
@@ -387,14 +388,41 @@ stock EncodePhotoURL(const url[], encoded[], size = sizeof(encoded))
 }
 
 stock GetUpdateTypeStr(const jsonStr[])
-{
-    if (strfind(jsonStr, "\"callback_query\"") != -1) {
-        return 2; 
-    }
+{   
+    if (strfind(jsonStr, "\"pre_checkout_query\"", false) != -1)
+        return 4;
 
-    if (strfind(jsonStr, "\"message\"") != -1) {
+    if (strfind(jsonStr, "\"successful_payment\"", false) != -1)
+        return 3;
+
+    if (strfind(jsonStr, "\"callback_query\"") != -1) 
+        return 2; 
+
+    if (strfind(jsonStr, "\"message\"") != -1) 
         return 1; 
-    }
 
     return 0; 
+}
+stock SplitString(const input[], delimiter, output[][], size)
+{
+    new len = strlen(input);
+    new part = 0, idx = 0;
+
+    for (new i = 0; i <= len; i++)
+    {
+        if (input[i] == delimiter || input[i] == '\0')
+        {
+            output[part][idx] = '\0'; 
+            part++;
+            idx = 0;
+
+            if (part >= size)
+                break;
+        }
+        else
+        {
+            output[part][idx++] = input[i];
+        }
+    }
+    return part; 
 }
