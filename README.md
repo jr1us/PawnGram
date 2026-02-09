@@ -1,11 +1,34 @@
 <p align="center">
-  <img width="515" height="208" alt="image5" src="https://github.com/user-attachments/assets/bcbc5788-9770-4adb-a9b0-898a8feedaa7" />
+  <img width="515" height="208" alt="PawnGram Logo" src="https://github.com/user-attachments/assets/bcbc5788-9770-4adb-a9b0-898a8feedaa7" />
 </p>
 
-| <img width="400" height="600" alt="image1" src="https://github.com/user-attachments/assets/4ba73f4f-1d6b-43eb-ae6e-ac68d5216ebf" /> | <img width="564" height="298" alt="image2" src="https://github.com/user-attachments/assets/bd1e4918-0ae6-475b-a1c1-961a1bf0fe2d" /> |
-|:--:|:--:|
-| <img width="350" height="400" alt="image3" src="https://github.com/user-attachments/assets/845fabbe-c360-4bbe-93f4-99c7cd80275f" /> | <img width="500" height="600" alt="image4" src="https://github.com/user-attachments/assets/a336d814-0524-4939-a1b0-5dabfb7ff27b" /> |
+---
 
+<table>
+  <tr>
+    <td valign="top"><img width="528" height="164" alt="Feature 1" src="https://github.com/user-attachments/assets/ab291efe-46ec-4b46-bd03-eb49f7b0b0cb" /></td>
+    <td valign="top"><img width="518" height="201" alt="Feature 2" src="https://github.com/user-attachments/assets/6a5a1c2f-e5e9-4fd0-a16e-214b1258fae6" /></td>
+    <td valign="top"><img width="514" height="346" alt="Feature 3" src="https://github.com/user-attachments/assets/d412b91f-8737-453b-b2d7-033a3a2746e8" /></td>
+  </tr>
+</table>
+
+---
+
+<table>
+  <tr>
+    <td align="center"><img width="400" height="600" alt="Example 1" src="https://github.com/user-attachments/assets/4ba73f4f-1d6b-43eb-ae6e-ac68d5216ebf" /></td>
+    <td align="center"><img width="564" height="298" alt="Example 2" src="https://github.com/user-attachments/assets/bd1e4918-0ae6-475b-a1c1-961a1bf0fe2d" /></td>
+  </tr>
+</table>
+
+---
+
+<table>
+  <tr>
+    <td align="center"><img width="350" height="400" alt="Example 3" src="https://github.com/user-attachments/assets/845fabbe-c360-4bbe-93f4-99c7cd80275f" /></td>
+    <td align="center"><img width="500" height="600" alt="Example 4" src="https://github.com/user-attachments/assets/a336d814-0524-4939-a1b0-5dabfb7ff27b" /></td>
+  </tr>
+</table>
 
 # PawnGram — Telegram Bot Library for Pawn Language
 
@@ -77,6 +100,14 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
 
         SendTelegramMessage(userId, "", .stickerFileId = stickers[random(sizeof stickers)]);
     }
+
+	else if (!strcmp(message, "/invoice", true))
+    {
+		new payload[32] = "testInvoice", currency[16] = "XTR", Float:price = 15;
+
+        SendTelegramInvoice(userId, "Test Invoice", "MoneyBack function - RefundStarPayment", payload, .currency = currency, .price = price);
+    }
+
     else if (!strcmp(message, "/custom_emoji", true))
     {
         new custom_emoji[][64] = {
@@ -135,6 +166,20 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
 }
 ```
 
+## Payment Callback Example
+
+```pawn
+callback OnTelegramSuccessfulPayment(const userId[], const payload[], const currency[], const amount[])
+{
+    if (!strcmp(payload, "testInvoice")) {
+		new buffer[32];
+
+		format(buffer, sizeof buffer, "<b>You paid the bill for</b> <code>%s stars</code>", amount);
+		SendTelegramMessage(userId, buffer, "HTML", .message_effect_id = MESSAGE_EFFECT_HEART);
+	}
+}
+```
+
 ### Example callback for handling inline buttons
 
 ```pawn
@@ -177,7 +222,8 @@ SendTelegramMessage(
     const stickerFileId[] = "",
     const voiceUrl[] = "",
     const videoNoteUrl[] = "",
-    const keyboard[] = ""
+    const keyboard[] = "",
+	const message_effect_id[] = ""
 )
 ```
 
@@ -191,8 +237,70 @@ SendTelegramMessage(
 	voiceUrl — voice message URL.
 	videoNoteUrl — video note file_id.
 	keyboard — JSON string with inline keyboard.
+	Message effect (animated visual effect that plays when the message is received; all available effect IDs are listed in PawnGram.Utils.inc)
 
 ### All media parameters are mutually exclusive — send only one per call.
+
+### Sending Payments via Telegram Stars / Other Currencies
+
+```pawn
+// For Telegram Stars
+
+new payload[32] = "testInvoice", 
+    currency[16] = "XTR", 
+    Float:price = 15; // If fractional part >= 0.5, amount rounds up (+1 to integer part), otherwise remains unchanged
+
+SendTelegramInvoice(userId, "Test Invoice", "MoneyBack function - RefundStarPayment", payload, .currency = currency, .price = price);
+
+// For rubles | dollars
+
+new payload[32] = "testInvoice",
+    provider_token[64] = "token", // Obtain from payment provider in Telegram (check via @BotFather)
+    currency[16] = "RUB", // Or USD
+    Float:price = 15.05; // Cost: 1 = 1 ruble | 1 = 1 dollar, fractional values allowed
+
+SendTelegramInvoice(userId, "Test Invoice", "MoneyBack function - RefundStarPayment", payload, .currency = currency, .price = price);
+
+```
+
+### Refunding Telegram Stars (chargeId is the Transaction ID)
+
+```pawn
+RefundStarPayment(const userId[], const chargeId[])
+```
+
+### Editing Messages
+
+```pawn
+EditTelegramMessage(const userId[], messageId, const text[] = "", const parse_mode[] = "" const keyboard[] = "", const photoUrl[] = "")
+```
+
+### Deleting Messages
+
+```pawn
+DeleteTelegramMessage(const userId[], messageId[])
+```
+
+### Convenient Inline Keyboard Builder
+
+```pawn
+new button[][][MAX_CALLBACK_SIZE] =
+{
+    {"Button1", "button_1"},
+    {"This is button2", "button_2"}
+};
+
+new keyBoardJson[1024];
+
+BuildInlineKeyboard(button, sizeof button, 2, keyBoardJson);
+SendTelegramMessage(userId, "Test Inline buttons", .keyboard = keyBoardJson);
+
+BuildInlineKeyboard(
+    const buttons[][][MAX_CALLBACK_SIZE], // Button array
+    buttonCount,                          // Number of buttons
+    buttonsPerRow,                        // Buttons per row
+    output[], len = sizeof(output))
+```
 
 ### Getting user information (asynchronous — request sent here, result handled only in callback)
 
