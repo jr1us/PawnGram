@@ -5,6 +5,8 @@
 | <img width="400" height="600" alt="image1" src="https://github.com/user-attachments/assets/4ba73f4f-1d6b-43eb-ae6e-ac68d5216ebf" /> | <img width="564" height="298" alt="image2" src="https://github.com/user-attachments/assets/bd1e4918-0ae6-475b-a1c1-961a1bf0fe2d" /> |
 |:--:|:--:|
 | <img width="350" height="400" alt="image3" src="https://github.com/user-attachments/assets/845fabbe-c360-4bbe-93f4-99c7cd80275f" /> | <img width="500" height="600" alt="image4" src="https://github.com/user-attachments/assets/a336d814-0524-4939-a1b0-5dabfb7ff27b" /> |
+<img width="518" height="201" alt="image" src="https://github.com/user-attachments/assets/6a5a1c2f-e5e9-4fd0-a16e-214b1258fae6"/> | <img width="514" height="346" alt="image" src="https://github.com/user-attachments/assets/d412b91f-8737-453b-b2d7-033a3a2746e8" />
+
 
 
 # PawnGram — Библиотека для Telegram-ботов на языке Pawn
@@ -77,6 +79,14 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
 
         SendTelegramMessage(userId, "", .stickerFileId = stickers[random(sizeof stickers)]);
     }
+
+	else if (!strcmp(message, "/invoice", true))
+    {
+		new payload[32] = "testInvoice", currency[16] = "XTR", Float:price = 15;
+
+        SendTelegramInvoice(userId, "Test Invoice", "MoneyBack function - RefundStarPayment", payload, .currency = currency, .price = price);
+    }
+
     else if (!strcmp(message, "/custom_emoji", true))
     {
         new custom_emoji[][64] = {
@@ -132,6 +142,20 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
     }
 
     return 1;
+}
+```
+
+##Пример каллбэка для обработки платежей
+
+```pawn
+callback OnTelegramSuccessfulPayment(const userId[], const payload[], const currency[], const amount[])
+{
+    if (!strcmp(payload, "testInvoice")) {
+		new buffer[32];
+
+		format(buffer, sizeof buffer, "<b>You paid the bill for</b> <code>%s stars</code>", amount);
+		SendTelegramMessage(userId, buffer, "HTML", .message_effect_id = MESSAGE_EFFECT_HEART);
+	}
 }
 ```
 
@@ -194,6 +218,62 @@ SendTelegramMessage(
 	
 ### Все медиа-параметры взаимоисключающие — передавайте только один за раз.
 
+### Отправка оплаты с помощью Telegram Stars / Другой валюты
+```pawn
+// Для Telegram Stars
+
+new payload[32] = "testInvoice", 
+    currency[16] = "XTR", 
+	Float:price = 15; // Если остаток >= 0.5, сумма округляется вверх (+1 к целой части), иначе сумма не изменяется
+
+SendTelegramInvoice(userId, "Test Invoice", "MoneyBack function - RefundStarPayment", payload, .currency = currency, .price = price);
+
+// Для рублей | долларов
+
+new payload[32] = "testInvoice",
+    provider_token[64] = "token", // Получить можно у платежной системы в телеграме ( узнать можно в @BotFather )
+    currency[16] = "RUB", // Либо USD, 
+	Float:price = 15.05; // Стоимость 1 = 1 рубль | 1 = 1 доллар, можно отправлять с остатком
+
+SendTelegramInvoice(userId, "Test Invoice", "MoneyBack function - RefundStarPayment", payload, .currency = currency, .price = price);
+
+```
+
+### Возврат Telegram Stars (chargeId это ID Транзакции)
+```pawn
+RefundStarPayment(const userId[], const chargeId[])
+```
+
+### Редактирование сообщения
+```pawn
+EditTelegramMessage(const userId[], messageId, const text[] = "", const parse_mode[] = "" const keyboard[] = "", const photoUrl[] = "")
+```
+
+### Удаление сообщений
+```pawn
+DeleteTelegramMessage(const userId[], messageId[])
+```
+
+### Удобная сборка Inline Кнопок
+
+```pawn
+new button[][][MAX_CALLBACK_SIZE] =
+{
+	{"Кнопка1", "button_1"},
+	{"Это кнопка2", "button_2}
+};
+
+new keyBoardJson[1024];
+
+BuildInlineKeyboard(button, sizeof button, 2, keyBoardJson);
+SendTelegramMessage(userId, "Тест Inline кнопок", .keyboard = keyBoardJson);
+
+BuildInlineKeyboard(
+	const buttons[][][MAX_CALLBACK_SIZE], // Массив с кнопками
+	buttonCount, // Количество кнопок
+	buttonsPerRow, // Сколько кнопок будет в одном ряду
+	output[], len = sizeof(output))
+```
 
 ### Получение информации об пользователи ( не работает в одном потоке -> отправили запрос, обработать можно только в каллбеке )
 ```pawn
