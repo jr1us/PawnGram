@@ -1,6 +1,8 @@
 <p align="center">
-  <img width="515" height="208" alt="PawnGram Logo" src="https://github.com/user-attachments/assets/bcbc5788-9770-4adb-a9b0-898a8feedaa7" />
+  <img src="https://github.com/user-attachments/assets/bcbc5788-9770-4adb-a9b0-898a8feedaa7" width="300" style="display:inline-block; margin-right:10px;" />
+  <img src="https://github.com/user-attachments/assets/e6f02cf0-8a76-43a4-8590-09ed1f2b724a" width="300" style="display:inline-block;" />
 </p>
+
 
 ---
 
