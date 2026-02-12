@@ -11,7 +11,7 @@
     #define callback%0(%1) forward%0(%1);public%0(%1)
 #endif
 
-#define BOT_TOKEN "7627136521:AAHfH70llUqJHp3LobJwHhNzp8uMIfr_gPg"
+#define BOT_TOKEN ""
 
 #if !defined BOT_TOKEN
     #error "[PawnGram] Please create #define BOT_TOKEN "TokenBotFather" "
