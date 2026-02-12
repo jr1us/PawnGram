@@ -46,6 +46,14 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
 
 		SendTelegramMessage(userId, "", .stickerFileId = stickers[random(sizeof stickers)]);
 	}
+
+	else if (!strcmp(message, "/invoice", true))
+    {
+		new payload[32] = "testInvoice", currency[16] = "XTR", Float:price = 15;
+
+        SendTelegramInvoice(userId, "Test Invoice", "MoneyBack function - RefundStarPayment", payload, .currency = currency, .price = price);
+    }
+
 	else if (!strcmp(message, "/custom_emoji", true))
 	{
 		new custom_emoji[][64] = {
@@ -100,6 +108,16 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
 	}
 
     return 1;
+}
+
+callback OnTelegramSuccessfulPayment(const userId[], const payload[], const currency[], const amount[])
+{
+    if (!strcmp(payload, "testInvoice")) {
+		new buffer[32];
+
+		format(buffer, sizeof buffer, "<b>You paid the bill for</b> <code>%s stars</code>", amount);
+		SendTelegramMessage(userId, buffer, "HTML", .message_effect_id = MESSAGE_EFFECT_HEART);
+	}
 }
 
 callback OnTelegramInlineKeyBoard(userId[], username[], callbackData[], firstName[], lastName[], callbackId[])
