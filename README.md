@@ -1,6 +1,8 @@
 <p align="center">
-  <img width="515" height="208" alt="PawnGram Logo" src="https://github.com/user-attachments/assets/bcbc5788-9770-4adb-a9b0-898a8feedaa7" />
+  <img src="https://github.com/user-attachments/assets/bcbc5788-9770-4adb-a9b0-898a8feedaa7" width="300" style="display:inline-block; margin-right:10px;" />
+  <img src="https://github.com/user-attachments/assets/e6f02cf0-8a76-43a4-8590-09ed1f2b724a" width="300" style="display:inline-block;" />
 </p>
+
 
 ---
 
@@ -80,8 +82,8 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
 {
     printf("[PawnGram -> OnTelegramMessage] New message! userId -> %s", userId);
 
-    if (!strlen(message))
-        return 0;
+    if (GetChatMemberStatus("your id group/chat", userId, message) == -1) // This checks subscription to a group or chat. All verification logic must be inside -> GetChatMemberMessage if you want to check! Unfortunately, only one group is supported.
+        return SendTelegramMessage(userId, "Please try again later");
 
     new buffer[256];
 
@@ -94,20 +96,61 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
     {
         new stickers[][256] = {
             "CAACAgIAAxkBAAETNwRo8x6fV8gso63eyvy9pI7RGhD7JQACdiAAAiFmgEvTomWJlLZrmDYE",
-            "CAACAgIAAxkBAAETNwZo8x7EbjvhDcqLic4NAciAy8KwQwACcCMAAi4PGErW6C2PO20QBzYE",
+            "CAACAgIAAxkBAAETNwZo8x7EbjvhDcqLic4NAciAy8KwQwACcCMAAi4PGErW6C2PO30QBzYE",
             "CAACAgIAAxkBAAETNwho8x7Lcr5jlo7mVizwsl4b4aDsaAACjh0AAuEKiUv-S9BnpAI53TYE"
         };
 
         SendTelegramMessage(userId, "", .stickerFileId = stickers[random(sizeof stickers)]);
     }
-
-	else if (!strcmp(message, "/invoice", true))
+    else if (!strcmp(message, "/buttons", true))
     {
-		new payload[32] = "testInvoice", currency[16] = "XTR", Float:price = 15;
+        new buttons[][2][128] = {
+            {"Button 1", "btn_1"},
+            {"Button 2", "btn_2"},
+            {"Button 3", "btn_3"},
+            {"Button 4", "btn_4"}
+        };
+
+        new keyboardJson[2096];
+        BuildInlineKeyboard(buttons, sizeof buttons, 3, keyboardJson);
+
+        SendTelegramMessage(userId, "&#128520; Three buttons in a row", "HTML", .keyboard = keyboardJson);
+    }
+    else if (!strcmp(message, "/styled_buttons", true))
+    {
+        new buttons[][4][128] = {
+            {"Delete", "btn_delete", "danger", ""},
+            {"Accept", "btn_accept", "success", ""},
+            {"Buy", "btn_buy", "primary", "5389049616962453932"},
+            {"Normal", "btn_normal", "", ""}
+        };
+
+        new keyboardJson[2096];
+        BuildInlineKeyboard(buttons, sizeof buttons, 2, keyboardJson);
+
+        SendTelegramMessage(userId, "&#127912; Styled buttons with colors and emoji", "HTML", .keyboard = keyboardJson);
+    }
+
+    return 1;
+}
+```
+
+## Example callback for subscription checking (after OnTelegramMessage → GetChatMemberStatus)
+
+```pawn
+callback GetChatMemberMessage(const userId[], const username[], const message[], const firstName[], const lastName[], const memberStatus[])
+{	
+    if (!GetChatMember(memberStatus))
+        return SendTelegramMessage(userId, "<b>You are not subscribed or not a member of the group/chat @your_channel</b>", "HTML");
+
+    new buffer[256];
+	
+    if (!strcmp(message, "/invoice", true))
+    {
+        new payload[32] = "testInvoice", currency[16] = "XTR", Float:price = 15;
 
         SendTelegramInvoice(userId, "Test Invoice", "MoneyBack function - RefundStarPayment", payload, .currency = currency, .price = price);
     }
-
     else if (!strcmp(message, "/custom_emoji", true))
     {
         new custom_emoji[][64] = {
@@ -118,52 +161,21 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
             "5442678635909621223"
         };
 
-        format(buffer, sizeof buffer, "<tg-emoji emoji-id=\"%s\">&#128525;</tg-emoji> <b>Sending custom emoji</b>", custom_emoji[random(sizeof custom_emoji)]);
-        SendTelegramMessage(userId, buffer, "HTML");
-    }
-    else if (!strcmp(message, "/emoji", true))
-    {
-        new emoji[][64] = {
-            "&#128147;",
-            "&#129320;",
-            "&#128512;",
-            "&#128526;",
-            "&#128545;"
-        };
-
-        format(buffer, sizeof(buffer), "%s <b>Sending default emoji!</b>", emoji[random(sizeof emoji)]);
+        format(buffer, sizeof buffer, "<tg-emoji emoji-id=\"%s\">&#128525;</tg-emoji> <b>Send custom emoji</b>", custom_emoji[random(sizeof custom_emoji)]);
         SendTelegramMessage(userId, buffer, "HTML");
     }
     else if (!strcmp(message, "/photo", true))
     {
         SendTelegramMessage(userId, "*Photo*", "markdown", .photoUrl = "https://img.joomcdn.net/6ad386a00a79511072954393bd626e903ff3569e_1024_1024.jpeg");
     }
-    else if (!strcmp(message, "/note", true))
-    {
-        SendTelegramMessage(userId, "", .videoNoteUrl = "DQACAgIAAxkBAAIJ32jzD53WlozJwzyuVwRMiGfzjuMeAAL9dAACX-yYS0xYaHnq4TUBNgQ");
-    }
     else if (!strcmp(message, "/video", true))
     {
         SendTelegramMessage(userId, "*Video*", "markdown", .videoUrl = "https://static.videezy.com/system/resources/previews/000/000/892/original/zon.mp4");
     }
-    else if (!strcmp(message, "/buttons", true))
-    {
-        new buttons[][][128] = {
-            {"button_1", "btn_1"},
-            {"button_2", "btn_2"},
-            {"button_3", "btn_3"},
-            {"Button 4", "btn_4"}
-        };
-
-        new keyboardJson[4096];
-        BuildInlineKeyboard(buttons, sizeof buttons, 3, keyboardJson); // 3 = buttons per row (layout:
-        // 1 2 3
-        //   4);
-        SendTelegramMessage(userId, "&#128520; Three buttons in a row", "HTML", .keyboard = keyboardJson);
-    }
-
+	
     return 1;
 }
+
 ```
 
 ## Payment Callback Example
@@ -293,16 +305,37 @@ new button[][][MAX_CALLBACK_SIZE] =
 new keyBoardJson[1024];
 
 BuildInlineKeyboard(button, sizeof button, 2, keyBoardJson);
-SendTelegramMessage(userId, "Test Inline buttons", .keyboard = keyBoardJson);
+SendTelegramMessage(userId, "Inline buttons test", .keyboard = keyBoardJson);
+
+// Sending colored inlineKeyBoard + Emoji
+
+// Styles:
+// danger  - red
+// success - green
+// primary - blue
+
+// After the style comes the ID of the custom emoji
+
+new button[][][MAX_CALLBACK_SIZE] = {
+    {"Delete", "btn_delete", "danger", "5461098492216752942"},
+    {"Accept", "btn_accept", "success", "5260416304224936047"},
+    {"Buy", "btn_buy", "primary", "5298779458918948862"},
+    {"Default", "btn_normal", "", ""}
+};
+
+new keyBoardJson[1024];
+
+BuildInlineKeyboard(button, sizeof button, 2, keyBoardJson);
+SendTelegramMessage(userId, "Inline buttons test", .keyboard = keyBoardJson);
 
 BuildInlineKeyboard(
-    const buttons[][][MAX_CALLBACK_SIZE], // Button array
+    const buttons[][][MAX_CALLBACK_SIZE], // Array of buttons
     buttonCount,                          // Number of buttons
-    buttonsPerRow,                        // Buttons per row
-    output[], len = sizeof(output))
+    buttonsPerRow,                        // How many buttons in each row
+    output[], len = sizeof(output))       // Output buffer
 ```
 
-### Getting user information (asynchronous — request sent here, result handled only in callback)
+### Getting user information (Does not work within a single thread → after sending the request, it can only be processed inside the callback. There is a verification method using GetChatMemberStatus — check the examples for it.)
 
 ```pawn
 GetTelegramUserInfo(const userId[])
@@ -312,6 +345,13 @@ GetTelegramUserInfo(const userId[])
 
 ```pawn
 GetChatMemberStatus(const chatId[], const userId[])
+```
+
+### Checking whether a user is a member of a group/chat
+## After this check, all bot logic continues inside → GetChatMemberMessage
+
+```pawn
+GetChatMemberStatus(const chatId[], const userId[], const message[] = "")
 ```
 
 Author:
