@@ -82,89 +82,98 @@ callback OnTelegramMessage(const userId[], const username[], const message[], co
 {
     printf("[PawnGram -> OnTelegramMessage] New message! userId -> %s", userId);
 
-    if (!strlen(message))
-        return 0;
+	if (GetChatMemberStatus("your id group/chat", userId, message) == -1) // Это проверка на подписку на группу или чат, вся логика должна быть в -> GetChatMemberMessage если хотите проверить ! Доступна только одна группа к сожалению
+		return SendTelegramMessage(userId, "Please try again later");
 
     new buffer[256];
 
-    if (!strcmp(message, "/start", true))
-    {
-        format(buffer, sizeof buffer, "*Hello, %s! Your ID*: `%s`", firstName, userId);
-        SendTelegramMessage(userId, buffer, "markdown");
-    }
-    else if (!strcmp(message, "/sticker", true))
-    {
-        new stickers[][256] = {
-            "CAACAgIAAxkBAAETNwRo8x6fV8gso63eyvy9pI7RGhD7JQACdiAAAiFmgEvTomWJlLZrmDYE",
-            "CAACAgIAAxkBAAETNwZo8x7EbjvhDcqLic4NAciAy8KwQwACcCMAAi4PGErW6C2PO20QBzYE",
-            "CAACAgIAAxkBAAETNwho8x7Lcr5jlo7mVizwsl4b4aDsaAACjh0AAuEKiUv-S9BnpAI53TYE"
-        };
+	if (!strcmp(message, "/start", true))
+	{
+		format(buffer, sizeof buffer, "*Hello, %s! Your ID*: `%s`", firstName, userId);
+		SendTelegramMessage(userId, buffer, "markdown");
+	}
+	else if (!strcmp(message, "/sticker", true))
+	{
+		new stickers[][256] = {
+			"CAACAgIAAxkBAAETNwRo8x6fV8gso63eyvy9pI7RGhD7JQACdiAAAiFmgEvTomWJlLZrmDYE",
+			"CAACAgIAAxkBAAETNwZo8x7EbjvhDcqLic4NAciAy8KwQwACcCMAAi4PGErW6C2PO30QBzYE",
+			"CAACAgIAAxkBAAETNwho8x7Lcr5jlo7mVizwsl4b4aDsaAACjh0AAuEKiUv-S9BnpAI53TYE"
+		};
 
-        SendTelegramMessage(userId, "", .stickerFileId = stickers[random(sizeof stickers)]);
-    }
+		SendTelegramMessage(userId, "", .stickerFileId = stickers[random(sizeof stickers)]);
+	}
+	else if (!strcmp(message, "/buttons", true))
+	{
+		new buttons[][2][128] = {
+			{"Button 1", "btn_1"},
+			{"Button 2", "btn_2"},
+			{"Button 3", "btn_3"},
+			{"Button 4", "btn_4"}
+		};
 
-	else if (!strcmp(message, "/invoice", true))
+		new keyboardJson[2096];
+		BuildInlineKeyboard(buttons, sizeof buttons, 3, keyboardJson);
+
+		SendTelegramMessage(userId, "&#128520; Three buttons in a row", "HTML", .keyboard = keyboardJson);
+	}
+	else if (!strcmp(message, "/styled_buttons", true))
+	{
+		new buttons[][4][128] = {
+			{"Delete", "btn_delete", "danger", ""},
+			{"Accept", "btn_accept", "success", ""},
+			{"Buy", "btn_buy", "primary", "5389049616962453932"},
+			{"Normal", "btn_normal", "", ""}
+		};
+
+		new keyboardJson[2096];
+		BuildInlineKeyboard(buttons, sizeof buttons, 2, keyboardJson);
+
+		SendTelegramMessage(userId, "&#127912; Styled buttons with colors and emoji", "HTML", .keyboard = keyboardJson);
+	}
+
+    return 1;
+}
+```
+
+## Пример каллбэка проверки на подписку (после того как отправили OnTelegramMessage -> GetChatMemberStatus)
+
+```pawn
+callback GetChatMemberMessage(const userId[], const username[], const message[], const firstName[], const lastName[], const memberStatus[])
+{	
+	if(!GetChatMember(memberStatus)) 
+		return SendTelegramMessage(userId, "<b>Вы не подписаны или не участник группы/чата @your_channel</b>", "HTML");
+
+	new buffer[256];
+	
+	if (!strcmp(message, "/invoice", true))
     {
 		new payload[32] = "testInvoice", currency[16] = "XTR", Float:price = 15;
 
         SendTelegramInvoice(userId, "Test Invoice", "MoneyBack function - RefundStarPayment", payload, .currency = currency, .price = price);
     }
+	else if (!strcmp(message, "/custom_emoji", true))
+	{
+		new custom_emoji[][64] = {
+			"5334725814040674667",
+			"5377385791456555103",
+			"5323520794121222108",
+			"5775870512127283512",
+			"5442678635909621223"
+		};
 
-    else if (!strcmp(message, "/custom_emoji", true))
-    {
-        new custom_emoji[][64] = {
-            "5334725814040674667",
-            "5377385791456555103",
-            "5323520794121222108",
-            "5775870512127283512",
-            "5442678635909621223"
-        };
-
-        format(buffer, sizeof buffer, "<tg-emoji emoji-id=\"%s\">&#128525;</tg-emoji> <b>Отправка кастомного эмодзи / Send custom emoji</b>", custom_emoji[random(sizeof custom_emoji)]);
-        SendTelegramMessage(userId, buffer, "HTML");
-    }
-    else if (!strcmp(message, "/emoji", true))
-    {
-        new emoji[][64] = {
-            "&#128147;",
-            "&#129320;",
-            "&#128512;",
-            "&#128526;",
-            "&#128545;"
-        };
-
-        format(buffer, sizeof(buffer), "%s <b>Отправка обычного эмодзи / Send default emoji!</b>", emoji[random(sizeof emoji)]);
-        SendTelegramMessage(userId, buffer, "HTML");
-    }
-    else if (!strcmp(message, "/photo", true))
-    {
-        SendTelegramMessage(userId, "*Photo*", "markdown", .photoUrl = "https://img.joomcdn.net/6ad386a00a79511072954393bd626e903ff3569e_1024_1024.jpeg");
-    }
-    else if (!strcmp(message, "/note", true))
-    {
-        SendTelegramMessage(userId, "", .videoNoteUrl = "DQACAgIAAxkBAAIJ32jzD53WlozJwzyuVwRMiGfzjuMeAAL9dAACX-yYS0xYaHnq4TUBNgQ");
-    }
-    else if (!strcmp(message, "/video", true))
-    {
-        SendTelegramMessage(userId, "*Video*", "markdown", .videoUrl = "https://static.videezy.com/system/resources/previews/000/000/892/original/zon.mp4");
-    }
-    else if (!strcmp(message, "/buttons", true))
-    {
-        new buttons[][][128] = {
-            {"button_1", "btn_1"},
-            {"button_2", "btn_2"},
-            {"button_3", "btn_3"},
-            {"4 Кнопка", "btn_4"}
-        };
-
-        new keyboardJson[4096];
-        BuildInlineKeyboard(buttons, sizeof buttons, 3, keyboardJson); // 3 это количество кнопок в ряд (Cетка будет такая:
-        // 1 2 3
-        //   4);
-        SendTelegramMessage(userId, "&#128520; Три кнопки в ряд", "HTML", .keyboard = keyboardJson);
-    }
-
-    return 1;
+		format(buffer, sizeof buffer, "<tg-emoji emoji-id=\"%s\">&#128525;</tg-emoji> <b>Send custom emoji</b>", custom_emoji[random(sizeof custom_emoji)]);
+		SendTelegramMessage(userId, buffer, "HTML");
+	}
+	else if (!strcmp(message, "/photo", true))
+	{
+		SendTelegramMessage(userId, "*Photo*", "markdown", .photoUrl = "https://img.joomcdn.net/6ad386a00a79511072954393bd626e903ff3569e_1024_1024.jpeg");
+	}
+	else if (!strcmp(message, "/video", true))
+	{
+		SendTelegramMessage(userId, "*Video*", "markdown", .videoUrl = "https://static.videezy.com/system/resources/previews/000/000/892/original/zon.mp4");
+	}
+	
+	return 1;
 }
 ```
 
@@ -293,6 +302,27 @@ new keyBoardJson[1024];
 BuildInlineKeyboard(button, sizeof button, 2, keyBoardJson);
 SendTelegramMessage(userId, "Тест Inline кнопок", .keyboard = keyBoardJson);
 
+// Отправка цветных inlineKeyBoard + Эмодзи
+
+// Стили:
+// danger - красный
+// success - зеленый
+// primary - синий
+
+// После идет Id кастомных эмодзи
+
+new button[][][MAX_CALLBACK_SIZE] = {
+	{"Удалить", "btn_delete", "danger", "5461098492216752942"},
+	{"Принять", "btn_accept", "success", "5260416304224936047"},
+	{"Купить", "btn_buy", "primary", "5298779458918948862"},
+	{"Обычная", "btn_normal", "", ""}
+};
+
+new keyBoardJson[1024];
+
+BuildInlineKeyboard(button, sizeof button, 2, keyBoardJson);
+SendTelegramMessage(userId, "Тест Inline кнопок", .keyboard = keyBoardJson);
+
 BuildInlineKeyboard(
 	const buttons[][][MAX_CALLBACK_SIZE], // Массив с кнопками
 	buttonCount, // Количество кнопок
@@ -300,7 +330,7 @@ BuildInlineKeyboard(
 	output[], len = sizeof(output))
 ```
 
-### Получение информации об пользователи ( не работает в одном потоке -> отправили запрос, обработать можно только в каллбеке )
+### Получение информации об пользователи ( не работает в одном потоке -> отправили запрос, обработать можно только в каллбеке | Есть метод проверки с GetChatMemberStatus изучите примеры с ним)
 ```pawn
 GetTelegramUserInfo(const userId[])
 ```
@@ -308,6 +338,13 @@ GetTelegramUserInfo(const userId[])
 ### Получение информации об пользователи в конкретном чате / канале ( Бот должен быть админом чата/канала | не работает в одном потоке -> отправили запрос, обработать можно только в каллбеке )
 ```pawn
 GetChatMemberStatus(const chatId[], const userId[])
+```
+
+### Проверка на то что состоит в группе/чате
+## Использование логики бота переходит -> GetChatMemberMessage
+
+```pawn
+GetChatMemberStatus(const chatId[], const userId[], const message[] = "")
 ```
 
 ### Автор:
