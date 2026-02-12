@@ -11,7 +11,7 @@
     #define callback%0(%1) forward%0(%1);public%0(%1)
 #endif
 
-#define BOT_TOKEN ""
+#define BOT_TOKEN "7627136521:AAHfH70llUqJHp3LobJwHhNzp8uMIfr_gPg"
 
 #if !defined BOT_TOKEN
     #error "[PawnGram] Please create #define BOT_TOKEN "TokenBotFather" "
@@ -34,8 +34,6 @@
 
 #define SHOW_ERROR_LANGUAGE "RU" // RU | EN
 
-#include "PawnGram.Utils"
-
 static enum {
     GET_UPDATE_MESSAGE = 1,
     GET_UPDATE_INLINE_KEYBOARD = 2,
@@ -49,6 +47,12 @@ const MAX_CALLBACK_SIZE = 128;
 const MAX_SIZE_TELEGRAM_NAME = 64;
 const MAX_SIZE_USER_NAME = 32;
 const MAX_SIZE_USER_ID = 32;
+
+const MAX_PENDING_REQUESTS = 1000;
+const INVALID_PENDING_SLOT_ID = -1;
+const MAX_CACHE_SIZE_LIFE = 15;
+
+#include "PawnGram.Utils"
 
 static bool:botInitialized = false;
 static RequestsClient:clientTelegram;
@@ -104,7 +108,9 @@ static const TelegramErrorsEN[][MAX_CALLBACK_SIZE] = {
     "Bad Request: CURRENCY_TOTAL_AMOUNT_INVALID (prov)",
     "Bad Request: can't parse labeled price: Field \"price\" must be a valid Number",
     "Response: Bad Request: field \"inline_keyboard\" must be of type Array",
-    "Forbidden: bots can't send messages to bots"
+    "Forbidden: bots can't send messages to bots",
+    "Bad Request: can't parse inline keyboard button: Field \"icon_custom_emoji_id\" must be a valid Number",
+    "Bad Request: can't parse inline keyboard button: invalid button style specified"
 };
 
 static const TelegramErrorsRU[sizeof TelegramErrorsEN][MAX_CALLBACK_SIZE] = {
@@ -157,7 +163,9 @@ static const TelegramErrorsRU[sizeof TelegramErrorsEN][MAX_CALLBACK_SIZE] = {
     "Неверный запрос: общая сумма валюты указана неверно",
     "Неверный запрос: невозможно разобрать цену. Поле \"price\" должно быть допустимым числом. (сумма должна быть без остатка)",
     "Неверный запрос: поле \"inline_keyboard\" должно быть типа Array (массив)",
-    "Неверный запрос: боты не могут отправлять сообщения ботам"
+    "Неверный запрос: боты не могут отправлять сообщения ботам",
+    "Неверный запрос: невозможно разобрать inline кнопку. Поле \"icon_custom_emoji_id\" должно быть допустимым числом",
+    "Неверный запрос: невозможно разобрать inline кнопку. Указан неверный стиль кнопки"
 };
 
 stock GetBotInit()
@@ -445,7 +453,7 @@ stock SendTelegramMessage(const userId[], const text[], const parse_mode[] = "",
     return _:id;
 }
 
-stock EditTelegramMessage(const userId[], messageId, const text[] = "", const parse_mode[] = "" const keyboard[] = "", const photoUrl[] = "")
+stock EditTelegramMessage(const userId[], messageId, const text[] = "", const keyboard[] = "", const photoUrl[] = "", const parse_mode[] = "HTML")
 {
     if (!botInitialized || !IsValidRequestsClient(clientTelegram)) return 0;
 
@@ -608,10 +616,10 @@ stock GetTelegramUserInfo(const userId[])
 
 callback OnTelegramUserInfo(Request:id, E_HTTP_STATUS:status, const data[], dataLen)
 {
-    new converteData[2096];
-    converteData[0] = EOS;
+    new convertData[2096];
+    convertData[0] = EOS;
     
-    UTF8_To_Win1251(data, converteData, sizeof converteData);
+    UTF8_To_Win1251(data, convertData, sizeof convertData);
 
     if (status == HTTP_STATUS_OK)
     {   
@@ -619,10 +627,10 @@ callback OnTelegramUserInfo(Request:id, E_HTTP_STATUS:status, const data[], data
             outputFirstName[MAX_SIZE_TELEGRAM_NAME * 2], outputLastName[MAX_SIZE_TELEGRAM_NAME * 2], 
             userName[MAX_SIZE_USER_NAME];
 
-        ParseJsonString(converteData, "result", "first_name", firstName, sizeof(firstName));
-        ParseJsonString(converteData, "result", "last_name", lastName, sizeof(lastName));
-        ParseJsonString(converteData, "result", "username", userName, sizeof(userName));
-        ParseJsonInt(converteData, "result", "id", chatId);
+        ParseJsonString(convertData, "result", "first_name", firstName, sizeof(firstName));
+        ParseJsonString(convertData, "result", "last_name", lastName, sizeof(lastName));
+        ParseJsonString(convertData, "result", "username", userName, sizeof(userName));
+        ParseJsonInt(convertData, "result", "id", chatId);
 
         DecodeUnicodeEscapes(lastName, outputLastName, sizeof(outputLastName));
         DecodeUnicodeEscapes(firstName, outputFirstName, sizeof(outputFirstName));
@@ -813,7 +821,15 @@ stock AnswerCallbackQuery(callbackId[], text[] = "", bool:showAlert = false)
     return _:id;
 }
 
-stock GetChatMemberStatus(const chatId[], const userId[])
+stock GetChatMember(const memberStatus[])
+{
+    if (strcmp(memberStatus, "member", true) != 0 && strcmp(memberStatus, "administrator", true) != 0 && strcmp(memberStatus, "creator", true) != 0)
+        return 0;
+    
+    return 1;
+}
+
+stock GetChatMemberStatus(const chatId[], const userId[], const message[] = "")
 {   
     if (!botInitialized)
         return print("[PawnGram] Bot not initialized yet!");
@@ -824,8 +840,26 @@ stock GetChatMemberStatus(const chatId[], const userId[])
     new endpoint[256];
     format(endpoint, sizeof endpoint , "/bot%s/getChatMember?chat_id=%s&user_id=%s", BOT_TOKEN, chatId, userId);
 
-    new Request:reqId = Request(clientTelegram, endpoint, HTTP_METHOD_GET, "OnChatMemberStatus");
-    return _:reqId;
+    if (message[0] != EOS)
+    {
+        new slot = GetPendingRequestSlot();
+
+        if (slot == INVALID_PENDING_SLOT_ID)
+            return -1;
+        
+        SetPendingCallbackData(slot, message);
+        SetPendingRequestData(slot, _:Request(clientTelegram, endpoint, HTTP_METHOD_GET, "OnChatMemberStatus"));
+        SetPendingTimeData(slot, gettime() + MAX_CACHE_SIZE_LIFE);
+
+        #if DEBUG_MODE_TELEGRAM
+            printf("[PawnGram] Pending request created | slot -> %d | userId -> %s | expires -> %d | reqId -> %d", 
+                slot, userId, gettime() + MAX_CACHE_SIZE_LIFE, GetPendingRequestData(slot));
+        #endif
+
+        return GetPendingRequestData(slot);
+    }
+
+    return _:Request(clientTelegram, endpoint, HTTP_METHOD_GET, "OnChatMemberStatus");
 }
 
 callback OnChatMemberStatus(Request:reqId, E_HTTP_STATUS:status, const data[], dataLen)
@@ -840,10 +874,37 @@ callback OnChatMemberStatus(Request:reqId, E_HTTP_STATUS:status, const data[], d
 
     if (status == HTTP_STATUS_OK)
     {
-        new statusStr[64], userIdOut[64];
+        new statusStr[64], userIdOut[MAX_SIZE_USER_ID];
         
         ParseJsonString(convertData, "result", "status", statusStr, sizeof statusStr);
         ParseJsonInt(convertData, "user", "id", userIdOut);
+
+        for (new i = 0; i < MAX_PENDING_REQUESTS; i++)
+        {   
+            if (GetPendingRequestData(i) == INVALID_PENDING_SLOT_ID)
+                continue;
+
+            if (GetPendingRequestData(i) == _:reqId) {
+                new firstName[MAX_SIZE_TELEGRAM_NAME], lastName[MAX_SIZE_TELEGRAM_NAME], 
+                    outputFirstName[MAX_SIZE_TELEGRAM_NAME * 2], outputLastName[MAX_SIZE_TELEGRAM_NAME * 2], 
+                    userName[MAX_SIZE_USER_NAME];
+
+                ParseJsonString(convertData, "user", "first_name", firstName, sizeof(firstName));
+                ParseJsonString(convertData, "user", "last_name", lastName, sizeof(lastName));
+                ParseJsonString(convertData, "user", "username", userName, sizeof(userName));
+
+                DecodeUnicodeEscapes(lastName, outputLastName, sizeof(outputLastName));
+                DecodeUnicodeEscapes(firstName, outputFirstName, sizeof(outputFirstName));
+
+                new message[MAX_CALLBACK_SIZE];
+
+                GetPendingCallbackData(i, message);
+
+                GetChatMemberMessage(userIdOut, userName, message, outputFirstName, outputLastName, statusStr);   
+
+                ResetPendingRequests(i);
+            }
+        }
 
         #if DEBUG_MODE_TELEGRAM
             printf("[PawnGram -> OnChatMemberStatus] User %s -> status: %s", userIdOut, statusStr);
@@ -888,6 +949,7 @@ callback OnBotInfo(Request:reqId, E_HTTP_STATUS:status, const data[], dataLen)
         botInitialized = true;
 
         SetTimer("GetTelegramUpdates", TELEGRAM_TICKRATE_UPDATE, true);
+        SetTimer("PendingRequestsUpdate", TELEGRAM_TICKRATE_UPDATE, true);
 
         printf("[PawnGram] Bot successful Initialized! t.me/%s | Name: %s", userName, firstName);
     }   
@@ -898,36 +960,79 @@ callback OnBotInfo(Request:reqId, E_HTTP_STATUS:status, const data[], dataLen)
     }
 }
 
-enum ButtonInfo {
-    BtnText[MAX_CALLBACK_SIZE],
-    BtnCallback[MAX_CALLBACK_SIZE]
-};
-
-stock BuildInlineKeyboard(const buttons[][][MAX_CALLBACK_SIZE], buttonCount, buttonsPerRow, output[], len = sizeof(output))
+stock BuildInlineKeyboard(const buttons[][][MAX_CALLBACK_SIZE], buttonCount, buttonsPerRow, output[], len = sizeof(output), cellCount = sizeof buttons[])
 {
     new Node:rows = JsonArray();
+
+    new utf8Text[MAX_CALLBACK_SIZE], utf8Callback[MAX_CALLBACK_SIZE],
+        utf8Style[32], utf8Emoji[64];
+
+    new Node:btn, Node:row, 
+        Node:tmpRow, Node:tmpRows;
+
+    new idx, 
+        hasStyle, hasEmoji;
     
     for (new i = 0; i < buttonCount; i += buttonsPerRow)
     {
-        new Node:row = JsonArray();
+        row = JsonArray();
         
-        for (new j = 0; j < buttonsPerRow && (i + j) < buttonCount; j++)
+        for (new j = 0; j < buttonsPerRow; j++)
         {
-            new utf8Text[MAX_CALLBACK_SIZE], utf8Callback[MAX_CALLBACK_SIZE];
-            ConvertWindows1251ToUTF8(buttons[i + j][0], utf8Text, sizeof(utf8Text));
-            ConvertWindows1251ToUTF8(buttons[i + j][1], utf8Callback, sizeof(utf8Callback));
+            idx = i + j;
+
+            if (idx >= buttonCount) 
+                break;
             
-            new Node:button = JsonObject(
-                "text", JsonString(utf8Text),
-                "callback_data", JsonString(utf8Callback)
-            );
+            ConvertWindows1251ToUTF8(buttons[idx][0], utf8Text, sizeof utf8Text);
+            ConvertWindows1251ToUTF8(buttons[idx][1], utf8Callback, sizeof utf8Callback);
             
-            new Node:tempRow = JsonArray(button);
-            row = JsonAppend(row, tempRow);
+            hasStyle = (cellCount >= 4 && buttons[idx][2][0] != EOS);
+            hasEmoji = (cellCount >= 4 && buttons[idx][3][0] != EOS);
+            
+            if (hasStyle && hasEmoji)
+            {
+                ConvertWindows1251ToUTF8(buttons[idx][2], utf8Style, sizeof utf8Style);
+                ConvertWindows1251ToUTF8(buttons[idx][3], utf8Emoji, sizeof utf8Emoji);
+                btn = JsonObject(
+                    "text", JsonString(utf8Text),
+                    "callback_data", JsonString(utf8Callback),
+                    "style", JsonString(utf8Style),
+                    "icon_custom_emoji_id", JsonString(utf8Emoji)
+                );
+            }
+            else if (hasStyle)
+            {
+                ConvertWindows1251ToUTF8(buttons[idx][2], utf8Style, sizeof utf8Style);
+                btn = JsonObject(
+                    "text", JsonString(utf8Text),
+                    "callback_data", JsonString(utf8Callback),
+                    "style", JsonString(utf8Style)
+                );
+            }
+            else if (hasEmoji)
+            {
+                ConvertWindows1251ToUTF8(buttons[idx][3], utf8Emoji, sizeof utf8Emoji);
+                btn = JsonObject(
+                    "text", JsonString(utf8Text),
+                    "callback_data", JsonString(utf8Callback),
+                    "icon_custom_emoji_id", JsonString(utf8Emoji)
+                );
+            }
+            else
+            {
+                btn = JsonObject(
+                    "text", JsonString(utf8Text),
+                    "callback_data", JsonString(utf8Callback)
+                );
+            }
+            
+            tmpRow = JsonArray(btn);
+            row = JsonAppend(row, tmpRow);
         }
         
-        new Node:tempRows = JsonArray(row);
-        rows = JsonAppend(rows, tempRows);
+        tmpRows = JsonArray(row);
+        rows = JsonAppend(rows, tmpRows);
     }
     
     new Node:result = JsonObject("inline_keyboard", rows);

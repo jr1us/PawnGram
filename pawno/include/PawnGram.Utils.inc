@@ -31,6 +31,70 @@
     SendTelegramMessage(userId, "Привет", .message_effect_id = MESSAGE_EFFECT_LIKE)
 */
 
+static enum E_PENDING_DATA
+{
+    pendingRequestId,
+    pendingCallback[MAX_CALLBACK_SIZE],
+    pendingRegisterTime
+}
+
+static PendingRequests[MAX_PENDING_REQUESTS][E_PENDING_DATA];
+
+stock GetPendingRequestSlot(index = INVALID_PENDING_SLOT_ID)
+{
+    for (new i = 0; i < MAX_PENDING_REQUESTS; i++)
+    {
+        if (PendingRequests[i][pendingRequestId] != INVALID_PENDING_SLOT_ID)
+            continue;
+        
+        index = i;
+        break;
+    }
+
+    return index;
+}
+
+stock GetPendingRequestData(index) 
+    return PendingRequests[index][pendingRequestId];
+
+stock GetPendingTimeData(index)
+    return PendingRequests[index][pendingRegisterTime];
+
+stock GetPendingCallbackData(index, data[], size = sizeof(data))
+    return format(data, size, "%s", PendingRequests[index][pendingCallback]);
+
+stock SetPendingRequestData(index, data)
+    return PendingRequests[index][pendingRequestId] = data;
+
+stock SetPendingTimeData(index, data)
+    return PendingRequests[index][pendingRegisterTime] = data;
+
+stock SetPendingCallbackData(index, const data[])
+    return format(PendingRequests[index][pendingCallback], MAX_CALLBACK_SIZE, data);
+
+stock ResetPendingRequests(index)
+{
+    PendingRequests[index][pendingRequestId] = INVALID_PENDING_SLOT_ID;
+    PendingRequests[index][pendingRegisterTime] = INVALID_PENDING_SLOT_ID;
+
+    PendingRequests[index][pendingCallback][0] = EOS;
+}
+
+stock InitPendingRequests()
+{
+    for (new i = 0; i < MAX_PENDING_REQUESTS; i++)
+        ResetPendingRequests(i);
+}
+
+callback PendingRequestsUpdate()
+{
+    for (new i = 0; i < MAX_PENDING_REQUESTS; i++)
+    {
+        if (gettime() > PendingRequests[i][pendingRegisterTime] && PendingRequests[i][pendingRequestId] != INVALID_PENDING_SLOT_ID)
+            ResetPendingRequests(i);   
+    }
+}
+
 // MESSAGE EFFECTS - Not premium
 #define MESSAGE_EFFECT_LIKE             "5107584321108051014"  // like | лайк
 #define MESSAGE_EFFECT_DISLIKE          "5104858069142078462"  // dislike | дизлайк
