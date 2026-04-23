@@ -44,6 +44,15 @@
 >
 > [Russian](README.ru.md)
 
+## VSCode Extension
+
+Install from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=jr1us.pawn-emoji-decorator)
+
+| Without extension | With extension |
+|---|---|
+| <img width="455" height="105" alt="image" src="https://github.com/user-attachments/assets/58951998-4d90-41b6-bb1b-3837d4e1c5f1" /> | <img width="319" height="100" alt="image" src="https://github.com/user-attachments/assets/1d983676-7053-49ec-b352-be4985c1a295" /> |
+
+
 **Example systems:**  
 >
 > [Account authentication](https://youtu.be/iWmfeV_JrQw)
